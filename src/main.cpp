@@ -1,4 +1,5 @@
 #include <iostream>
+#include "poker_player.h"
 #include <gtkmm.h>
 
 Gtk::Window* window = nullptr;
@@ -35,6 +36,6 @@ int main(int argc, char* argv[])
 
   delete window;
 
-  
+
   return 0;
 }
