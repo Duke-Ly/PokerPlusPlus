@@ -14,10 +14,8 @@
 #include <utility>
 #include "asio.hpp"
 #include "chat_message.hpp"
-#include "Hand.hpp"
-#include "Player.hpp"
-
-typedef std::shared_ptr<player> player_ptr;
+#include "hand.hpp"
+#include "player.hpp"
 
 class Dealer
 {
@@ -28,7 +26,7 @@ public:
     void shuffleDeck();
     void setCurrentDeck();
     void deal();
-    void next_player(player_ptr nextPlayer);
+    void next_player();
 };
 
 #endif

@@ -14,7 +14,7 @@
 class chat_message
 {
 public:
-    chat_message():body_length_(0);
+    chat_message();
     ~chat_message();
     const char* data() const;
     char* data();
@@ -27,7 +27,6 @@ public:
     void encode_header();
 
 private:
-    char data_[header_length + max_body_length];
     std::size_t body_length_;
 
 public:

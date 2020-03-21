@@ -1,5 +1,15 @@
 #include <iostream>
-#include "poker_player.h"
+#include "card.hpp"
+#include "chat_client.hpp"
+#include "chat_message.cpp"
+#include "Dealer.hpp"
+#include "hand.hpp"
+#include "player.hpp"
+#include "poker_game.hpp"
+#include "poker_player.hpp"
+#include "poker_table.hpp"
+#include "spectator.hpp"
+#include "asio.hpp"
 #include <gtkmm.h>
 
 Gtk::Window* window = nullptr;

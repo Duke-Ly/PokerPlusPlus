@@ -2,6 +2,7 @@
 #define POKER_TABLE_HPP
 
 #include <iostream>
+#include <vector>
 #include "dealer.hpp"
 #include "player.hpp"
 #include "poker_player.hpp"
@@ -19,8 +20,7 @@ class Poker_Table
       Dealer dealer;
 
   private:
-      set<player_ptr> players;
-      enum max_recent_msgs = 100;
+      int max_recent_msgs = 100;
 };
 
 #endif

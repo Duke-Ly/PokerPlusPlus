@@ -14,6 +14,10 @@
 #include "asio.hpp"
 #include "chat_message.hpp"
 
+using asio::ip::tcp;
+
+typedef std::deque<chat_message> chat_message_queue;
+
 class chat_client
 {
 public:

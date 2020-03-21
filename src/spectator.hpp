@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include "player.hpp"
-##include "poker_table.hpp"
+#include "poker_table.hpp"
 
 class Spectator
 {

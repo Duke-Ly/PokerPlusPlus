@@ -2,9 +2,9 @@
 #define POKER_PLAYER_HPP
 
 #include <gtkmm.h>
-#include "player.h"
-#include "chat_message.h"
-#include "asio.h"
+#include "player.hpp"
+#include "chat_message.hpp"
+#include "asio.hpp"
 
 class Poker_Player : public Gtk::Window
 {
@@ -28,7 +28,6 @@ class Poker_Player : public Gtk::Window
     void do_read_body();
     void do_write();
     tcp::socket socket;
-    Poker_Table& table_ptr;
     chat_message read_msg;
     chat_message_queue write_msg;
 };

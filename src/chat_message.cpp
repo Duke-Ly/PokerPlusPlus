@@ -9,7 +9,7 @@ chat_message::chat_message()
 	
 }
 
-chat_message::~chat_message();
+chat_message::~chat_message() {};
 
 const char* chat_message::data() const
 {
@@ -48,7 +48,7 @@ void chat_message::body_length(std::size_t new_length)
 
 bool chat_message::decode_header()
 {
-
+	return true;
 }
 
 void chat_message::encode_header()
