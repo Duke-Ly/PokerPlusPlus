@@ -1,6 +1,6 @@
-#include "poker_player.h"
+#include "poker_player.hpp"
 
-Poker_Player::Poker_Player() 
+Poker_Player::Poker_Player()
 {
 
 }
