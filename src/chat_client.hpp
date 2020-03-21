@@ -12,25 +12,18 @@
 #include <thread>
 #include <assert.h>
 #include "asio.hpp"
-#include "chat_message3.hpp"
-
-using asio::ip::tcp;
-
-typedef std::deque<chat_message> chat_message_queue;
+#include "chat_message.hpp"
 
 class chat_client
 {
 public:
-    chat_client(asio::io_context& io_context,
-                const tcp::resolver::results_type& endpoints)
-        : io_context_(io_context),
-          socket_(io_context);
+    chat_client();
     ~chat_client();
-    void write(const chat_message& msg);
+    void write();
     void close();
 
 private:
-    void do_connect(const tcp::resolver::results_type& endpoints);
+    void do_connect();
     void do_read_header();
     void do_read_body();
     void do_write();

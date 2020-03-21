@@ -14,8 +14,6 @@
 class chat_message
 {
 public:
-    enum { header_length = 4 + sizeof(client_action) + sizeof(game_state) };
-    enum { max_body_length = 512 };
     chat_message():body_length_(0);
     ~chat_message();
     const char* data() const;
@@ -33,8 +31,7 @@ private:
     std::size_t body_length_;
 
 public:
-    client_action ca;
-    game_state gs;
+
 };
 
 #endif

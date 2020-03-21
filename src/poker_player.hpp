@@ -2,8 +2,9 @@
 #define POKER_PLAYER_HPP
 
 #include <gtkmm.h>
-//#include "player.h"
-//#include "chat_message.h"
+#include "player.h"
+#include "chat_message.h"
+#include "asio.h"
 
 class Poker_Player : public Gtk::Window
 {

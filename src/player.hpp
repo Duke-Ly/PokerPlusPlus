@@ -9,7 +9,7 @@ class Player
   public:
       Player();
       ~Player();
-      virtual void deliver(const chat_message& msg) = 0;
+      virtual void deliver() = 0;
 
       Hand playerHand;
       std::string name;
