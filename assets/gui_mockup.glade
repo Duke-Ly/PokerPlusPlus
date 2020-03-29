@@ -5,161 +5,20 @@
   <object class="GtkWindow" id="window">
     <property name="can_focus">False</property>
     <child>
-      <placeholder/>
-    </child>
-    <child>
-      <object class="GtkBox" id="vbox1">
+      <object class="GtkBox" id="Player_Client_GUI">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="margin_left">5</property>
         <property name="orientation">vertical</property>
         <child>
-          <object class="GtkMenuBar" id="toolbar">
+          <object class="GtkMenuBar" id="GUI_Menu">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <child>
-              <object class="GtkMenuItem">
+              <object class="GtkMenuItem" id="Help_Menu">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">_File</property>
-                <property name="use_underline">True</property>
-                <child type="submenu">
-                  <object class="GtkMenu">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <child>
-                      <object class="GtkImageMenuItem">
-                        <property name="label">gtk-new</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="use_underline">True</property>
-                        <property name="use_stock">True</property>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkImageMenuItem">
-                        <property name="label">gtk-open</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="use_underline">True</property>
-                        <property name="use_stock">True</property>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkImageMenuItem">
-                        <property name="label">gtk-save</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="use_underline">True</property>
-                        <property name="use_stock">True</property>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkImageMenuItem">
-                        <property name="label">gtk-save-as</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="use_underline">True</property>
-                        <property name="use_stock">True</property>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkSeparatorMenuItem">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkImageMenuItem">
-                        <property name="label">gtk-quit</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="use_underline">True</property>
-                        <property name="use_stock">True</property>
-                      </object>
-                    </child>
-                  </object>
-                </child>
-              </object>
-            </child>
-            <child>
-              <object class="GtkMenuItem">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="label" translatable="yes">_Edit</property>
-                <property name="use_underline">True</property>
-                <child type="submenu">
-                  <object class="GtkMenu">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <child>
-                      <object class="GtkImageMenuItem">
-                        <property name="label">gtk-cut</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="use_underline">True</property>
-                        <property name="use_stock">True</property>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkImageMenuItem">
-                        <property name="label">gtk-copy</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="use_underline">True</property>
-                        <property name="use_stock">True</property>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkImageMenuItem">
-                        <property name="label">gtk-paste</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="use_underline">True</property>
-                        <property name="use_stock">True</property>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkImageMenuItem">
-                        <property name="label">gtk-delete</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="use_underline">True</property>
-                        <property name="use_stock">True</property>
-                      </object>
-                    </child>
-                  </object>
-                </child>
-              </object>
-            </child>
-            <child>
-              <object class="GtkMenuItem">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="label" translatable="yes">_Help</property>
-                <property name="use_underline">True</property>
-                <child type="submenu">
-                  <object class="GtkMenu">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <child>
-                      <object class="GtkImageMenuItem">
-                        <property name="label">gtk-about</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="use_underline">True</property>
-                        <property name="use_stock">True</property>
-                      </object>
-                    </child>
-                  </object>
-                </child>
-              </object>
-            </child>
-            <child>
-              <object class="GtkMenuItem">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="label" translatable="yes">_About</property>
+                <property name="label" translatable="yes">Help</property>
                 <property name="use_underline">True</property>
               </object>
             </child>
@@ -171,34 +30,21 @@
           </packing>
         </child>
         <child>
-          <object class="GtkBox" id="vbox_play_area">
+          <object class="GtkBox" id="Poker_Table">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="orientation">vertical</property>
             <child>
-              <object class="GtkBox" id="hbox_new_players">
+              <object class="GtkBox" id="Opponents_and_Specators">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <child>
-                  <object class="GtkBox" id="vbox_nplayer1">
+                  <object class="GtkBox" id="vbox_player1">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="orientation">vertical</property>
                     <child>
-                      <object class="GtkImage" id="image_nplayer1">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="stock">gtk-orientation-portrait</property>
-                        <property name="icon_size">5</property>
-                      </object>
-                      <packing>
-                        <property name="expand">True</property>
-                        <property name="fill">True</property>
-                        <property name="position">0</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="label_nplayer_name1">
+                      <object class="GtkLabel" id="label_player1_name">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">&lt;Player Name&gt;</property>
@@ -210,7 +56,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="label_nbalance1">
+                      <object class="GtkLabel" id="label_player1_balance">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">&lt;Chip Balance&gt;</property>
@@ -229,25 +75,12 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkBox" id="vbox_nplayer2">
+                  <object class="GtkBox" id="vbox_player2">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="orientation">vertical</property>
                     <child>
-                      <object class="GtkImage" id="image_nplayer2">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="stock">gtk-orientation-portrait</property>
-                        <property name="icon_size">5</property>
-                      </object>
-                      <packing>
-                        <property name="expand">True</property>
-                        <property name="fill">True</property>
-                        <property name="position">0</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="label_nplayer_name2">
+                      <object class="GtkLabel" id="label_player2_name">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">&lt;Player Name&gt;</property>
@@ -259,7 +92,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="label_nbalance2">
+                      <object class="GtkLabel" id="label_player2_balance">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">&lt;Chip Balance&gt;</property>
@@ -278,25 +111,12 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkBox" id="vbox_nplayer3">
+                  <object class="GtkBox" id="vbox_player3">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="orientation">vertical</property>
                     <child>
-                      <object class="GtkImage" id="image_nplayer3">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="stock">gtk-orientation-portrait</property>
-                        <property name="icon_size">5</property>
-                      </object>
-                      <packing>
-                        <property name="expand">True</property>
-                        <property name="fill">True</property>
-                        <property name="position">0</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="label_nplayer_name3">
+                      <object class="GtkLabel" id="label_player3_name">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">&lt;Player Name&gt;</property>
@@ -308,7 +128,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="label_nbalance3">
+                      <object class="GtkLabel" id="label_player3_balance">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">&lt;Chip Balance&gt;</property>
@@ -327,25 +147,12 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkBox" id="vbox_nplayer4">
+                  <object class="GtkBox" id="vbox_player4">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="orientation">vertical</property>
                     <child>
-                      <object class="GtkImage" id="image_nplayer4">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="stock">gtk-orientation-portrait</property>
-                        <property name="icon_size">5</property>
-                      </object>
-                      <packing>
-                        <property name="expand">True</property>
-                        <property name="fill">True</property>
-                        <property name="position">0</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="label_nplayer_name4">
+                      <object class="GtkLabel" id="label_player4_name">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">&lt;Player Name&gt;</property>
@@ -357,7 +164,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="label_nbalance4">
+                      <object class="GtkLabel" id="label_player4_balance">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">&lt;Chip Balance&gt;</property>
@@ -376,18 +183,12 @@
                   </packing>
                 </child>
                 <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
                   <object class="GtkBox" id="vbox_spectators">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="orientation">vertical</property>
                     <child>
-                      <object class="GtkLabel" id="label_spect_title">
+                      <object class="GtkLabel" id="label_spectotrs_title">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Specators</property>
@@ -438,6 +239,30 @@
                         <property name="position">3</property>
                       </packing>
                     </child>
+                    <child>
+                      <object class="GtkLabel" id="label_spectator4">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">&lt;spectator 4&gt;</property>
+                      </object>
+                      <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
+                        <property name="position">4</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label_spectator5">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">&lt;spectator 5&gt;</property>
+                      </object>
+                      <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
+                        <property name="position">5</property>
+                      </packing>
+                    </child>
                   </object>
                   <packing>
                     <property name="expand">True</property>
@@ -453,12 +278,9 @@
               </packing>
             </child>
             <child>
-              <object class="GtkBox" id="hbox_mainplayer">
+              <object class="GtkBox" id="hbox_player_hand">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <child>
-                  <placeholder/>
-                </child>
                 <child>
                   <object class="GtkGrid" id="grid_hand">
                     <property name="visible">True</property>
@@ -469,7 +291,7 @@
                         <property name="can_focus">False</property>
                         <property name="hexpand">True</property>
                         <property name="vexpand">True</property>
-                        <property name="pixbuf">10_resized.png</property>
+                        <property name="pixbuf">red_back.png</property>
                         <property name="icon_size">6</property>
                       </object>
                       <packing>
@@ -483,7 +305,7 @@
                         <property name="can_focus">False</property>
                         <property name="hexpand">True</property>
                         <property name="vexpand">True</property>
-                        <property name="pixbuf">ace_of_diamonds_resized.png</property>
+                        <property name="pixbuf">red_back.png</property>
                         <property name="icon_size">6</property>
                       </object>
                       <packing>
@@ -497,7 +319,7 @@
                         <property name="can_focus">False</property>
                         <property name="hexpand">True</property>
                         <property name="vexpand">True</property>
-                        <property name="pixbuf">king_of_clubs_resized.png</property>
+                        <property name="pixbuf">red_back.png</property>
                         <property name="icon_size">6</property>
                       </object>
                       <packing>
@@ -511,7 +333,7 @@
                         <property name="can_focus">False</property>
                         <property name="hexpand">True</property>
                         <property name="vexpand">True</property>
-                        <property name="pixbuf">6_of_clubs_resized.png</property>
+                        <property name="pixbuf">red_back.png</property>
                         <property name="icon_size">6</property>
                       </object>
                       <packing>
@@ -525,7 +347,7 @@
                         <property name="can_focus">False</property>
                         <property name="hexpand">True</property>
                         <property name="vexpand">True</property>
-                        <property name="pixbuf">3_of_hearts_resized.png</property>
+                        <property name="pixbuf">red_back.png</property>
                         <property name="icon_size">6</property>
                       </object>
                       <packing>
@@ -608,10 +430,26 @@
                     <property name="can_focus">False</property>
                     <property name="orientation">vertical</property>
                     <child>
-                      <placeholder/>
+                      <object class="GtkLabel" id="label_empty4">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="halign">start</property>
+                        <property name="valign">center</property>
+                        <property name="hexpand">True</property>
+                        <property name="vexpand">True</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Ubuntu Mono Bold 15"/>
+                          <attribute name="weight" value="semibold"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
                     </child>
                     <child>
-                      <object class="GtkButton" id="button_replacce">
+                      <object class="GtkButton" id="button_replace">
                         <property name="label" translatable="yes">Replace</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
@@ -624,29 +462,29 @@
                       </packing>
                     </child>
                     <child>
-                      <placeholder/>
+                      <object class="GtkLabel" id="label_empty3">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="halign">start</property>
+                        <property name="valign">center</property>
+                        <property name="hexpand">True</property>
+                        <property name="vexpand">True</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Ubuntu Mono Bold 15"/>
+                          <attribute name="weight" value="semibold"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
+                        <property name="position">2</property>
+                      </packing>
                     </child>
                   </object>
                   <packing>
                     <property name="expand">True</property>
                     <property name="fill">True</property>
                     <property name="position">2</property>
-                  </packing>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <object class="GtkImage" id="image_cardstack">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="pixbuf">resized.png</property>
-                    <property name="icon_size">6</property>
-                  </object>
-                  <packing>
-                    <property name="expand">True</property>
-                    <property name="fill">True</property>
-                    <property name="position">4</property>
                   </packing>
                 </child>
               </object>
@@ -657,29 +495,23 @@
               </packing>
             </child>
             <child>
-              <object class="GtkBox" id="hbox_chips1">
+              <object class="GtkBox" id="hbox_chips_values">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <object class="GtkBox" id="hbox_chips2">
+                  <object class="GtkBox" id="hbox_chips_info">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <child>
-                      <object class="GtkBox" id="vbox_chip1">
+                      <object class="GtkBox" id="vbox_white_chip">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="orientation">vertical</property>
                         <child>
-                          <object class="GtkImage" id="image_chip1">
+                          <object class="GtkImage" id="white_chip_image">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="pixbuf">icons8-chip-48.png</property>
+                            <property name="pixbuf">white_chip.png</property>
                             <property name="icon_size">5</property>
                           </object>
                           <packing>
@@ -689,10 +521,10 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkLabel" id="lable_chip1">
+                          <object class="GtkLabel" id="white_chip_value">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="label" translatable="yes">&lt;Chip Value 1&gt;</property>
+                            <property name="label" translatable="yes">$1</property>
                           </object>
                           <packing>
                             <property name="expand">True</property>
@@ -708,12 +540,12 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkBox" id="vbox_chip2">
+                      <object class="GtkBox" id="vbox_red_chip">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="orientation">vertical</property>
                         <child>
-                          <object class="GtkImage" id="image_chip2">
+                          <object class="GtkImage" id="red_chip_image">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="pixbuf">red_chip.png</property>
@@ -726,10 +558,10 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkLabel" id="lable_chip2">
+                          <object class="GtkLabel" id="red_chip_value">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="label" translatable="yes">&lt;Chip Value 2&gt;</property>
+                            <property name="label" translatable="yes">$5</property>
                           </object>
                           <packing>
                             <property name="expand">True</property>
@@ -745,12 +577,12 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkBox" id="vbox_chip3">
+                      <object class="GtkBox" id="vbox_blue_chip">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="orientation">vertical</property>
                         <child>
-                          <object class="GtkImage" id="image_chip3">
+                          <object class="GtkImage" id="blue_chip_image">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="pixbuf">blue_chip.png</property>
@@ -763,10 +595,10 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkLabel" id="lable_chip3">
+                          <object class="GtkLabel" id="blue_chip_value">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="label" translatable="yes">&lt;Chip Value 3&gt;</property>
+                            <property name="label" translatable="yes">$25</property>
                           </object>
                           <packing>
                             <property name="expand">True</property>
@@ -781,6 +613,45 @@
                         <property name="position">2</property>
                       </packing>
                     </child>
+                  </object>
+                  <packing>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="label_empty2">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="valign">center</property>
+                    <property name="hexpand">True</property>
+                    <property name="vexpand">True</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Ubuntu Mono Bold 15"/>
+                      <attribute name="weight" value="semibold"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="label_pot_value">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="valign">center</property>
+                    <property name="hexpand">True</property>
+                    <property name="vexpand">True</property>
+                    <property name="label" translatable="yes">Current Pot: $0</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Ubuntu Mono Bold 15"/>
+                      <attribute name="weight" value="semibold"/>
+                    </attributes>
                   </object>
                   <packing>
                     <property name="expand">True</property>
@@ -803,24 +674,190 @@
           </packing>
         </child>
         <child>
-          <object class="GtkBox" id="hbox_bottom">
+          <object class="GtkLabel" id="label_dealer_message">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="halign">start</property>
+            <property name="valign">center</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="xpad">5</property>
+            <property name="label" translatable="yes">Message from Dealer: Waiting for another player.</property>
+            <property name="justify">center</property>
+            <attributes>
+              <attribute name="font-desc" value="Ubuntu Mono Bold 12"/>
+              <attribute name="weight" value="semibold"/>
+            </attributes>
+          </object>
+          <packing>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
+            <property name="position">2</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkBox" id="Player_Inputs">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <child>
-              <object class="GtkLabel" id="label_main_balance">
+              <object class="GtkBox" id="vbox_player_balance">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="halign">start</property>
-                <property name="valign">center</property>
-                <property name="hexpand">True</property>
-                <property name="vexpand">True</property>
-                <property name="label" translatable="yes">Player Chip Balance:</property>
-                <attributes>
-                  <attribute name="font-desc" value="Ubuntu Mono Bold 15"/>
-                  <attribute name="weight" value="semibold"/>
-                  <attribute name="foreground" value="#000000000000"/>
-                  <attribute name="background" value="#eeeeeeeeecec"/>
-                </attributes>
+                <property name="margin_top">6</property>
+                <property name="orientation">vertical</property>
+                <child>
+                  <object class="GtkLabel" id="total_balance">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="valign">center</property>
+                    <property name="hexpand">True</property>
+                    <property name="vexpand">True</property>
+                    <property name="label" translatable="yes">Total Balance: $100</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Ubuntu Mono Bold 15"/>
+                      <attribute name="weight" value="semibold"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkBox" id="hbox_player_chips">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <child>
+                      <object class="GtkBox" id="hbox_player_chips_info">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <child>
+                          <object class="GtkBox" id="vbox_player_white_chip">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="orientation">vertical</property>
+                            <child>
+                              <object class="GtkImage" id="white_chip_image1">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="pixbuf">white_chip.png</property>
+                                <property name="icon_size">5</property>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">0</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkLabel" id="num_white_chip">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="label" translatable="yes">25</property>
+                              </object>
+                              <packing>
+                                <property name="expand">True</property>
+                                <property name="fill">True</property>
+                                <property name="position">1</property>
+                              </packing>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="expand">True</property>
+                            <property name="fill">True</property>
+                            <property name="position">0</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkBox" id="vbox_player_red_chip">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="orientation">vertical</property>
+                            <child>
+                              <object class="GtkImage" id="red_chip_image1">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="pixbuf">red_chip.png</property>
+                                <property name="icon_size">5</property>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">0</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkLabel" id="num_red_chip">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="label" translatable="yes">5</property>
+                              </object>
+                              <packing>
+                                <property name="expand">True</property>
+                                <property name="fill">True</property>
+                                <property name="position">1</property>
+                              </packing>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="expand">True</property>
+                            <property name="fill">True</property>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkBox" id="vbox_player_blue_chip">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="orientation">vertical</property>
+                            <child>
+                              <object class="GtkImage" id="blue_chip_image1">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="pixbuf">blue_chip.png</property>
+                                <property name="icon_size">5</property>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">0</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkLabel" id="num_blue_chip">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="label" translatable="yes">1</property>
+                              </object>
+                              <packing>
+                                <property name="expand">True</property>
+                                <property name="fill">True</property>
+                                <property name="position">1</property>
+                              </packing>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="expand">True</property>
+                            <property name="fill">True</property>
+                            <property name="position">2</property>
+                          </packing>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -829,78 +866,26 @@
               </packing>
             </child>
             <child>
-              <placeholder/>
-            </child>
-            <child>
-              <object class="GtkGrid" id="grid_buttons1">
+              <object class="GtkLabel" id="label_empty1">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <child>
-                  <object class="GtkButton" id="button_bet">
-                    <property name="label">Bet</property>
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
-                    <property name="hexpand">True</property>
-                    <property name="vexpand">True</property>
-                  </object>
-                  <packing>
-                    <property name="left_attach">0</property>
-                    <property name="top_attach">0</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkLabel" id="label_bet_amount">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="hexpand">True</property>
-                    <property name="vexpand">True</property>
-                    <property name="label" translatable="yes">&lt;amount&gt;</property>
-                  </object>
-                  <packing>
-                    <property name="left_attach">1</property>
-                    <property name="top_attach">0</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkLabel" id="label_raise">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="hexpand">True</property>
-                    <property name="vexpand">True</property>
-                    <property name="label" translatable="yes">Raise</property>
-                  </object>
-                  <packing>
-                    <property name="left_attach">0</property>
-                    <property name="top_attach">1</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkScale" id="slider">
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="hexpand">True</property>
-                    <property name="vexpand">True</property>
-                    <property name="round_digits">1</property>
-                    <property name="digits">0</property>
-                  </object>
-                  <packing>
-                    <property name="left_attach">1</property>
-                    <property name="top_attach">1</property>
-                  </packing>
-                </child>
+                <property name="halign">start</property>
+                <property name="valign">center</property>
+                <property name="hexpand">True</property>
+                <property name="vexpand">True</property>
+                <attributes>
+                  <attribute name="font-desc" value="Ubuntu Mono Bold 15"/>
+                  <attribute name="weight" value="semibold"/>
+                </attributes>
               </object>
               <packing>
                 <property name="expand">True</property>
                 <property name="fill">True</property>
-                <property name="position">2</property>
+                <property name="position">1</property>
               </packing>
             </child>
             <child>
-              <placeholder/>
-            </child>
-            <child>
-              <object class="GtkBox" id="vbox_buttons2">
+              <object class="GtkBox" id="vbox_player_buttons1">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="orientation">vertical</property>
@@ -947,27 +932,103 @@
               <packing>
                 <property name="expand">True</property>
                 <property name="fill">True</property>
+                <property name="position">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkBox" id="vbox_player_buttons2">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="orientation">vertical</property>
+                <child>
+                  <object class="GtkButton" id="button_bet">
+                    <property name="label">Bet</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <property name="hexpand">True</property>
+                    <property name="vexpand">True</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton" id="button_rasie">
+                    <property name="label">Raise</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <property name="hexpand">True</property>
+                    <property name="vexpand">True</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton" id="button_all_in">
+                    <property name="label">All-In</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <property name="hexpand">True</property>
+                    <property name="vexpand">True</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">2</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">3</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label_empty">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="halign">start</property>
+                <property name="valign">center</property>
+                <property name="hexpand">True</property>
+                <property name="vexpand">True</property>
+                <attributes>
+                  <attribute name="font-desc" value="Ubuntu Mono Bold 15"/>
+                  <attribute name="weight" value="semibold"/>
+                </attributes>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
                 <property name="position">4</property>
               </packing>
             </child>
             <child>
-              <placeholder/>
-            </child>
-            <child>
-              <object class="GtkBox" id="vbox_potbal">
+              <object class="GtkBox" id="vbox_bet">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="margin_top">6</property>
                 <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkLabel" id="label_potbal">
+                  <object class="GtkLabel" id="label_current_bet">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="halign">start</property>
                     <property name="valign">center</property>
                     <property name="hexpand">True</property>
                     <property name="vexpand">True</property>
-                    <property name="label" translatable="yes">Pot Value:</property>
+                    <property name="xpad">1</property>
+                    <property name="ypad">1</property>
+                    <property name="label" translatable="yes">Minimum Bet: $0</property>
+                    <property name="justify">center</property>
+                    <property name="single_line_mode">True</property>
                     <attributes>
                       <attribute name="font-desc" value="Ubuntu Mono Bold 15"/>
                       <attribute name="weight" value="semibold"/>
@@ -976,9 +1037,42 @@
                   <packing>
                     <property name="expand">True</property>
                     <property name="fill">True</property>
-                    <property name="position">7</property>
+                    <property name="position">0</property>
                   </packing>
                 </child>
+                <child>
+                  <object class="GtkEntry" id="player_bet_entry">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="max_length">3</property>
+                    <property name="placeholder_text" translatable="yes">Bet Ammount</property>
+                    <property name="input_purpose">number</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">5</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label_empty5">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="halign">start</property>
+                <property name="valign">center</property>
+                <property name="hexpand">True</property>
+                <property name="vexpand">True</property>
+                <attributes>
+                  <attribute name="font-desc" value="Ubuntu Mono Bold 15"/>
+                  <attribute name="weight" value="semibold"/>
+                </attributes>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -990,7 +1084,7 @@
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="position">2</property>
+            <property name="position">4</property>
           </packing>
         </child>
       </object>
