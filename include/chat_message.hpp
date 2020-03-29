@@ -1,5 +1,18 @@
+/*
+ * CSE3310-003 Spring 2020
+ * Project Prototyping
+ * Duke Ly
+ * 1001296968
+ * 02/04/2020
+*/
 //
 // chat_message.hpp
+// ~~~~~~~~~~~~~~~~
+//
+// Copyright (c) 2003-2018 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+//
+// Distributed under the Boost Software License, Version 1.0. (See accompanying
+// file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 
 #ifndef CHAT_MESSAGE_HPP
@@ -8,29 +21,78 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
-#include "Game_State.hpp"
-#include "client_action.hpp"
 
 class chat_message
 {
 public:
-    chat_message();
-    ~chat_message();
-    const char* data() const;
-    char* data();
-    std::size_t length() const;
-    const char* body() const;
-    char* body();
-    std::size_t body_length() const;
-    void body_length(std::size_t new_length);
-    bool decode_header();
-    void encode_header();
+    enum { header_length = 4 };
+    enum { max_body_length = 512 };
+    // CSE3310 This is where the maximum size of chat message body is defined
+    chat_message()
+        : body_length_(0)
+    {
+    }
+
+    const char* data() const
+    {
+        return data_;
+    }
+
+    char* data()
+    {
+        return data_;
+    }
+
+    std::size_t length() const
+    {
+        return header_length + body_length_;
+    }
+
+    const char* body() const
+    {
+        return data_ + header_length;
+    }
+
+    char* body()
+    {
+        return data_ + header_length;
+    }
+
+    std::size_t body_length() const
+    {
+        return body_length_;
+    }
+
+    void body_length(std::size_t new_length)
+    {
+        body_length_ = new_length;
+        if (body_length_ > max_body_length)
+            body_length_ = max_body_length;
+    }
+
+    bool decode_header()
+    {
+        char header[header_length + 1] = "";
+        std::strncat(header, data_, header_length);
+        body_length_ = std::atoi(header);
+        if (body_length_ > max_body_length)
+        {
+            body_length_ = 0;
+            return false;
+        }
+        return true;
+    }
+
+    void encode_header()
+    {
+        char header[header_length + 1] = "";
+        std::sprintf(header, "%4d", static_cast<int>(body_length_));
+        std::memcpy(data_, header, header_length);
+    }
 
 private:
+    char data_[header_length + max_body_length];
     std::size_t body_length_;
-
-public:
-
 };
 
-#endif
+#endif // CHAT_MESSAGE_HPP
