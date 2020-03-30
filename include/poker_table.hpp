@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <vector>
-#include "dealer.hpp"
+#include "Dealer.hpp"
 #include "player.hpp"
 #include "poker_player.hpp"
 
