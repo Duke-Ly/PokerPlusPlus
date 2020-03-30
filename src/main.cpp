@@ -21,7 +21,7 @@ int main(int argc, char* argv[])
   auto refBuilder = Gtk::Builder::create();
   try
   {
-    refBuilder->add_from_file("gui_mockup.glade");
+    refBuilder->add_from_file("../assets/gui_mockup.glade");
   }
   catch (const Glib::FileError& ex)
   {
