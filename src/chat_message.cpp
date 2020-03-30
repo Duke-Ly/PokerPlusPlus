@@ -3,7 +3,7 @@
 #include <cstring>
 #include "chat_message.hpp"
 
-
+/*
 chat_message::chat_message()
 {
 	
@@ -55,3 +55,4 @@ void chat_message::encode_header()
 {
 
 }
+*/
