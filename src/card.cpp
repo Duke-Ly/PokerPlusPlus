@@ -1,8 +1,15 @@
 #include "card.hpp"
+#include <string>
+#include <iostream>
 
-Card::Card(int value, cardSuit suit)
+using namespace std;
+
+Card::Card(int value, cardSuit suit, string cardID)
 {
-
+    this->value = value;
+    this->suit = suit;
+    this->cardID = cardID;
+    cout<<cardID<<" has been created."<<endl;
 }
 
-Card::~Card() { }
+Card::~Card() {};
