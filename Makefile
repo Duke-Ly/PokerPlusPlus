@@ -5,7 +5,7 @@ CPPFLAGS += -I./include -I./asio-1.12.2/include
 LDLIBS   += -lpthread
 GTKFLAGS = `/usr/bin/pkg-config gtkmm-3.0 --cflags --libs`
 
-TARGETS = asio-1.12.2 src/chat_server src/chat_client src/json
+TARGETS = asio-1.12.2 src/chat_server src/chat_client src/json src/test_code
 
 all: ${TARGETS}
 
@@ -18,3 +18,4 @@ clean:
 	-rm -f src/chat_client
 	-rm -f src/chat_server		
 	-rm -f src/json
+	-rm -f src/test_code
