@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include "card.hpp"
-#include "dealer.hpp"
+#include "Dealer.hpp"
 
 class Hand
 {
