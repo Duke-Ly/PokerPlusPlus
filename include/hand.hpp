@@ -16,8 +16,10 @@ public:
     void removeCard(Card rmCard);
     void sortHand();
     void calcHandValue();
+    void findHighCard();
     bool isOverMaxSize();
 
+    int highCardValue = 0;
     int handSize = 0;
     int handValue = 0;
     vector<Card> cards;

@@ -114,6 +114,23 @@ void Hand::calcHandValue()
         handValue = 9;
 }
 
+void Hand::findHighCard()
+{
+    for(int i=0; i<cards.size(); i++)
+    {
+        if(cards[i].value==1)
+        {
+            highCardValue = 1;
+            return;
+        }
+        // generic case
+        if((i>0)&&(cards[i].value>cards[i-1].value))
+            highCardValue = cards[i].value;
+        else // special case for first card in hand
+            highCardValue = cards[i].value;
+    }
+}
+
 bool Hand::isOverMaxSize()
 {
     if(cards.size()>maxHandSize)
