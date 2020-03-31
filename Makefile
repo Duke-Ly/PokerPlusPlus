@@ -8,7 +8,7 @@ LDLIBS   += -lpthread ${GTKLINKFLAGS}
 #GTKFLAGS = `/usr/bin/pkg-config gtkmm-3.0 --cflags --libs`
 
 TARGETS = asio-1.12.2 src/chat_server src/chat_client src/json src/test_code \
-			src/main
+			src/player_gui
 
 all: ${TARGETS}
 
@@ -17,8 +17,8 @@ asio-1.12.2:
 
 clean:
 	-rm -rf asio-1.12.2
-	-rm -f src/main
+	-rm -f src/player_gui
 	-rm -f src/chat_client
-	-rm -f src/chat_server		
+	-rm -f src/chat_server
 	-rm -f src/json
 	-rm -f src/test_code
