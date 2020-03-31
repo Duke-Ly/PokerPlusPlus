@@ -1,11 +1,3 @@
-/*
- * CSE3310-003 Spring 2020
- * Project Prototyping
- * Duke Ly
- * 1001296968
- * 02/04/2020
-*/
-
 #include <iostream>
 #include <ctime>
 #include "json.hpp"
