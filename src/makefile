@@ -7,13 +7,13 @@ CPPFLAGS += ${GTKCOMPILEFLAGS} -I../include -I../asio-1.12.2/include
 LDLIBS   += -lpthread ${GTKLINKFLAGS}
 #GTKFLAGS = `/usr/bin/pkg-config gtkmm-3.0 --cflags --libs`
 
-TARGETS = ../asio-1.12.2 chat_server chat_client json test_code \
+TARGETS = asio-1.12.2 chat_server chat_client json test_code \
 			main
 
 all: ${TARGETS}
 
-../asio-1.12.2:
-	tar xzf asio-1.12.2.tar.gz
+asio-1.12.2:
+	tar xzf ../asio-1.12.2.tar.gz -C ..
 	
 Player_GUI.o: Player_GUI.cpp ../include/Player_GUI.hpp
 	${CXX} ${CXXFLAGS} ${CPPFLAGS} -o $@ -c $< ${LDLIBS}
