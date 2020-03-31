@@ -14,12 +14,12 @@ all: ${TARGETS}
 
 asio-1.12.2:
 	tar xzf ../asio-1.12.2.tar.gz -C ..
-	
-Player_GUI.o: Player_GUI.cpp ../include/Player_GUI.hpp
+
+player_GUI.o: player_gui.cpp ../include/player_gui.hpp
 	${CXX} ${CXXFLAGS} ${CPPFLAGS} -o $@ -c $< ${LDLIBS}
-	
-main: main.cpp Player_GUI.o
-	${CXX} ${CXXFLAGS} ${CPPFLAGS} -o $@ $< Player_GUI.o ${LDLIBS}
+
+main: main.cpp player_gui.o
+	${CXX} ${CXXFLAGS} ${CPPFLAGS} -o $@ $< player_gui.o ${LDLIBS}
 
 clean:
 	-rm -rf ../asio-1.12.2
