@@ -271,6 +271,7 @@ int main(int argc, char* argv[])
     refBuilder->add_from_file("../assets/gui_mockup.glade");
     refBuilder->get_widget("window", window);
 
+
     if (window)
     {
         refBuilder->get_widget("button_check", button_check);
