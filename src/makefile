@@ -15,8 +15,8 @@ all: ${TARGETS}
 asio-1.12.2:
 	tar xzf ../asio-1.12.2.tar.gz -C ..
 
-player_gui.o: player_gui.cpp ../include/player_gui.hpp
-	${CXX} ${CXXFLAGS} ${CPPFLAGS} -o $@ -c $< ${LDLIBS}
+#player_gui.o: player_gui.cpp ../include/player_gui.hpp
+#	${CXX} ${CXXFLAGS} ${CPPFLAGS} -o $@ -c $< ${LDLIBS}
 
 #chat_client: chat_client.cpp player_gui.o
 #	${CXX} ${CXXFLAGS} ${CPPFLAGS} -o $@ $< player_gui.o ${LDLIBS}
@@ -26,9 +26,8 @@ player_gui.o: player_gui.cpp ../include/player_gui.hpp
 
 clean:
 	-rm -rf ../asio-1.12.2
-	-rm -f main
 	-rm -f chat_client
 	-rm -f chat_server
 	-rm -f json
 	-rm -f test_code
-	-rm -f player_gui.o
+	-rm -f main
