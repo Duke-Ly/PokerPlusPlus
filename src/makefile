@@ -18,8 +18,11 @@ asio-1.12.2:
 player_gui.o: player_gui.cpp ../include/player_gui.hpp
 	${CXX} ${CXXFLAGS} ${CPPFLAGS} -o $@ -c $< ${LDLIBS}
 
-main: main.cpp player_gui.o
-	${CXX} ${CXXFLAGS} ${CPPFLAGS} -o $@ $< player_gui.o ${LDLIBS}
+#chat_client: chat_client.cpp player_gui.o
+#	${CXX} ${CXXFLAGS} ${CPPFLAGS} -o $@ $< player_gui.o ${LDLIBS}
+
+#main: main.cpp player_gui.o
+#	${CXX} ${CXXFLAGS} ${CPPFLAGS} -o $@ $< player_gui.o ${LDLIBS}
 
 clean:
 	-rm -rf ../asio-1.12.2
