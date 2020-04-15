@@ -4,6 +4,7 @@
 #include <gtkmm.h>
 #include "player.hpp"
 #include "chat_message.hpp"
+#include "poker_table.hpp"
 #include "asio.hpp"
 
 class Poker_Player : public Gtk::Window
@@ -13,16 +14,7 @@ class Poker_Player : public Gtk::Window
       ~Poker_Player();
       void start();
       void deliver(chat_message& msg);
-      void on_new_game_click();
-      void on_help_click();
-      void on_about_click();
-      void on_quit_click();
-      void on_bet_click();
-      void on_raise_click();
-      void on_check_click();
-      void on_call_click();
-      void on_fold_click();
-      void on_replace_click();
+
   private:
     void do_read_header();
     void do_read_body();
@@ -30,6 +22,7 @@ class Poker_Player : public Gtk::Window
     tcp::socket socket;
     chat_message read_msg;
     chat_message_queue write_msg;
+    poker_table& table;
 };
 
 #endif

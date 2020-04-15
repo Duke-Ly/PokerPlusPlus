@@ -25,6 +25,9 @@ Gtk::CheckButton* check3 = nullptr;
 Gtk::CheckButton* check4 = nullptr;
 Gtk::CheckButton* check5 = nullptr;
 Gtk::Entry* player_bet_entry = nullptr;
+Gtk::Entry* entry_player_chat = nullptr;
+Gtk::Button* button_send = nullptr;
+Gtk::Button* button_clear = nullptr;
 
 typedef std::deque<chat_message> chat_message_queue;
 
@@ -143,6 +146,36 @@ private:
     chat_message read_msg_;
     chat_message_queue write_msgs_;
 };
+
+static void entry_player_chat_activate()
+{
+  if (window)
+  {
+    if (entry_player_chat)
+    {
+      std::cout << entry_player_chat->get_text() + "\n\n";
+
+    }
+  }
+}
+
+static void on_send_button_clicked()
+{
+    if(window)
+    {
+        if (button_send)
+            std::cout << "Send Button was clicked.\n\n";
+    }
+}
+
+static void on_clear_button_clicked()
+{
+    if(window)
+    {
+        if (button_clear)
+            std::cout << "Clear Button was clicked.\n\n";
+    }
+}
 
 static void player_bet_entry_activate()
 {
@@ -287,6 +320,9 @@ int main(int argc, char* argv[])
         refBuilder->get_widget("check4", check4);
         refBuilder->get_widget("check5", check5);
         refBuilder->get_widget("player_bet_entry", player_bet_entry);
+        refBuilder->get_widget("entry_player_chat", entry_player_chat);
+        refBuilder->get_widget("button_send", button_send);
+        refBuilder->get_widget("button_clear", button_clear);
 
         if (button_check)
         {
@@ -339,6 +375,18 @@ int main(int argc, char* argv[])
         if (player_bet_entry)
         {
             player_bet_entry->signal_activate().connect(sigc::ptr_fun(player_bet_entry_activate));
+        }
+        if (entry_player_chat)
+        {
+          entry_player_chat->signal_activate().connect(sigc::ptr_fun(entry_player_chat_activate));
+        }
+        if (button_send)
+        {
+          button_send->signal_clicked().connect(sigc::ptr_fun(on_send_button_clicked));
+        }
+        if (button_clear)
+        {
+          button_clear->signal_clicked().connect(sigc::ptr_fun(on_clear_button_clicked));
         }
     }
 
