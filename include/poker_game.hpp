@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include "asio.hpp"
-#include "poker_table.hpp"
 
 class Poker_Game
 {

@@ -1,21 +1,13 @@
-//
-// Dealer.hpp
-//
-
 #ifndef DEALER_HPP
 #define DEALER_HPP
 
-#include <cstdlib>
-#include <deque>
-#include <iostream>
-#include <list>
-#include <memory>
-#include <set>
-#include <utility>
-#include "asio.hpp"
-#include "chat_message.hpp"
-#include "hand.hpp"
+#include "card.hpp"
 #include "player.hpp"
+#include <vector>
+
+using namespace std;
+
+typedef std::shared_ptr<player> player_ptr;
 
 class Dealer
 {
@@ -24,9 +16,12 @@ public:
     ~Dealer();
     void createDeck();
     void shuffleDeck();
-    void setCurrentDeck();
     void deal();
     void next_player();
+
+    int card_idx;
+    vector<Card> deck;
+    player_ptr current_player;
 };
 
 #endif
