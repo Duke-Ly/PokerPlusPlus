@@ -299,7 +299,7 @@ static void on_replace_button_clicked()
 int main(int argc, char* argv[])
 {
     int gc = 1;
-    auto app = Gtk::Application::create(gc, argv, "Poker++");
+    auto app = Gtk::Application::create(gc, argv, "gui_mockup.glade");
     auto refBuilder = Gtk::Builder::create();
     refBuilder->add_from_file("gui_mockup.glade");
     refBuilder->get_widget("window", window);
