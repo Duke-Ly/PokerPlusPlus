@@ -268,7 +268,7 @@ int main(int argc, char* argv[])
     int gc = 1;
     auto app = Gtk::Application::create(gc, argv, "Poker++");
     auto refBuilder = Gtk::Builder::create();
-    refBuilder->add_from_file("../assets/gui_mockup.glade");
+    refBuilder->add_from_file("gui_mockup.glade");
     refBuilder->get_widget("window", window);
 
     if (window)
