@@ -11,6 +11,8 @@ using namespace std;
 Dealer::Dealer()
 {
      cout<<"Creating a dealer"<<endl;
+     createDeck();
+     shuffleDeck();
      current_player = NULL;
      card_idx=0;
 }
