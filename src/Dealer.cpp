@@ -92,6 +92,7 @@ void Dealer::shuffleDeck()
 
 void Dealer::deal()
 {
+    // Need to update code here.
     card_idx++;
 }
 

@@ -13,13 +13,8 @@ class Poker_Game
 {
 public:
     Poker_Game(asio::io_context& io_context,
-               const tcp::endpoint& endpoint)
-        : acceptor_(io_context, endpoint)
-    {
-        cout<<"Creating a Poker_Game"<<endl;
-        do_accept();
-    }
-    ~Poker_Game();
+               const tcp::endpoint& endpoint);
+    //~Poker_Game();
 
 private:
     void do_accept();

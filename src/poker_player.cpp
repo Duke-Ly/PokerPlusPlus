@@ -9,6 +9,13 @@
 using asio::ip::tcp;
 using namespace std;
 
+Poker_Player::Poker_Player(tcp::socket socket, Poker_Table& table)
+    : socket_(std::move(socket)),
+      table_(table)
+{
+    std::cout << "Creating a Poker_Player " << std::endl;
+}
+
 Poker_Player::~Poker_Player() {};
 
 void Poker_Player::start()

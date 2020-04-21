@@ -16,7 +16,7 @@ class Player
 
       Hand playerHand;
       string name;
-      string playerID;
+      string playerUUID;
 };
 
 #endif

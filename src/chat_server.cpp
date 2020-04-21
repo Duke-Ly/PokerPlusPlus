@@ -20,8 +20,6 @@ using asio::ip::tcp;
 using json = nlohmann::json;
 using namespace std;
 
-typedef std::deque<chat_message> chat_message_queue;
-
 int main(int argc, char* argv[])
 {
     try
