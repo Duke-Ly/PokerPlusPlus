@@ -1,19 +1,22 @@
 #ifndef PLAYER_HPP
 #define PLAYER_HPP
 
-#include <iostream>
+#include <string>
+#include "chat_message.hpp"
 #include "hand.hpp"
+
+using namespace std;
 
 class Player
 {
   public:
       Player();
-      ~Player();
-      virtual void deliver() = 0;
+      virtual ~Player();
+      virtual void deliver(const chat_message& msg) = 0;
 
       Hand playerHand;
-      std::string name;
-      std::string playerID;
+      string name;
+      string playerID;
 };
 
 #endif

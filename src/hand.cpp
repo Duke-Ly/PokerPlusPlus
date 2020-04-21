@@ -20,11 +20,11 @@ void Hand::addCard(Card card)
 
 void Hand::removeCard(Card rmCard)
 {
-    for(int i=0; i<cards.size(); ++i)
+    for(int i=0; i<(int)cards.size(); ++i)
         if((rmCard.suit==cards[i].suit)&&(rmCard.value==cards[i].value))
         {
             cout<<cards[i].cardID<<" had been removed from hand."<<endl;
-            cards.erase(cards.[i]);
+            cards.erase(cards.begin()+i);
             handSize--;
         }
 }
@@ -46,11 +46,11 @@ void Hand::calcHandValue()
     int numPair = 0;
 
     // check for one pair or two pair
-    for(int i=0; i<cards.size(); i++)
+    for(int i=0; i<(int)cards.size(); i++)
     {
-        if((i>0)&&(i<cards.size()-1)&&(cards[i].value==cards[i-1].value)&&(cards[i].value!=cards[i+1].value))
+        if((i>0)&&(i<(int)cards.size()-1)&&(cards[i].value==cards[i-1].value)&&(cards[i].value!=cards[i+1].value))
             numPair++;
-        if((i==cards.size()-1)&&(cards[i].value==cards[i-1].value)&&(cards[i].value!=cards[i-2].value))
+        if((i==(int)cards.size()-1)&&(cards[i].value==cards[i-1].value)&&(cards[i].value!=cards[i-2].value))
             numPair++;
     }
     if(numPair==1)
@@ -59,9 +59,9 @@ void Hand::calcHandValue()
         twoPair = true;
 
     // check for three of a kind
-    for(int i=0; i<cards.size(); i++)
+    for(int i=0; i<(int)cards.size(); i++)
     {
-        if((i>0)&&(i<cards.size()-1)&&(cards[i].value==cards[i-1].value)&&(cards[i].value==cards[i+1].value))
+        if((i>0)&&(i<(int)cards.size()-1)&&(cards[i].value==cards[i-1].value)&&(cards[i].value==cards[i+1].value))
             threeOfaKind = true;
     }
 
@@ -116,7 +116,7 @@ void Hand::calcHandValue()
 
 void Hand::findHighCard()
 {
-    for(int i=0; i<cards.size(); i++)
+    for(int i=0; i<(int)cards.size(); i++)
     {
         if(cards[i].value==1)
         {
@@ -133,7 +133,7 @@ void Hand::findHighCard()
 
 bool Hand::isOverMaxSize()
 {
-    if(cards.size()>maxHandSize)
+    if((int)cards.size()>maxHandSize)
         return true;
     else
         return false;

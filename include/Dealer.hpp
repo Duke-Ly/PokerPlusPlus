@@ -1,13 +1,14 @@
 #ifndef DEALER_HPP
 #define DEALER_HPP
 
+#include <vector>
+#include <memory>
 #include "card.hpp"
 #include "player.hpp"
-#include <vector>
 
 using namespace std;
 
-typedef std::shared_ptr<player> player_ptr;
+typedef std::shared_ptr<Player> player_ptr;
 
 class Dealer
 {
@@ -17,7 +18,7 @@ public:
     void createDeck();
     void shuffleDeck();
     void deal();
-    void next_player();
+    void next_player(player_ptr nextPlayer);
 
     int card_idx;
     vector<Card> deck;

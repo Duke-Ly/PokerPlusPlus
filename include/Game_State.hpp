@@ -1,22 +1,33 @@
 //
-// Game_State.hpp
+// game_state.hpp
 //
 
 #ifndef GAME_STATE_HPP
 #define GAME_STATE_HPP
 
-class Game_State
+#include <vector>
+#include <string>
+
+using namespace std;
+
+class game_state
 {
 public:
+   bool dealer_cards_valid;
+   int dealer_cards[3];
+   bool player_cards_valid;
+   int player_cards[2][3]; // [players][cards]
+/*
     int cards_requested;
-    std::vector<std::string> chat;
-    std::string dealer_comment;
-    std::vector<std::string> hand;
+    vector<string> chat;
+    string dealer_comment;
+    vector<string> hand;
     int current_bet;
-    std::string event;
-    std::vector<std::string> from;
+    string event;
+    vector<string> from;
     int total_bet;
-    std::string turn;
+    string turn;
+*/
 };
 
 #endif
