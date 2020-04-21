@@ -28,6 +28,15 @@ Gtk::Entry* player_bet_entry = nullptr;
 Gtk::Entry* entry_player_chat = nullptr;
 Gtk::Button* button_send = nullptr;
 Gtk::Button* button_clear = nullptr;
+Gtk::Image* image_card1 = nullptr;
+Gtk::Image* image_card2 = nullptr;
+Gtk::Image* image_card3 = nullptr;
+Gtk::Image* image_card4 = nullptr;
+Gtk::Image* image_card5 = nullptr;
+Gtk::MenuItem* help_menu = nullptr;
+Gtk::MenuItem* about_menu = nullptr;
+Gtk::Label* label_dealer_message = nullptr;
+Gtk::Label* total_balance = nullptr;
 
 typedef std::deque<chat_message> chat_message_queue;
 
@@ -154,7 +163,7 @@ static void entry_player_chat_activate()
     if (entry_player_chat)
     {
       std::cout << entry_player_chat->get_text() + "\n\n";
-
+      entry_player_chat->set_text("");
     }
   }
 }
@@ -164,7 +173,13 @@ static void on_send_button_clicked()
     if(window)
     {
         if (button_send)
+        {
             std::cout << "Send Button was clicked.\n\n";
+            std::cout << entry_player_chat->get_text() + "\n\n";
+
+            entry_player_chat->set_text("");
+        }
+
     }
 }
 
@@ -173,7 +188,10 @@ static void on_clear_button_clicked()
     if(window)
     {
         if (button_clear)
-            std::cout << "Clear Button was clicked.\n\n";
+        {
+          std::cout << "Clear Button was clicked.\n\n";
+          entry_player_chat->set_text("");
+        }
     }
 }
 
@@ -183,17 +201,41 @@ static void player_bet_entry_activate()
     {
         if (player_bet_entry)
         {
-            std::cout << "$" + player_bet_entry->get_text() + " bet was set.\n\n";
+
+            int total;
+            int *player_balance = &total;
+            *player_balance = 100;
+
+            if (*player_balance <= 0)
+              std::cout << "Error. Balance is 0. Bet not set.\n\n";
+            else if (player_bet_entry->get_text() == "")
+              std::cout << "Error. Player bet not set.\n\n";
+            else if (std::stoi(player_bet_entry->get_text(),nullptr,0) > *player_balance)
+              std::cout << "Error. Bet amount is greater than chip balance.\n\n";
+            else
+            {
+              int entry = std::stoi(player_bet_entry->get_text(),nullptr,0);
+              *player_balance = *player_balance - entry;
+
+              std::cout << "$" + player_bet_entry->get_text() + " bet was set.\n\n";
+              std::cout << "current balance is " << *player_balance << "\n\n";
+            }
+
+            player_bet_entry->set_text("");
+          }
+
         }
-    }
+
 }
 
 static void check1_toggled()
 {
     if (window)
     {
-        if (check1)
+        if (check1->get_active())
             std::cout << "Check Box 1 checked.\n\n";
+        else
+            std::cout << "Check Box 1 UNCHECKED.\n\n";
     }
 }
 
@@ -201,8 +243,10 @@ static void check2_toggled()
 {
     if (window)
     {
-        if (check2)
-            std::cout << "Check Box 2 checked.\n\n";
+      if (check2->get_active())
+          std::cout << "Check Box 2 checked.\n\n";
+      else
+          std::cout << "Check Box 2 UNCHECKED.\n\n";
     }
 }
 
@@ -210,8 +254,10 @@ static void check3_toggled()
 {
     if (window)
     {
-        if (check3)
-            std::cout << "Check Box 3 checked.\n\n";
+      if (check3->get_active())
+          std::cout << "Check Box 3 checked.\n\n";
+      else
+          std::cout << "Check Box 3 UNCHECKED.\n\n";
     }
 }
 
@@ -219,8 +265,10 @@ static void check4_toggled()
 {
     if (window)
     {
-        if (check4)
-            std::cout << "Check Box 4 checked.\n\n";
+      if (check4->get_active())
+          std::cout << "Check Box 4 checked.\n\n";
+      else
+          std::cout << "Check Box 4 UNCHECKED.\n\n";
     }
 }
 
@@ -228,8 +276,10 @@ static void check5_toggled()
 {
     if (window)
     {
-        if (check5)
-            std::cout << "Check Box 5 checked.\n\n";
+      if (check5->get_active())
+          std::cout << "Check Box 5 checked.\n\n";
+      else
+          std::cout << "Check Box 5 UNCHECKED.\n\n";
     }
 }
 
@@ -265,7 +315,26 @@ static void on_bet_button_clicked()
     if (window)
     {
         if (button_bet)
+        {
+            int player_balance = 100;
+
             std::cout << "Bet Button was clicked.\n\n";
+
+            if (player_bet_entry->get_text() == "")
+              std::cout << "Error. Player bet not set.\n\n";
+            else if (std::stoi(player_bet_entry->get_text(),nullptr,0) > player_balance)
+              std::cout << "Error. Bet amount is greater than chip balance.\n\n";
+            else
+            {
+              std::cout << "$" + player_bet_entry->get_text() + " bet was set.\n\n";
+
+              int entry = std::stoi(player_bet_entry->get_text(),nullptr,0);
+              int current = player_balance - entry;
+              std::cout << "current balance is " + current;
+            }
+
+            player_bet_entry->set_text("");
+        }
     }
 }
 
@@ -289,23 +358,90 @@ static void on_all_in_button_clicked()
 
 static void on_replace_button_clicked()
 {
+  std::string assets[52] = {"../assets/10C.png", "../assets/10D.png", "../assets/10H.png", "../assets/10S.png",
+                            "../assets/9C.png", "../assets/9D.png", "../assets/9H.png", "../assets/9S.png",
+                            "../assets/8C.png", "../assets/8D.png", "../assets/8H.png", "../assets/8S.png",
+                            "../assets/7C.png", "../assets/7D.png", "../assets/7H.png", "../assets/7S.png",
+                            "../assets/6C.png", "../assets/6D.png", "../assets/6H.png", "../assets/6S.png",
+                            "../assets/5C.png", "../assets/5D.png", "../assets/5H.png", "../assets/5S.png",
+                            "../assets/4C.png", "../assets/4D.png", "../assets/4H.png", "../assets/4S.png",
+                            "../assets/3C.png", "../assets/3D.png", "../assets/3H.png", "../assets/3S.png",
+                            "../assets/2C.png", "../assets/2D.png", "../assets/2H.png", "../assets/2S.png",
+                            "../assets/AC.png", "../assets/AD.png", "../assets/AH.png", "../assets/AS.png",
+                            "../assets/KC.png", "../assets/KD.png", "../assets/KH.png", "../assets/KS.png",
+                            "../assets/QC.png", "../assets/QD.png", "../assets/QH.png", "../assets/QS.png",
+                            "../assets/JC.png", "../assets/JD.png", "../assets/JH.png", "../assets/JS.png"};
+
     if (window)
     {
         if (button_replace)
+        {
             std::cout << "Replace Button was clicked.\n\n";
+
+            if (check1->get_active())
+            {
+                int randomIndex = rand() % 53;
+                image_card1->set(assets[randomIndex]);
+
+                check1->set_active(false);
+            }
+            if (check2->get_active())
+            {
+              int randomIndex = rand() % 53;
+              image_card2->set(assets[randomIndex]);
+
+              check2->set_active(false);
+            }
+            if (check3->get_active())
+            {
+              int randomIndex = rand() % 53;
+              image_card3->set(assets[randomIndex]);
+
+              check3->set_active(false);
+            }
+            if (check4->get_active())
+            {
+              int randomIndex = rand() % 53;
+              image_card4->set(assets[randomIndex]);
+
+              check4->set_active(false);
+            }
+            if (check5->get_active())
+            {
+              int randomIndex = rand() % 53;
+              image_card5->set(assets[randomIndex]);
+
+              check5->set_active(false);
+            }
+        }
     }
+}
+
+void on_help_menu_clicked()
+{
+  if (window)
+  {
+    if (help_menu)
+    {
+
+    }
+  }
 }
 
 int main(int argc, char* argv[])
 {
     int gc = 1;
-    auto app = Gtk::Application::create(gc, argv, "Poker++");
+    auto app = Gtk::Application::create(gc, argv, "gui_mockup.glade");
     auto refBuilder = Gtk::Builder::create();
     refBuilder->add_from_file("gui_mockup.glade");
     refBuilder->get_widget("window", window);
 
     if (window)
     {
+        // WINDOW TITLE and BACKGROUND COLOR
+        window->set_title("Poker++");
+        window->override_background_color(Gdk::RGBA{"green"});
+
         refBuilder->get_widget("button_check", button_check);
         refBuilder->get_widget("button_call", button_call);
         refBuilder->get_widget("button_fold", button_fold);
@@ -322,6 +458,15 @@ int main(int argc, char* argv[])
         refBuilder->get_widget("entry_player_chat", entry_player_chat);
         refBuilder->get_widget("button_send", button_send);
         refBuilder->get_widget("button_clear", button_clear);
+        refBuilder->get_widget("image_card1", image_card1);
+        refBuilder->get_widget("image_card2", image_card2);
+        refBuilder->get_widget("image_card3", image_card3);
+        refBuilder->get_widget("image_card4", image_card4);
+        refBuilder->get_widget("image_card5", image_card5);
+        refBuilder->get_widget("help_menu", help_menu);
+        refBuilder->get_widget("about_menu", about_menu);
+        refBuilder->get_widget("label_dealer_message", label_dealer_message);
+        refBuilder->get_widget("total_balance", total_balance);
 
         if (button_check)
         {
@@ -386,6 +531,10 @@ int main(int argc, char* argv[])
         if (button_clear)
         {
           button_clear->signal_clicked().connect(sigc::ptr_fun(on_clear_button_clicked));
+        }
+        if (help_menu)
+        {
+          help_menu->signal_activate().connect(sigc::ptr_fun(on_help_menu_clicked));
         }
     }
 
