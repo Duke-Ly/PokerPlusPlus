@@ -46,4 +46,4 @@ clean:
 	-rm -f json
 	-rm -f test_code
 	-rm -f main
-	-rm *.o
+	-rm -f *.o
