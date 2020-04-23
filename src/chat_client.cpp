@@ -37,6 +37,9 @@ Gtk::MenuItem* help_menu = nullptr;
 Gtk::MenuItem* about_menu = nullptr;
 Gtk::Label* label_dealer_message = nullptr;
 Gtk::Label* total_balance = nullptr;
+Gtk::AboutDialog* about_dialog = nullptr;
+Gtk::MessageDialog* help_dialog = nullptr;
+Gtk::Button* help_close = nullptr;
 
 typedef std::deque<chat_message> chat_message_queue;
 
@@ -155,6 +158,20 @@ private:
     chat_message read_msg_;
     chat_message_queue write_msgs_;
 };
+static void on_help_menu_activate()
+{
+  help_dialog->show();
+}
+
+static void on_help_close_clicked()
+{
+  help_dialog->hide();
+}
+
+static void on_about_dialog_activate_link()
+{
+  about_dialog->show();
+}
 
 static void entry_player_chat_activate()
 {
@@ -201,31 +218,18 @@ static void player_bet_entry_activate()
     {
         if (player_bet_entry)
         {
+              int player_balance = 100;
 
-            int total;
-            int *player_balance = &total;
-            *player_balance = 100;
-
-            if (*player_balance <= 0)
-              std::cout << "Error. Balance is 0. Bet not set.\n\n";
-            else if (player_bet_entry->get_text() == "")
-              std::cout << "Error. Player bet not set.\n\n";
-            else if (std::stoi(player_bet_entry->get_text(),nullptr,0) > *player_balance)
-              std::cout << "Error. Bet amount is greater than chip balance.\n\n";
-            else
-            {
               int entry = std::stoi(player_bet_entry->get_text(),nullptr,0);
-              *player_balance = *player_balance - entry;
+              player_balance = player_balance - entry;
 
               std::cout << "$" + player_bet_entry->get_text() + " bet was set.\n\n";
-              std::cout << "current balance is " << *player_balance << "\n\n";
-            }
+              std::cout << "current balance is " << player_balance << "\n\n";
 
-            player_bet_entry->set_text("");
+              player_bet_entry->set_text("");
           }
 
-        }
-
+    }
 }
 
 static void check1_toggled()
@@ -467,6 +471,9 @@ int main(int argc, char* argv[])
         refBuilder->get_widget("about_menu", about_menu);
         refBuilder->get_widget("label_dealer_message", label_dealer_message);
         refBuilder->get_widget("total_balance", total_balance);
+        refBuilder->get_widget("about_dialog", about_dialog);
+        refBuilder->get_widget("help_dialog", help_dialog);
+        refBuilder->get_widget("help_close", help_close);
 
         if (button_check)
         {
@@ -532,9 +539,17 @@ int main(int argc, char* argv[])
         {
           button_clear->signal_clicked().connect(sigc::ptr_fun(on_clear_button_clicked));
         }
+        if (about_menu)
+        {
+          about_menu->signal_activate().connect(sigc::ptr_fun(on_about_dialog_activate_link));
+        }
         if (help_menu)
         {
-          help_menu->signal_activate().connect(sigc::ptr_fun(on_help_menu_clicked));
+          help_menu->signal_activate().connect(sigc::ptr_fun(on_help_menu_activate));
+        }
+        if (help_close)
+        {
+          help_close->signal_clicked().connect(sigc::ptr_fun(on_help_close_clicked));
         }
     }
 

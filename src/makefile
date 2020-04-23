@@ -20,11 +20,11 @@ card.o: card.cpp ../include/card.hpp
 
 hand.o: hand.cpp ../include/hand.hpp
 	${CXX} ${CXXFLAGS} ${CPPFLAGS} -o $@ -c $< ${LDLIBS}
-	
+
 player.o: player.cpp ../include/player.hpp
 	${CXX} ${CXXFLAGS} ${CPPFLAGS} -o $@ -c $< ${LDLIBS}
 
-dealer.o: dealer.cpp ../include/dealer.hpp
+dealer.o: Dealer.cpp ../include/Dealer.hpp
 	${CXX} ${CXXFLAGS} ${CPPFLAGS} -o $@ -c $< ${LDLIBS}
 
 poker_table.o: poker_table.cpp ../include/poker_table.hpp
@@ -32,7 +32,7 @@ poker_table.o: poker_table.cpp ../include/poker_table.hpp
 
 poker_player.o: poker_player.cpp ../include/poker_player.hpp
 	${CXX} ${CXXFLAGS} ${CPPFLAGS} -o $@ -c $< ${LDLIBS}
-	
+
 poker_game.o: poker_game.cpp ../include/poker_game.hpp
 	${CXX} ${CXXFLAGS} ${CPPFLAGS} -o $@ -c $< ${LDLIBS}
 

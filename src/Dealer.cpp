@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <random>
 #include <memory>
-#include "dealer.hpp"
+#include "Dealer.hpp"
 #include "card.hpp"
 #include "player.hpp"
 

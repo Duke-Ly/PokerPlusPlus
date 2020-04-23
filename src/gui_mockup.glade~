@@ -1223,7 +1223,7 @@ Kiran Karki
       </object>
     </child>
   </object>
-  <object class="GtkMessageDialog" id="help_dialog">
+  <object class="GtkMessageDialog" id="help_dialo">
     <property name="can_focus">False</property>
     <property name="type_hint">dialog</property>
     <property name="transient_for">window</property>
