@@ -11,7 +11,7 @@
 #include "card.hpp"
 #include "hand.hpp"
 #include "player.hpp"
-#include "dealer.hpp"
+#include "Dealer.hpp"
 #include "poker_table.hpp"
 #include "poker_player.hpp"
 #include "poker_game.hpp"

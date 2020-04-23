@@ -13,7 +13,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
-#include "game_state.hpp"
+#include "Game_State.hpp"
 #include "client_action.hpp"
 
 class chat_message

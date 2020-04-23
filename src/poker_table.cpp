@@ -7,7 +7,7 @@
 #include <set>
 #include <utility>
 #include "asio.hpp"
-#include "dealer.hpp"
+#include "Dealer.hpp"
 #include "player.hpp"
 #include "poker_table.hpp"
 
