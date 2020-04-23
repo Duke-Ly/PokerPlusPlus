@@ -4,12 +4,15 @@
 #include <iostream>
 #include <thread>
 #include <ctime>
+#include <assert.h>
 #include "json.hpp"
 #include "asio.hpp"
 #include "chat_message.hpp"
 
 using asio::ip::tcp;
 using json = nlohmann::json;
+using namespace Gtk;
+using namespace std;
 
 Gtk::Window* window = nullptr;
 Gtk::Button* button_check = nullptr;
@@ -44,7 +47,6 @@ public:
         : io_context_(io_context),
           socket_(io_context)
     {
-        // CSE3310 This is where the program call the function where connection is established with the server
         do_connect(endpoints);
     }
 
@@ -73,9 +75,8 @@ public:
 private:
     void do_connect(const tcp::resolver::results_type& endpoints)
     {
-        // CSE3310 This is where the program connection is established with the server
         asio::async_connect(socket_, endpoints,
-                            [this](std::error_code ec, tcp::endpoint)
+            [this](std::error_code ec, tcp::endpoint)
         {
             if (!ec)
             {
@@ -111,6 +112,33 @@ private:
         {
             if (!ec)
             {
+               char outline[read_msg_.body_length() + 2];
+                                       // '\n' + '\0' is 2 more chars
+               outline[0] = '\n';
+               outline[read_msg_.body_length() + 1] = '\0';
+               std::memcpy ( &outline[1], read_msg_.body(), read_msg_.body_length() );
+
+               std::string p = "player "+ std::to_string (read_msg_.gs.player_cards[0][0]) + " " +
+                                         std::to_string (read_msg_.gs.player_cards[0][1]) + " " +
+                                         std::to_string (read_msg_.gs.player_cards[0][2]) + '\n' +
+                                         std::to_string (read_msg_.gs.player_cards[1][0]) + " " +
+                                         std::to_string (read_msg_.gs.player_cards[1][1]) + " " +
+                                         std::to_string (read_msg_.gs.player_cards[1][2]);
+
+               std::string d = "dealer " + std::to_string (read_msg_.gs.dealer_cards[0]) + " " +
+                                          std::to_string (read_msg_.gs.dealer_cards[1]) + " " +
+                                          std::to_string (read_msg_.gs.dealer_cards[2]);
+
+               if (read_msg_.gs.player_cards_valid)
+                  std::cout<<"player_cards_valid"<<endl;
+               else
+                  std::cout<<"waiting"<<endl;
+
+               if (read_msg_.gs.dealer_cards_valid)
+                  std::cout<<"player_cards_valid"<<endl;
+               else
+                  std::cout<<"waiting"<<endl;
+
                 std::cout.write(read_msg_.body(), read_msg_.body_length());
                 std::cout << "\n";
                 do_read_header();
@@ -152,6 +180,9 @@ private:
     chat_message_queue write_msgs_;
 };
 
+// global symbols
+chat_client *c;
+
 static void entry_player_chat_activate()
 {
   if (window)
@@ -174,6 +205,16 @@ static void on_send_button_clicked()
             std::cout << entry_player_chat->get_text() + "\n\n";
 
             entry_player_chat->set_text("");
+
+            // test code need to remove later
+               chat_message msg;
+               msg.body_length (0);
+               msg.ca.hit = true;
+               msg.ca.stand = false;
+               msg.ca.name_valid = false;
+               msg.encode_header();
+               assert ( c );  // this is a global class
+               c->write(msg);
         }
 
     }
@@ -381,8 +422,9 @@ static void on_replace_button_clicked()
 
 int main(int argc, char* argv[])
 {
-    int gc = 1;
-    auto app = Gtk::Application::create(gc, argv, "gui_mockup.glade");
+    //int gc = 1;
+    //auto app = Gtk::Application::create(gc, argv, "gui_mockup.glade");
+    Main kit(argc,argv);
     auto refBuilder = Gtk::Builder::create();
     refBuilder->add_from_file("gui_mockup.glade");
     refBuilder->get_widget("window", window);
@@ -491,14 +533,16 @@ int main(int argc, char* argv[])
 
     tcp::resolver resolver(io_context);
     auto endpoints = resolver.resolve(argv[1], argv[2]);
-    chat_client c(io_context, endpoints);
+    //chat_client c(io_context, endpoints);
+    c = new chat_client(io_context, endpoints);
 
     std::thread t([&io_context]()
     {
         io_context.run();
     });
-    app->run(*window);
-    c.close();
+    //app->run(*window);
+    kit.run(*window);
+    c->close();
     t.join();
 
     delete window;
