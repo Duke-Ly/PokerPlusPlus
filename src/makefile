@@ -5,14 +5,16 @@ GTKCOMPILEFLAGS = $(shell pkg-config --cflags gtkmm-3.0)
 CXXFLAGS += -DASIO_STANDALONE -Wall -O0 -g -std=c++11
 CPPFLAGS += ${GTKCOMPILEFLAGS} -I../include -I../asio-1.12.2/include
 LDLIBS   += -lpthread ${GTKLINKFLAGS}
-#GTKFLAGS = `/usr/bin/pkg-config gtkmm-3.0 --cflags --libs`
 
-TARGETS = asio-1.12.2 chat_server chat_client json test_code \
+ROOTDIR = ../
+VPATH = $(ROOTDIR)
+
+TARGETS = $(ROOTDIR)/asio-1.12.2 chat_server chat_client json test_code \
 			main
 
 all: ${TARGETS}
 
-asio-1.12.2:
+$(ROOTDIR)/asio-1.12.2:
 	tar xzf ../asio-1.12.2.tar.gz -C ..
 
 card.o: card.cpp ../include/card.hpp
@@ -35,8 +37,14 @@ poker_player.o: poker_player.cpp ../include/poker_player.hpp
 
 poker_game.o: poker_game.cpp ../include/poker_game.hpp
 	${CXX} ${CXXFLAGS} ${CPPFLAGS} -o $@ -c $< ${LDLIBS}
+	
+player_gui.o: player_gui.cpp ../include/player_gui.hpp
+	${CXX} ${CXXFLAGS} ${CPPFLAGS} -o $@ -c $< ${LDLIBS}
 
 chat_server: chat_server.cpp card.o hand.o player.o dealer.o poker_table.o poker_player.o poker_game.o
+	${CXX} ${CXXFLAGS} ${CPPFLAGS} -o $@ $< *.o ${LDLIBS}
+
+main: main.cpp player_gui.o
 	${CXX} ${CXXFLAGS} ${CPPFLAGS} -o $@ $< *.o ${LDLIBS}
 
 clean:
