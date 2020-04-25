@@ -38,10 +38,10 @@ game_client.o: game_client.cpp ../include/game_client.hpp
 	${CXX} ${CXXFLAGS} ${CPPFLAGS} -o $@ -c $< ${LDLIBS}	
 
 dealer: dealer.cpp card.o hand.o poker_table.o poker_player.o poker_game.o
-	${CXX} ${CXXFLAGS} ${CPPFLAGS} -o $@ $< *.o ${LDLIBS}
+	${CXX} ${CXXFLAGS} ${CPPFLAGS} -o $@ $< card.o hand.o poker_table.o poker_player.o poker_game.o ${LDLIBS}
 
 player: player.cpp player_gui.o game_client.o
-	${CXX} ${CXXFLAGS} ${CPPFLAGS} -o $@ $< *.o ${LDLIBS}
+	${CXX} ${CXXFLAGS} ${CPPFLAGS} -o $@ $< player_gui.o game_client.o ${LDLIBS}
 
 clean:
 	-rm -rf ../asio-1.12.2
