@@ -65,7 +65,7 @@ void Poker_Player::do_read_body()
         {
             json to_dealer = json::parse(string(read_msg_.body()));
             json to_player;  // represents the entire game state.  sent to all players
-            to_player["turn"] = table_.dealer.current_player->playerUUID;   // UUID of the current player.
+            to_player["turn"] = nullptr;//table_.dealer.current_player->playerUUID;
             to_player["chat"] = "Table chat message";
             to_player["dealer_comment"] = "Waiting for dealer";
             to_player["recommended_play"] = "Waiting for dealer";
@@ -79,8 +79,17 @@ void Poker_Player::do_read_body()
                 cout<<n<<endl;
                 self->name = string(to_dealer["from"].at("name"));
                 self->playerUUID = string(to_dealer["from"].at("uuid"));
+                to_player["dealer_comment"] = n;
             }
-            else if(to_dealer["event"]=="chat"&&table_.game_active)
+            else if(to_dealer["event"]=="chat"&&table_.game_active&&(table_.game_state==WAITING))
+            {
+                if(to_dealer["chat"]=="start")
+                {
+                    table_.game_state = ANTE;
+                    cout<<"game_state = ANTE"<<endl;
+                }
+            }
+            else if((to_dealer["event"]=="chat")&&table_.game_active)
             {
                 cout<<"from: "<<string(to_dealer["from"])<<endl;
                 cout<<"chat: "<<string(to_dealer["chat"])<<endl;
@@ -90,9 +99,9 @@ void Poker_Player::do_read_body()
             }
 
             if(table_.players.size() >= 2)
-            {
                 table_.game_active = true;
-            }
+            else
+                table_.game_active = false;
 
             set<player_ptr>::iterator it;
             for(it=table_.players.begin(); it!=table_.players.end(); ++it)
@@ -109,16 +118,10 @@ void Poker_Player::do_read_body()
             cout<<to_player.dump(2)<<endl;
             string t = to_player.dump();
             chat_message sending;
-            if (t.size() < chat_message::max_body_length)
-            {
-                cout<<"the size string being sent is "<<t.size()<<endl;
-                memcpy(sending.body(), t.c_str(), t.size());
-                sending.body_length(t.size());
-                sending.encode_header();
-                table_.deliver(sending);
-            }
-            //read_msg_.encode_header(); // so the body text above gets sent
-            //table_.deliver(read_msg_);
+            memcpy(sending.body(), t.c_str(), t.size());
+            sending.body_length(t.size());
+            sending.encode_header();
+            table_.deliver(sending);
             do_read_header();
         }
         else
