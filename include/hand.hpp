@@ -18,6 +18,7 @@ public:
     void calcHandValue();
     void findHighCard();
     bool isOverMaxSize();
+    vector<string> cardsVector();
 
     int highCardValue = 0;
     int handSize = 0;
