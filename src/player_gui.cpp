@@ -49,21 +49,21 @@ Player_GUI::Player_GUI(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>
     builder->get_widget("help_close", help_close);
 
     name_dialog_enter->signal_clicked().connect(sigc::mem_fun(*this, &Player_GUI::on_name_dialog_enter_clicked));
-    button_check->signal_clicked().connect(sigc::mem_fun(*this, &Player_GUI::on_check_button_clicked));
+//  button_check->signal_clicked().connect(sigc::mem_fun(*this, &Player_GUI::on_check_button_clicked));
     button_call->signal_clicked().connect(sigc::mem_fun(*this, &Player_GUI::on_call_button_clicked));
     button_fold->signal_clicked().connect(sigc::mem_fun(*this, &Player_GUI::on_fold_button_clicked));
     button_bet->signal_clicked().connect(sigc::mem_fun(*this, &Player_GUI::on_bet_button_clicked));
     button_raise->signal_clicked().connect(sigc::mem_fun(*this, &Player_GUI::on_raise_button_clicked));
     button_all_in->signal_clicked().connect(sigc::mem_fun(*this, &Player_GUI::on_all_in_button_clicked));
     button_replace->signal_clicked().connect(sigc::mem_fun(*this, &Player_GUI::on_replace_button_clicked));
-    check1->signal_clicked().connect(sigc::mem_fun(*this, &Player_GUI::check1_toggled));
+/*    check1->signal_clicked().connect(sigc::mem_fun(*this, &Player_GUI::check1_toggled));
     check2->signal_clicked().connect(sigc::mem_fun(*this, &Player_GUI::check2_toggled));
     check3->signal_clicked().connect(sigc::mem_fun(*this, &Player_GUI::check3_toggled));
     check4->signal_clicked().connect(sigc::mem_fun(*this, &Player_GUI::check4_toggled));
     check5->signal_clicked().connect(sigc::mem_fun(*this, &Player_GUI::check5_toggled));
     player_bet_entry->signal_activate().connect(sigc::mem_fun(*this, &Player_GUI::player_bet_entry_activate));
     entry_player_chat->signal_activate().connect(sigc::mem_fun(*this, &Player_GUI::entry_player_chat_activate));
-    button_send->signal_clicked().connect(sigc::mem_fun(*this, &Player_GUI::on_send_button_clicked));
+*/  button_send->signal_clicked().connect(sigc::mem_fun(*this, &Player_GUI::on_send_button_clicked));
     button_clear->signal_clicked().connect(sigc::mem_fun(*this, &Player_GUI::on_clear_button_clicked));
     about_menu->signal_activate().connect(sigc::mem_fun(*this, &Player_GUI::on_about_dialog_activate_link));
     help_menu->signal_activate().connect(sigc::mem_fun(*this, &Player_GUI::on_help_menu_activate));
@@ -76,7 +76,7 @@ Player_GUI::Player_GUI(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>
 
 void Player_GUI::on_name_dialog_enter_clicked()
 {
-    std::string playerName;
+    string playerName;
 
     if (entry_player_name->get_text() == "")
     {
@@ -116,18 +116,19 @@ void Player_GUI::on_about_dialog_activate_link()
     about_dialog->show();
 }
 
-
+/*
 void Player_GUI::entry_player_chat_activate()
 {
     if (window)
     {
         if (entry_player_chat)
         {
-            std::cout << entry_player_chat->get_text() + "\n\n";
+            cout << entry_player_chat->get_text() + "\n\n";
             entry_player_chat->set_text("");
         }
     }
 }
+*/
 
 void Player_GUI::on_send_button_clicked()
 {
@@ -154,12 +155,13 @@ void Player_GUI::on_clear_button_clicked()
     {
         if (button_clear)
         {
-            std::cout << "Clear Button was clicked.\n\n";
+            cout << "Clear Button was clicked" << endl;
             entry_player_chat->set_text("");
         }
     }
 }
 
+/*
 void Player_GUI::player_bet_entry_activate()
 {
     if (window)
@@ -168,26 +170,28 @@ void Player_GUI::player_bet_entry_activate()
         {
             int player_balance = 100;
 
-            int entry = std::stoi(player_bet_entry->get_text(),nullptr,0);
+            int entry = stoi(player_bet_entry->get_text(),nullptr,0);
             player_balance = player_balance - entry;
 
-            std::cout << "$" + player_bet_entry->get_text() + " bet was set.\n\n";
-            std::cout << "current balance is " << player_balance << "\n\n";
+            cout << "$" + player_bet_entry->get_text() + " bet was set" << endl;
+            cout << "current balance is " << player_balance << "\n\n";
 
             player_bet_entry->set_text("");
         }
 
     }
 }
+*/
 
+/*
 void Player_GUI::check1_toggled()
 {
     if (window)
     {
         if (check1->get_active())
-            std::cout << "Check Box 1 checked.\n\n";
+            cout << "Check Box 1 checked" << endl;
         else
-            std::cout << "Check Box 1 UNCHECKED.\n\n";
+            cout << "Check Box 1 UNCHECKED" << endl;
     }
 }
 
@@ -196,9 +200,9 @@ void Player_GUI::check2_toggled()
     if (window)
     {
         if (check2->get_active())
-            std::cout << "Check Box 2 checked.\n\n";
+            cout << "Check Box 2 checked" << endl;
         else
-            std::cout << "Check Box 2 UNCHECKED.\n\n";
+            cout << "Check Box 2 UNCHECKED" << endl;
     }
 }
 
@@ -207,9 +211,9 @@ void Player_GUI::check3_toggled()
     if (window)
     {
         if (check3->get_active())
-            std::cout << "Check Box 3 checked.\n\n";
+            cout << "Check Box 3 checked" << endl;
         else
-            std::cout << "Check Box 3 UNCHECKED.\n\n";
+            cout << "Check Box 3 UNCHECKED" << endl;
     }
 }
 
@@ -218,9 +222,9 @@ void Player_GUI::check4_toggled()
     if (window)
     {
         if (check4->get_active())
-            std::cout << "Check Box 4 checked.\n\n";
+            cout << "Check Box 4 checked" << endl;
         else
-            std::cout << "Check Box 4 UNCHECKED.\n\n";
+            cout << "Check Box 4 UNCHECKED" << endl;
     }
 }
 
@@ -229,11 +233,12 @@ void Player_GUI::check5_toggled()
     if (window)
     {
         if (check5->get_active())
-            std::cout << "Check Box 5 checked.\n\n";
+            cout << "Check Box 5 checked" << endl;
         else
-            std::cout << "Check Box 5 UNCHECKED.\n\n";
+            cout << "Check Box 5 UNCHECKED" << endl;
     }
 }
+
 
 void Player_GUI::on_check_button_clicked()
 {
@@ -241,12 +246,13 @@ void Player_GUI::on_check_button_clicked()
     {
         if (button_check)
         {
-          std::cout << "Check Button was clicked.\n\n";
-          std::string event = "check";
-          client->event = event;
+          cout << "Check Button was clicked" << endl;
+          client->event = "check";
+          client->send();
         }
     }
 }
+*/
 
 void Player_GUI::on_call_button_clicked()
 {
@@ -254,9 +260,9 @@ void Player_GUI::on_call_button_clicked()
     {
         if (button_call)
         {
-          std::cout << "Call Button was clicked.\n\n";
-          std::string event = "call";
-          client->event = event;
+          cout << "Call Button was clicked" << endl;
+          client->event = "call";
+          client->send();
         }
     }
 }
@@ -267,9 +273,9 @@ void Player_GUI::on_fold_button_clicked()
     {
         if (button_fold)
         {
-          std::cout << "Fold Button was clicked.\n\n";
-          std::string event = "fold";
-          client->event = event;
+          cout << "Fold Button was clicked" << endl;
+          client->event = "fold";
+          client->send();
         }
     }
 }
@@ -282,20 +288,20 @@ void Player_GUI::on_bet_button_clicked()
         {
             int player_balance = 100;
 
-            std::cout << "Bet Button was clicked.\n\n";
+            cout << "Bet Button was clicked" << endl;
 
             if (player_bet_entry->get_text() == "")
-                std::cout << "Error. Player bet not set.\n\n";
-            else if (std::stoi(player_bet_entry->get_text(),nullptr,0) > player_balance)
-                std::cout << "Error. Bet amount is greater than chip balance.\n\n";
+                cout << "Error. Player bet not set" << endl;
+            else if (stoi(player_bet_entry->get_text(),nullptr,0) > player_balance)
+                cout << "Error. Bet amount is greater than chip balance" << endl;
             else
             {
-                std::cout << "$" + player_bet_entry->get_text() + " bet was set.\n\n";
+                cout << "$" + player_bet_entry->get_text() + " bet was set" << endl;
 
-                int entry = std::stoi(player_bet_entry->get_text(),nullptr,0);
+                int entry = stoi(player_bet_entry->get_text(),nullptr,0);
                 client->bet = entry;
-                std::string event = "bet";
-                client->event = event;
+                client->event = "bet";
+                client->send();
             }
 
             player_bet_entry->set_text("");
@@ -309,9 +315,11 @@ void Player_GUI::on_raise_button_clicked()
     {
         if (button_raise)
         {
-          std::cout << "Raise Button was clicked.\n\n";
-          std::string event = "raise";
-          client->event = event;
+          cout << "Raise Button was clicked" << endl;
+          // TO DO : implement raise
+          client->raise = 1;
+          client->event = "raise";
+          client->send();
         }
     }
 }
@@ -322,8 +330,8 @@ void Player_GUI::on_all_in_button_clicked()
     {
         if (button_all_in)
         {
-          std::cout << "All-in Button was clicked.\n\n";
-          std::string event = "all-in";
+          cout << "All-in Button was clicked" << endl;
+          string event = "all-in";
           client->event = event;
         }
     }
@@ -331,7 +339,7 @@ void Player_GUI::on_all_in_button_clicked()
 
 void Player_GUI::on_replace_button_clicked()
 {
-    std::string assets[52] = {"../assets/10C.png", "../assets/10D.png", "../assets/10H.png", "../assets/10S.png",
+    string assets[52] = {"../assets/10C.png", "../assets/10D.png", "../assets/10H.png", "../assets/10S.png",
                               "../assets/9C.png", "../assets/9D.png", "../assets/9H.png", "../assets/9S.png",
                               "../assets/8C.png", "../assets/8D.png", "../assets/8H.png", "../assets/8S.png",
                               "../assets/7C.png", "../assets/7D.png", "../assets/7H.png", "../assets/7S.png",
@@ -350,8 +358,8 @@ void Player_GUI::on_replace_button_clicked()
     {
         if (button_replace)
         {
-            std::cout << "Replace Button was clicked.\n\n";
-            std::string event = "replace";
+            cout << "Replace Button was clicked" << endl;
+            string event = "replace";
 
             if (check1->get_active())
             {
@@ -360,6 +368,7 @@ void Player_GUI::on_replace_button_clicked()
                 int position = 0;
                 client->replace_vector[position] = 1;
                 client->event = event;
+                client->send();
 
                 check1->set_active(false);
             }
@@ -370,6 +379,7 @@ void Player_GUI::on_replace_button_clicked()
                 int position = 1;
                 client->replace_vector[position] = 1;
                 client->event = event;
+                client->send();
 
                 check2->set_active(false);
             }
@@ -380,6 +390,7 @@ void Player_GUI::on_replace_button_clicked()
                 int position = 2;
                 client->replace_vector[position] = 1;
                 client->event = event;
+                client->send();
 
                 check3->set_active(false);
             }
@@ -390,6 +401,7 @@ void Player_GUI::on_replace_button_clicked()
                 int position = 3;
                 client->replace_vector[position] = 1;
                 client->event = event;
+                client->send();
 
                 check4->set_active(false);
             }
@@ -400,6 +412,7 @@ void Player_GUI::on_replace_button_clicked()
                 int position = 4;
                 client->replace_vector[position] = 1;
                 client->event = event;
+                client->send();
 
                 check5->set_active(false);
             }
