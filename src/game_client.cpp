@@ -41,7 +41,6 @@ void game_client::close()
     });
 }
 
-
 void game_client::do_connect(const tcp::resolver::results_type& endpoints)
 {
     asio::async_connect(socket_, endpoints, [this](error_code ec, tcp::endpoint)

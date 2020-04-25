@@ -5,7 +5,7 @@
 #include <memory>
 #include <set>
 #include "asio.hpp"
-#include "Dealer.hpp"
+#include "dealer.hpp"
 #include "player.hpp"
 
 using asio::ip::tcp;

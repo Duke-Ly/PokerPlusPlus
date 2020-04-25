@@ -32,6 +32,7 @@ int main(int argc, char* argv[])
     tcp::resolver resolver(io_context);
     auto endpoints = resolver.resolve(argv[1], argv[2]);
     game_client gc(io_context, endpoints);
+    player_gui->client = &gc;
 
     std::thread t([&io_context]()
     {

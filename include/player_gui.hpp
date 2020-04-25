@@ -2,6 +2,7 @@
 #define PLAYER_GUI
 
 #include <gtkmm.h>
+#include "game_client.hpp"
 
 using namespace Gtk;
 using namespace Glib;
@@ -45,6 +46,7 @@ protected:
 
 public:
   Player_GUI(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade);
+  game_client* client;
 
 protected:
   void on_name_dialog_enter_clicked();

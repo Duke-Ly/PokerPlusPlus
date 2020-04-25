@@ -1,4 +1,5 @@
 #include "player_gui.hpp"
+#include "game_client.hpp"
 #include <gtkmm.h>
 #include <iostream>
 
@@ -81,6 +82,7 @@ void Player_GUI::on_name_dialog_enter_clicked()
     else
     {
         playerName = entry_player_name->get_text();
+        client->name = playerName;
         std::cout << "Welcome " << playerName << "!\n\n";
 
         player_name_dialog->hide();
@@ -121,7 +123,12 @@ void Player_GUI::on_send_button_clicked()
         if (button_send)
         {
             std::cout << "Send Button was clicked.\n\n";
-            std::cout << entry_player_chat->get_text() + "\n\n";
+            std::string chat = entry_player_chat->get_text();
+            client->chat = chat;
+
+            std::string event = "send";
+            client->event = event;
+            std::cout << chat << "\n\n";
 
             entry_player_chat->set_text("");
         }
@@ -221,7 +228,11 @@ void Player_GUI::on_check_button_clicked()
     if(window)
     {
         if (button_check)
-            std::cout << "Check Button was clicked.\n\n";
+        {
+          std::cout << "Check Button was clicked.\n\n";
+          std::string event = "check";
+          client->event = event;
+        }
     }
 }
 
@@ -230,7 +241,11 @@ void Player_GUI::on_call_button_clicked()
     if (window)
     {
         if (button_call)
-            std::cout << "Call Button was clicked.\n\n";
+        {
+          std::cout << "Call Button was clicked.\n\n";
+          std::string event = "call";
+          client->event = event;
+        }
     }
 }
 
@@ -239,7 +254,11 @@ void Player_GUI::on_fold_button_clicked()
     if (window)
     {
         if (button_fold)
-            std::cout << "Fold Button was clicked.\n\n";
+        {
+          std::cout << "Fold Button was clicked.\n\n";
+          std::string event = "fold";
+          client->event = event;
+        }
     }
 }
 
@@ -262,8 +281,9 @@ void Player_GUI::on_bet_button_clicked()
                 std::cout << "$" + player_bet_entry->get_text() + " bet was set.\n\n";
 
                 int entry = std::stoi(player_bet_entry->get_text(),nullptr,0);
-                int current = player_balance - entry;
-                std::cout << "current balance is " + current;
+                client->bet = entry;
+                std::string event = "bet";
+                client->event = event;
             }
 
             player_bet_entry->set_text("");
@@ -276,7 +296,11 @@ void Player_GUI::on_raise_button_clicked()
     if (window)
     {
         if (button_raise)
-            std::cout << "Raise Button was clicked.\n\n";
+        {
+          std::cout << "Raise Button was clicked.\n\n";
+          std::string event = "raise";
+          client->event = event;
+        }
     }
 }
 
@@ -285,7 +309,11 @@ void Player_GUI::on_all_in_button_clicked()
     if (window)
     {
         if (button_all_in)
-            std::cout << "All-in Button was clicked.\n\n";
+        {
+          std::cout << "All-in Button was clicked.\n\n";
+          std::string event = "all-in";
+          client->event = event;
+        }
     }
 }
 
@@ -311,11 +339,15 @@ void Player_GUI::on_replace_button_clicked()
         if (button_replace)
         {
             std::cout << "Replace Button was clicked.\n\n";
+            std::string event = "replace";
 
             if (check1->get_active())
             {
                 int randomIndex = rand() % 53;
                 image_card1->set(assets[randomIndex]);
+                int position = 0;
+                client->replaceVector[position] = 1;
+                client->event = event;
 
                 check1->set_active(false);
             }
@@ -323,6 +355,9 @@ void Player_GUI::on_replace_button_clicked()
             {
                 int randomIndex = rand() % 53;
                 image_card2->set(assets[randomIndex]);
+                int position = 1;
+                client->replaceVector[position] = 1;
+                client->event = event;
 
                 check2->set_active(false);
             }
@@ -330,6 +365,9 @@ void Player_GUI::on_replace_button_clicked()
             {
                 int randomIndex = rand() % 53;
                 image_card3->set(assets[randomIndex]);
+                int position = 2;
+                client->replaceVector[position] = 1;
+                client->event = event;
 
                 check3->set_active(false);
             }
@@ -337,6 +375,9 @@ void Player_GUI::on_replace_button_clicked()
             {
                 int randomIndex = rand() % 53;
                 image_card4->set(assets[randomIndex]);
+                int position = 3;
+                client->replaceVector[position] = 1;
+                client->event = event;
 
                 check4->set_active(false);
             }
@@ -344,6 +385,9 @@ void Player_GUI::on_replace_button_clicked()
             {
                 int randomIndex = rand() % 53;
                 image_card5->set(assets[randomIndex]);
+                int position = 4;
+                client->replaceVector[position] = 1;
+                client->event = event;
 
                 check5->set_active(false);
             }
