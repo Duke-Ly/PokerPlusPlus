@@ -29,7 +29,7 @@ public:
     int current_pot = 0;
     int minimum_bet = 1;
     set<player_ptr> players;
-    bool game_active = false;
+    bool game_active = false; // set to true for debug
     gameState game_state = WAITING;
     chat_message_queue recent_msgs_;
 

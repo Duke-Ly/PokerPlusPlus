@@ -89,12 +89,15 @@ void Dealer::createDeck()
     deck.push_back(Card(11, Ssuit, "JS"));
     deck.push_back(Card(12, Ssuit, "QS"));
     deck.push_back(Card(13, Ssuit, "KS"));
+
+    cout<<"deck have been created"<<endl;
 }
 
 void Dealer::shuffleDeck()
 {
     auto rng = default_random_engine {};
     shuffle(deck.begin(), deck.end(), rng);
+    cout<<"deck have been shuffled"<<endl;
 }
 
 void Dealer::deal()
@@ -106,6 +109,7 @@ void Dealer::deal()
 void Dealer::next_player(player_ptr nextPlayer)
 {
     current_player = nextPlayer;
+    cout<<"current_player = "<<current_player->name<<endl;
 }
 
 int main(int argc, char* argv[])
