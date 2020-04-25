@@ -12,6 +12,7 @@ using asio::ip::tcp;
 using namespace std;
 
 typedef deque<chat_message> chat_message_queue;
+enum gameState {WAITING, ANTE, BETTING1, SWAP, BETTING2, WIN};
 
 class Poker_Table
 {
@@ -26,9 +27,10 @@ public:
 
     Dealer dealer;
     int current_pot = 0;
-    int minimum_bet = 0;
+    int minimum_bet = 1;
     set<player_ptr> players;
     bool game_active = false;
+    gameState game_state = WAITING;
     chat_message_queue recent_msgs_;
 
 private:

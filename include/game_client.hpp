@@ -22,8 +22,8 @@ public:
     std::string name;
     std::string event;
     std::string chat;
-    int bet;
-    int raise;
+    int bet = 0;
+    int raise = 0;
     std::vector<int> replace_vector = {0, 0, 0, 0, 0};
 
 private:
