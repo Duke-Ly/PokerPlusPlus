@@ -37,7 +37,7 @@ poker_player.o: poker_player.cpp ../include/poker_player.hpp
 
 poker_game.o: poker_game.cpp ../include/poker_game.hpp
 	${CXX} ${CXXFLAGS} ${CPPFLAGS} -o $@ -c $< ${LDLIBS}
-	
+
 player_gui.o: player_gui.cpp ../include/player_gui.hpp
 	${CXX} ${CXXFLAGS} ${CPPFLAGS} -o $@ -c $< ${LDLIBS}
 
@@ -45,6 +45,9 @@ chat_server: chat_server.cpp card.o hand.o player.o dealer.o poker_table.o poker
 	${CXX} ${CXXFLAGS} ${CPPFLAGS} -o $@ $< *.o ${LDLIBS}
 
 main: main.cpp player_gui.o
+	${CXX} ${CXXFLAGS} ${CPPFLAGS} -o $@ $< *.o ${LDLIBS}
+
+chat_client: chat_client.cpp player_gui.o
 	${CXX} ${CXXFLAGS} ${CPPFLAGS} -o $@ $< *.o ${LDLIBS}
 
 clean:

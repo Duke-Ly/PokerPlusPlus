@@ -13,15 +13,15 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
-#include "Game_State.hpp"
+#include "game_state.hpp"
 #include "client_action.hpp"
 
 class chat_message
 {
 public:
-    enum { header_length = 4 };
-    enum { max_body_length = 4096 };
-    // CSE3310 This is where the maximum size of chat message body is defined
+    enum {header_length = 4};
+    enum {max_body_length = 4096};
+
     chat_message()
         : body_length_(0)
     {
