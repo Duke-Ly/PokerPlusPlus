@@ -102,9 +102,31 @@ void game_client::do_read_body()
     {
         if(!ec)
         {
-            cout<<"From the dealer"<<endl;
-            cout.write(read_msg_.body(), read_msg_.body_length());
-            cout << "\n";
+  /*          json to_player = json::parse(string(read_msg_.body()));
+            to_player["turn"] = to_player["from"].at("uuid");
+            to_player["chat"] = to_player["chat"];
+            to_player["dealer_comment"] = to_player["dealer_comment"];
+            to_player["recommended_play"] = to_player["recommended_play"];
+            to_player["current_pot"] = int(to_player["current_pot"]);
+            to_player["minimum_bet"] = int(to_player["minimum_bet"]);
+            to_player["hand"] =
+            {
+              {{"total_balance",to_player["hand"].at("total_balance")}, {"current_bet",to_player["hand"].at("current_bet")}, {"uuid",to_player["hand"].at("uuid")}, {"name",to_player["hand"].at("name")}, {"cards",to_player["hand"].at("cards")}},
+              {{"total_balance",to_player["hand"].at("total_balance")}, {"current_bet",to_player["hand"].at("current_bet")}, {"uuid",to_player["hand"].at("uuid")}, {"name",to_player["hand"].at("name")}, {"cards",to_player["hand"].at("cards")}},
+              {{"total_balance",to_player["hand"].at("total_balance")}, {"current_bet",to_player["hand"].at("current_bet")}, {"uuid",to_player["hand"].at("uuid")}, {"name",to_player["hand"].at("name")}, {"cards",to_player["hand"].at("cards")}},
+              {{"total_balance",to_player["hand"].at("total_balance")}, {"current_bet",to_player["hand"].at("current_bet")}, {"uuid",to_player["hand"].at("uuid")}, {"name",to_player["hand"].at("name")}, {"cards",to_player["hand"].at("cards")}}
+            };
+*/
+
+    // **********************************************************************************
+
+            cout<<"From the dealer:"<<endl;
+            json to_player = json::parse(string(read_msg_.body()));
+
+            cout << "\"chat\": " << to_player["chat"] << endl;
+
+            //cout.write(read_msg_.body(), read_msg_.body_length());
+            //cout << endl;
             do_read_header();
         }
         else
