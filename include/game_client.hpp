@@ -17,13 +17,14 @@ public:
     ~game_client();
     void write(const chat_message& msg);
     void close();
+    void send();
     std::string uuid;
     std::string name;
     std::string event;
     std::string chat;
     int bet;
     int raise;
-    std::vector<int> replaceVector = {0, 0, 0, 0, 0};
+    std::vector<int> replace_vector = {0, 0, 0, 0, 0};
 
 private:
     void do_connect(const tcp::resolver::results_type& endpoints);

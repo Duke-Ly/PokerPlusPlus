@@ -41,6 +41,29 @@ void game_client::close()
     });
 }
 
+void game_client::send()
+{
+    chat_message msg;
+
+    json to_dealer;
+    to_dealer["from"] = { {"uuid",this->uuid}, {"name",this->name} };
+    to_dealer["event"] = this->event; // "check","bet","call","raise","fold","all_in","replace","chat","join"
+    to_dealer["replace_vector"] = this->replace_vector;
+    to_dealer["bet"] = this->bet;
+    to_dealer["raise"] = this->raise;
+    to_dealer["chat"] = this->chat;
+
+    cout<<"to dealer:"<<endl;
+    cout<<to_dealer.dump(2)<<endl;
+
+    string t = to_dealer.dump();
+
+    msg.body_length(t.size());
+    memcpy(msg.body(), t.c_str(), msg.body_length());
+    msg.encode_header();
+    this->write(msg);
+}
+
 void game_client::do_connect(const tcp::resolver::results_type& endpoints)
 {
     asio::async_connect(socket_, endpoints, [this](error_code ec, tcp::endpoint)

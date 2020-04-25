@@ -1,9 +1,16 @@
-#include "player_gui.hpp"
-#include "game_client.hpp"
 #include <gtkmm.h>
 #include <iostream>
+#include <boost/uuid/uuid.hpp>
+#include <boost/uuid/uuid_generators.hpp>
+#include <boost/uuid/uuid_io.hpp>
+#include <boost/lexical_cast.hpp>
+#include <string>
+#include "player_gui.hpp"
+#include "game_client.hpp"
 
 using namespace Gtk;
+using namespace std;
+using namespace boost::uuids;
 
 Player_GUI::Player_GUI(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade) :
     Gtk::Window(cobject), builder(refGlade)
@@ -81,10 +88,15 @@ void Player_GUI::on_name_dialog_enter_clicked()
     }
     else
     {
+        random_generator gen;
+        uuid id = gen();
         playerName = entry_player_name->get_text();
         client->name = playerName;
-        std::cout << "Welcome " << playerName << "!\n\n";
-
+        cout<<"Welcome "<<playerName<<"!\n\n";
+        string uuid = to_string(id);
+        client->uuid = uuid;
+        client->event = "join";
+        client->send();
         player_name_dialog->hide();
     }
 }
@@ -104,6 +116,7 @@ void Player_GUI::on_about_dialog_activate_link()
     about_dialog->show();
 }
 
+
 void Player_GUI::entry_player_chat_activate()
 {
     if (window)
@@ -122,15 +135,14 @@ void Player_GUI::on_send_button_clicked()
     {
         if (button_send)
         {
-            std::cout << "Send Button was clicked.\n\n";
-            std::string chat = entry_player_chat->get_text();
+            cout<<"Send Button was clicked"<<endl;
+            string chat = entry_player_chat->get_text();
             client->chat = chat;
-
-            std::string event = "send";
+            string event = "chat";
             client->event = event;
-            std::cout << chat << "\n\n";
-
+            cout<<chat<<endl;
             entry_player_chat->set_text("");
+            client->send();
         }
 
     }
@@ -346,7 +358,7 @@ void Player_GUI::on_replace_button_clicked()
                 int randomIndex = rand() % 53;
                 image_card1->set(assets[randomIndex]);
                 int position = 0;
-                client->replaceVector[position] = 1;
+                client->replace_vector[position] = 1;
                 client->event = event;
 
                 check1->set_active(false);
@@ -356,7 +368,7 @@ void Player_GUI::on_replace_button_clicked()
                 int randomIndex = rand() % 53;
                 image_card2->set(assets[randomIndex]);
                 int position = 1;
-                client->replaceVector[position] = 1;
+                client->replace_vector[position] = 1;
                 client->event = event;
 
                 check2->set_active(false);
@@ -366,7 +378,7 @@ void Player_GUI::on_replace_button_clicked()
                 int randomIndex = rand() % 53;
                 image_card3->set(assets[randomIndex]);
                 int position = 2;
-                client->replaceVector[position] = 1;
+                client->replace_vector[position] = 1;
                 client->event = event;
 
                 check3->set_active(false);
@@ -376,7 +388,7 @@ void Player_GUI::on_replace_button_clicked()
                 int randomIndex = rand() % 53;
                 image_card4->set(assets[randomIndex]);
                 int position = 3;
-                client->replaceVector[position] = 1;
+                client->replace_vector[position] = 1;
                 client->event = event;
 
                 check4->set_active(false);
@@ -386,7 +398,7 @@ void Player_GUI::on_replace_button_clicked()
                 int randomIndex = rand() % 53;
                 image_card5->set(assets[randomIndex]);
                 int position = 4;
-                client->replaceVector[position] = 1;
+                client->replace_vector[position] = 1;
                 client->event = event;
 
                 check5->set_active(false);
