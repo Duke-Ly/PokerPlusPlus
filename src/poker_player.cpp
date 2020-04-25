@@ -66,16 +66,37 @@ void Poker_Player::do_read_body()
             json to_dealer = json::parse(string(read_msg_.body()));
             json to_player;  // represents the entire game state.  sent to all players
             to_player["turn"] = table_.dealer.current_player->playerUUID;   // UUID of the current player.
-            to_player["chat"] = "chat msg";
-            to_player["dealer_comment"] = "Awaiting for two player";
-            to_player["recommended_play"] = "You should check";
+            to_player["chat"] = "Table chat message";
+            to_player["dealer_comment"] = "Waiting for dealer";
+            to_player["recommended_play"] = "Waiting for dealer";
             to_player["current_pot"] = table_.current_pot;
             to_player["minimum_bet"] = table_.minimum_bet;
             to_player["hand"] = {};
+
+            if(to_dealer["event"]=="join")
+            {
+                string n = string(to_dealer["from"].at("name")) + " has joined.";
+                cout<<n<<endl;
+                self->name = string(to_dealer["from"].at("name"));
+                self->playerUUID = string(to_dealer["from"].at("uuid"));
+            }
+            else if(to_dealer["event"]=="chat"&&table_.game_active)
+            {
+                cout<<"from: "<<string(to_dealer["from"])<<endl;
+                cout<<"chat: "<<string(to_dealer["chat"])<<endl;
+                string msg = "from: " + string(to_dealer["from"]) + "\n" +
+                             "chat: " + string(to_dealer["chat"]);
+                to_player["chat"] = msg;
+            }
+
+            if(table_.players.size() >= 2)
+            {
+                table_.game_active = true;
+            }
+
             set<player_ptr>::iterator it;
             for(it=table_.players.begin(); it!=table_.players.end(); ++it)
             {
-
                 to_player["hand"].push_back(
                 {
                     {"total_balance",(*it)->total_balance},
@@ -84,32 +105,9 @@ void Poker_Player::do_read_body()
                     {"name",(*it)->name},
                     {"cards",(*it)->playerHand.cardsVector()}});
             }
-            /*
-                        to_player["hand"] =
-                        {
-                            {{"total_balance",100}, {"current_bet",10}, {"uuid","3f96b414-9ac9-40b5-8007-90d0e771f0d0"}, {"name","Bud"},{"cards",{"acespades","10hearts","9clubs","2diamonds","kinghearts"}}},
-                            {{"total_balance",100}, {"current_bet",1}, {"uuid","3f96b414-9ac9-40b5-8007-20d0e771f0d0"}, {"name","Donald"},{"cards",{"acehearts","10spades","9clubs","2clubs","jackhearts"}}},
-                            {{"total_balance",100}, {"current_bet",5}, {"uuid","3f96b414-9ac9-40b5-8007-30d0e771f0d0"}, {"name","Ann"},{"cards",{"aceclubs","10diamonds","9clubs","2hearts","queenhearts"}}},
-                            {{"total_balance",100}, {"current_bet",0}, {"uuid","3f96b414-9ac9-40b5-8007-40d0e771f0d0"}, {"name","Melania"},{"cards",{"acediamonds","10clubs","9clubs","2spades","kinghearts"}}}
-                        };
-            */
             cout<<"to player:"<<endl;
             cout<<to_player.dump(2)<<endl;
             string t = to_player.dump();
-
-            if(to_dealer["event"]=="join")
-            {
-                string m = string(to_dealer["from"].at("name")) + " has joined.";
-                cout<<m<<endl;
-                self->name = string(to_dealer["from"].at("name"));
-                self->playerUUID = string(to_dealer["from"].at("uuid"));
-            }
-
-            if(table_.players.size() >= 2)
-            {
-                table_.game_active = true;
-            }
-
             chat_message sending;
             if (t.size() < chat_message::max_body_length)
             {

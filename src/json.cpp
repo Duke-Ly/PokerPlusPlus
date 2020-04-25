@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
 {
     nlohmann::json to_dealer;
     to_dealer["from"] = { {"uuid","3f96b414-9ac9-40b5-8007-90d0e771f0d0"}, {"name","Bud"} };
-    to_dealer["event"] = "check";        // "check","bet","call","raise","fold","all_in","replace","chat"
+    to_dealer["event"] = "check";        // "check","bet","call","raise","fold","all_in","replace","chat","join"
     to_dealer["replace_vector"] = {0, 0, 0, 0, 0};
     to_dealer["bet"] = 1.00;
     to_dealer["raise"] = 1.00;
