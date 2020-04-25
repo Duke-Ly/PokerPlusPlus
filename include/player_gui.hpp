@@ -7,6 +7,7 @@ class Player_GUI : public Gtk::Window
 {
 protected:
   Glib::RefPtr<Gtk::Builder> builder;
+  Gtk::Dialog* player_name_dialog = nullptr; 
   Gtk::Window* window = nullptr;
   Gtk::Button* button_check = nullptr;
   Gtk::Button* button_call = nullptr;
@@ -36,11 +37,14 @@ protected:
   Gtk::AboutDialog* about_dialog = nullptr;
   Gtk::MessageDialog* help_dialog = nullptr;
   Gtk::Button* help_close = nullptr;
+  Gtk::Button* name_dialog_enter = nullptr;
+  Gtk::Entry* entry_player_name = nullptr;
 
 public:
   Player_GUI(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade);
 
 protected:
+  void on_name_dialog_enter_clicked();
   void on_help_menu_activate();
   void on_help_close_clicked();
   void on_help_menu_clicked();

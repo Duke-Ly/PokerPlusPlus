@@ -7,6 +7,9 @@ using namespace Gtk;
 Player_GUI::Player_GUI(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade) :
       Gtk::Window(cobject), builder(refGlade)
 {
+  builder->get_widget("player_name_dialog", player_name_dialog);
+  builder->get_widget("name_dialog_enter", name_dialog_enter);
+  builder->get_widget("entry_player_name", entry_player_name);
   builder->get_widget("window", window);
   builder->get_widget("button_check",  button_check);
   builder->get_widget("button_call", button_call);
@@ -37,7 +40,7 @@ Player_GUI::Player_GUI(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>
   builder->get_widget("help_dialog", help_dialog);
   builder->get_widget("help_close", help_close);
 
-
+  name_dialog_enter->signal_clicked().connect(sigc::mem_fun(*this, &Player_GUI::on_name_dialog_enter_clicked));
   button_check->signal_clicked().connect(sigc::mem_fun(*this, &Player_GUI::on_check_button_clicked));
   button_call->signal_clicked().connect(sigc::mem_fun(*this, &Player_GUI::on_call_button_clicked));
   button_fold->signal_clicked().connect(sigc::mem_fun(*this, &Player_GUI::on_fold_button_clicked));
@@ -58,8 +61,30 @@ Player_GUI::Player_GUI(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>
   help_menu->signal_activate().connect(sigc::mem_fun(*this, &Player_GUI::on_help_menu_activate));
   help_close->signal_clicked().connect(sigc::mem_fun(*this, &Player_GUI::on_help_close_clicked));
 
-    window->set_title("Poker++");
-    window->override_background_color(Gdk::RGBA{"green"});
+  window->set_title("Poker++");
+  window->override_background_color(Gdk::RGBA{"green"});
+  player_name_dialog->show();
+}
+
+void Player_GUI::on_name_dialog_enter_clicked()
+{
+  std::string playerName;
+
+  if (entry_player_name->get_text() == "")
+  {
+    entry_player_name->set_text("**INVALID** Please enter name");
+  }
+  else if (entry_player_name->get_text() == "**INVALID** Please enter name")
+  {
+    entry_player_name->set_text("**INVALID** Please enter name");
+  }
+  else
+  {
+    playerName = entry_player_name->get_text();
+    std::cout << "Welcome " << playerName << "!\n\n";
+
+    player_name_dialog->hide();
+  }
 }
 
 void Player_GUI::on_help_menu_activate()

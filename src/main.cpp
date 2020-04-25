@@ -8,7 +8,7 @@
 #include "json.hpp"
 #include "asio.hpp"
 #include "chat_message.hpp"
-#include "Player_GUI.hpp"
+#include "player_gui.hpp"
 
 using asio::ip::tcp;
 using json = nlohmann::json;
