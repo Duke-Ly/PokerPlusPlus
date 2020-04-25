@@ -138,3 +138,10 @@ bool Hand::isOverMaxSize()
     else
         return false;
 }
+
+vector<string> Hand::cardsVector()
+{
+    vector<string> returnVector;
+    for(int i=0; i<(int)cards.size(); i++)
+        returnVector.push_back(cards[i].cardID);
+}

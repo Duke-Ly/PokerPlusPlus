@@ -27,11 +27,13 @@ public:
     Dealer dealer;
     int current_pot = 0;
     int minimum_bet = 0;
+    set<player_ptr> players;
+    bool game_active = false;
+    chat_message_queue recent_msgs_;
 
 private:
     enum {max_recent_msgs = 100};
-    set<player_ptr> players;
-    chat_message_queue recent_msgs_;
+
 };
 
 #endif

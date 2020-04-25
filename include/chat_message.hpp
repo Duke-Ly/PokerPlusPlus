@@ -1,6 +1,3 @@
-// chat_message.hpp
-// ~~~~~~~~~~~~~~~~
-//
 // Copyright (c) 2003-2018 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -85,8 +82,6 @@ public:
 private:
     char data_[header_length + max_body_length];
     std::size_t body_length_;
-
-public:
 };
 
 #endif // CHAT_MESSAGE_HPP

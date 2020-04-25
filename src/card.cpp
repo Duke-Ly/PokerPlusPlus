@@ -1,6 +1,6 @@
-#include "card.hpp"
 #include <string>
 #include <iostream>
+#include "card.hpp"
 
 using namespace std;
 
