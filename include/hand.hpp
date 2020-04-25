@@ -1,9 +1,9 @@
 #ifndef HAND_HPP
 #define HAND_HPP
 
-#include "card.hpp"
 #include <vector>
 #include <string>
+#include "card.hpp"
 
 using namespace std;
 

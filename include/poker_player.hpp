@@ -2,7 +2,6 @@
 #define POKER_PLAYER_HPP
 
 #include <memory>
-#include <string>
 #include "hand.hpp"
 #include "player.hpp"
 #include "chat_message.hpp"
@@ -14,13 +13,14 @@ using namespace std;
 
 class Poker_Player
     : public Player,
-    public std::enable_shared_from_this<Poker_Player>
+      public enable_shared_from_this<Poker_Player>
 {
 public:
     Poker_Player(tcp::socket socket, Poker_Table& table);
     ~Poker_Player();
     void start();
     void deliver(const chat_message& msg);
+
 
 private:
     void do_read_header();

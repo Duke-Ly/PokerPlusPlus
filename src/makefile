@@ -9,8 +9,7 @@ LDLIBS   += -lpthread ${GTKLINKFLAGS}
 ROOTDIR = ../
 VPATH = $(ROOTDIR)
 
-TARGETS = $(ROOTDIR)/asio-1.12.2 chat_server chat_client json test_code \
-			main
+TARGETS = $(ROOTDIR)/asio-1.12.2 player dealer json test_code
 
 all: ${TARGETS}
 
@@ -21,12 +20,6 @@ card.o: card.cpp ../include/card.hpp
 	${CXX} ${CXXFLAGS} ${CPPFLAGS} -o $@ -c $< ${LDLIBS}
 
 hand.o: hand.cpp ../include/hand.hpp
-	${CXX} ${CXXFLAGS} ${CPPFLAGS} -o $@ -c $< ${LDLIBS}
-
-player.o: player.cpp ../include/player.hpp
-	${CXX} ${CXXFLAGS} ${CPPFLAGS} -o $@ -c $< ${LDLIBS}
-
-dealer.o: Dealer.cpp ../include/Dealer.hpp
 	${CXX} ${CXXFLAGS} ${CPPFLAGS} -o $@ -c $< ${LDLIBS}
 
 poker_table.o: poker_table.cpp ../include/poker_table.hpp
@@ -40,21 +33,20 @@ poker_game.o: poker_game.cpp ../include/poker_game.hpp
 
 player_gui.o: player_gui.cpp ../include/player_gui.hpp
 	${CXX} ${CXXFLAGS} ${CPPFLAGS} -o $@ -c $< ${LDLIBS}
+	
+game_client.o: game_client.cpp ../include/game_client.hpp
+	${CXX} ${CXXFLAGS} ${CPPFLAGS} -o $@ -c $< ${LDLIBS}	
 
-chat_server: chat_server.cpp card.o hand.o player.o dealer.o poker_table.o poker_player.o poker_game.o
+dealer: dealer.cpp card.o hand.o poker_table.o poker_player.o poker_game.o
 	${CXX} ${CXXFLAGS} ${CPPFLAGS} -o $@ $< *.o ${LDLIBS}
 
-main: main.cpp player_gui.o
-	${CXX} ${CXXFLAGS} ${CPPFLAGS} -o $@ $< *.o ${LDLIBS}
-
-chat_client: chat_client.cpp player_gui.o
+player: player.cpp player_gui.o game_client.o
 	${CXX} ${CXXFLAGS} ${CPPFLAGS} -o $@ $< *.o ${LDLIBS}
 
 clean:
 	-rm -rf ../asio-1.12.2
-	-rm -f chat_client
-	-rm -f chat_server
+	-rm -f player
+	-rm -f dealer
 	-rm -f json
 	-rm -f test_code
-	-rm -f main
 	-rm -f *.o

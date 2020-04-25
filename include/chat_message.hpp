@@ -13,8 +13,6 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
-#include "game_state.hpp"
-#include "client_action.hpp"
 
 class chat_message
 {
@@ -89,8 +87,6 @@ private:
     std::size_t body_length_;
 
 public:
-    client_action ca;
-    game_state gs;
 };
 
 #endif // CHAT_MESSAGE_HPP

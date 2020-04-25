@@ -3,11 +3,14 @@
 
 #include <gtkmm.h>
 
+using namespace Gtk;
+using namespace Glib;
+
 class Player_GUI : public Gtk::Window
 {
 protected:
   Glib::RefPtr<Gtk::Builder> builder;
-  Gtk::Dialog* player_name_dialog = nullptr; 
+  Gtk::Dialog* player_name_dialog = nullptr;
   Gtk::Window* window = nullptr;
   Gtk::Button* button_check = nullptr;
   Gtk::Button* button_call = nullptr;

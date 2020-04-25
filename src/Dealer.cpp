@@ -1,21 +1,28 @@
+#include <cstdlib>
+#include <exception>
 #include <vector>
 #include <iostream>
 #include <algorithm>
+#include <list>
 #include <random>
 #include <memory>
-#include "Dealer.hpp"
+#include "dealer.hpp"
 #include "card.hpp"
 #include "player.hpp"
+#include "asio.hpp"
+#include "chat_message.hpp"
+#include "poker_game.hpp"
 
+using asio::ip::tcp;
 using namespace std;
 
 Dealer::Dealer()
 {
-     cout<<"Creating a dealer"<<endl;
-     createDeck();
-     shuffleDeck();
-     current_player = NULL;
-     card_idx=0;
+    cout<<"Creating a dealer"<<endl;
+    createDeck();
+    shuffleDeck();
+    current_player = NULL;
+    card_idx=0;
 }
 
 Dealer::~Dealer() {};
@@ -99,4 +106,32 @@ void Dealer::deal()
 void Dealer::next_player(player_ptr nextPlayer)
 {
     current_player = nextPlayer;
+}
+
+int main(int argc, char* argv[])
+{
+    try
+    {
+        if(argc < 2)
+        {
+            cerr<<"Usage: chat_server <port> [<port> ...]\n";
+            return 1;
+        }
+
+        asio::io_context io_context;
+        list<Poker_Game> servers;
+        for (int i = 1; i < argc; ++i)
+        {
+            tcp::endpoint endpoint(tcp::v4(), atoi(argv[i]));
+            servers.emplace_back(io_context, endpoint);
+        }
+
+        io_context.run();
+    }
+    catch(exception& e)
+    {
+        cerr<<"Exception: "<<e.what()<<"\n";
+    }
+
+    return 0;
 }

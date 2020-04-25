@@ -9,13 +9,13 @@ using asio::ip::tcp;
 
 Poker_Game::Poker_Game(asio::io_context& io_context,
                        const tcp::endpoint& endpoint)
-        : acceptor_(io_context, endpoint)
-    {
-        cout<<"Creating a Poker_Game"<<endl;
-        do_accept();
-    }
+    : acceptor_(io_context, endpoint)
+{
+    cout<<"Creating a Poker_Game"<<endl;
+    do_accept();
+}
 
-//Poker_Game::~Poker_Game() {};
+Poker_Game::~Poker_Game() {};
 
 void Poker_Game::do_accept()
 {
