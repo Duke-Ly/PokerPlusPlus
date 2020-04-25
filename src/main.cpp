@@ -163,11 +163,7 @@ chat_client *c;
 
 int main(int argc, char* argv[])
 {
-
     Main kit(argc,argv);
-//    auto refBuilder = Gtk::Builder::create();
-//    refBuilder->add_from_file("gui_mockup.glade");
-//    refBuilder->get_widget("window", player_gui);
     Glib::RefPtr<Gtk::Builder> builder = Gtk::Builder::create_from_file("gui_mockup.glade");
     Player_GUI *player_gui = nullptr;
     builder->get_widget_derived("window", player_gui);
