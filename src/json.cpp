@@ -38,15 +38,15 @@ int main(int argc, char *argv[])
     to_player["hand"] =
     {
         {{"total_balance",100}, {"current_bet",10}, {"uuid","3f96b414-9ac9-40b5-8007-90d0e771f0d0"}, {"name","Bud"},{"cards",{"acespades","10hearts","9clubs","2diamonds","kinghearts"}}},
-        {{"total_balance",100}, {"current_bet",1}, {"uuid","3f96b414-9ac9-40b5-8007-20d0e771f0d0"}, {"name","Donald"},{"cards",{"acehearts","10spades","9clubs","2clubs","jackhearts"}}},
-        {{"total_balance",100}, {"current_bet",5}, {"uuid","3f96b414-9ac9-40b5-8007-30d0e771f0d0"}, {"name","Ann"},{"cards",{"aceclubs","10diamonds","9clubs","2hearts","queenhearts"}}},
+//        {{"total_balance",100}, {"current_bet",1}, {"uuid","3f96b414-9ac9-40b5-8007-20d0e771f0d0"}, {"name","Donald"},{"cards",{"acehearts","10spades","9clubs","2clubs","jackhearts"}}},
+//        {{"total_balance",100}, {"current_bet",5}, {"uuid","3f96b414-9ac9-40b5-8007-30d0e771f0d0"}, {"name","Ann"},{"cards",{"aceclubs","10diamonds","9clubs","2hearts","queenhearts"}}},
         {{"total_balance",100}, {"current_bet",0}, {"uuid","3f96b414-9ac9-40b5-8007-40d0e771f0d0"}, {"name","Melania"},{"cards",{"acediamonds","10clubs","9clubs","2spades","kinghearts"}}}
     };
 
-    to_player["hand"].push_back({{"total_balance",0}, {"current_bet",0}, {"uuid","3f96b414-9ac9-40b5-8007-000000000000"}, {"name","0"},{"cards",{"0","0","0","0","0"}}});
+    //to_player["hand"].push_back({{"total_balance",0}, {"current_bet",0}, {"uuid","3f96b414-9ac9-40b5-8007-000000000000"}, {"name","0"},{"cards",{"0","0","0","0","0"}}});
     //cout<<"to player:"<<endl;
-    //cout<<to_player.dump(2) <<endl;
-    cout<<to_player["hand"][1].at("uuid")<<endl;
+    cout<<to_player.dump(2) <<endl;
+    //cout<<to_player["hand"][0].at("uuid")<<endl;
 
     return 0;
 }
