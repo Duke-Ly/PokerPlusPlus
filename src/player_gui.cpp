@@ -74,6 +74,11 @@ Player_GUI::Player_GUI(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>
     player_name_dialog->show();
 }
 
+void Player_GUI::update()
+{
+    label_dealer_message->set_text("message form dealer: "+client->dealer_comment);
+}
+
 void Player_GUI::on_name_dialog_enter_clicked()
 {
     string playerName;
@@ -138,10 +143,11 @@ void Player_GUI::on_send_button_clicked()
         {
             cout<<"Send Button was clicked"<<endl;
             string chat = entry_player_chat->get_text();
+            if(!chat.compare(""))
+                chat = " ";
             client->chat = chat;
             string event = "chat";
             client->event = event;
-            cout<<chat<<endl;
             entry_player_chat->set_text("");
             client->send();
         }
@@ -262,7 +268,7 @@ void Player_GUI::on_call_button_clicked()
         {
           cout << "Call Button was clicked" << endl;
           client->event = "call";
-          client->send();
+          //client->send();
         }
     }
 }
@@ -275,7 +281,7 @@ void Player_GUI::on_fold_button_clicked()
         {
           cout << "Fold Button was clicked" << endl;
           client->event = "fold";
-          client->send();
+          //client->send();
         }
     }
 }
@@ -301,7 +307,7 @@ void Player_GUI::on_bet_button_clicked()
                 int entry = stoi(player_bet_entry->get_text(),nullptr,0);
                 client->bet = entry;
                 client->event = "bet";
-                client->send();
+                //client->send();
             }
 
             player_bet_entry->set_text("");
@@ -319,7 +325,7 @@ void Player_GUI::on_raise_button_clicked()
           // TO DO : implement raise
           client->raise = 1;
           client->event = "raise";
-          client->send();
+          //client->send();
         }
     }
 }
@@ -332,7 +338,7 @@ void Player_GUI::on_all_in_button_clicked()
         {
           cout << "All-in Button was clicked" << endl;
           string event = "all-in";
-          client->event = event;
+          //client->event = event;
         }
     }
 }
@@ -368,7 +374,7 @@ void Player_GUI::on_replace_button_clicked()
                 int position = 0;
                 client->replace_vector[position] = 1;
                 client->event = event;
-                client->send();
+                //client->send();
 
                 check1->set_active(false);
             }
@@ -379,7 +385,7 @@ void Player_GUI::on_replace_button_clicked()
                 int position = 1;
                 client->replace_vector[position] = 1;
                 client->event = event;
-                client->send();
+                //client->send();
 
                 check2->set_active(false);
             }
@@ -390,7 +396,7 @@ void Player_GUI::on_replace_button_clicked()
                 int position = 2;
                 client->replace_vector[position] = 1;
                 client->event = event;
-                client->send();
+                //client->send();
 
                 check3->set_active(false);
             }
@@ -401,7 +407,7 @@ void Player_GUI::on_replace_button_clicked()
                 int position = 3;
                 client->replace_vector[position] = 1;
                 client->event = event;
-                client->send();
+                //client->send();
 
                 check4->set_active(false);
             }
@@ -412,7 +418,7 @@ void Player_GUI::on_replace_button_clicked()
                 int position = 4;
                 client->replace_vector[position] = 1;
                 client->event = event;
-                client->send();
+                //client->send();
 
                 check5->set_active(false);
             }

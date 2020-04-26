@@ -18,8 +18,8 @@ int main(int argc, char *argv[])
     to_dealer["raise"] = 1.00;
     to_dealer["chat"] = "this is a string of text representing a chat message";
 
-    cout<<"to dealer:"<<endl;
-    cout<<to_dealer.dump(2)<<endl;
+    //cout<<"to dealer:"<<endl;
+    //cout<<to_dealer.dump(2)<<endl;
 
     if(to_dealer["event"]=="check")
     {
@@ -44,8 +44,9 @@ int main(int argc, char *argv[])
     };
 
     to_player["hand"].push_back({{"total_balance",0}, {"current_bet",0}, {"uuid","3f96b414-9ac9-40b5-8007-000000000000"}, {"name","0"},{"cards",{"0","0","0","0","0"}}});
-    cout<<"to player:"<<endl;
-    cout<<to_player.dump(2) <<endl;
+    //cout<<"to player:"<<endl;
+    //cout<<to_player.dump(2) <<endl;
+    cout<<to_player["hand"][1].at("uuid")<<endl;
 
     return 0;
 }

@@ -72,7 +72,7 @@ void Poker_Player::do_read_body()
             to_player["recommended_play"] = "Waiting for dealer";
             to_player["current_pot"] = table_.current_pot;
             to_player["minimum_bet"] = table_.minimum_bet;
-            to_player["hand"] = {};
+            to_player["hand"].push_back({{"total_balance",0}, {"current_bet",0}, {"uuid","3f96b414-9ac9-40b5-8007-000000000000"}, {"name","0"},{"cards",{"red_back","red_back","red_back","red_back","red_back"}}});
 
             if(to_dealer["event"]=="join")
             {

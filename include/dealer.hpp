@@ -22,7 +22,7 @@ public:
 
     int card_idx;
     vector<Card> deck;
-    player_ptr current_player;
+    player_ptr current_player = nullptr;
 };
 
 #endif

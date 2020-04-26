@@ -9,7 +9,7 @@ using namespace Glib;
 
 class Player_GUI : public Gtk::Window
 {
-protected:
+public:
   Glib::RefPtr<Gtk::Builder> builder;
   Gtk::Dialog* player_name_dialog = nullptr;
   Gtk::Window* window = nullptr;
@@ -47,6 +47,7 @@ protected:
 public:
   Player_GUI(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade);
   game_client* client;
+  void update();
 
 protected:
   void on_name_dialog_enter_clicked();

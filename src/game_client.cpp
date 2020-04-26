@@ -5,9 +5,11 @@
 #include "asio.hpp"
 #include "chat_message.hpp"
 #include "game_client.hpp"
+#include "player_gui.hpp"
 
 using asio::ip::tcp;
 using json = nlohmann::json;
+using namespace Gtk;
 using namespace std;
 
 game_client::game_client(asio::io_context& io_context,
@@ -102,28 +104,25 @@ void game_client::do_read_body()
     {
         if(!ec)
         {
-  /*          json to_player = json::parse(string(read_msg_.body()));
-            to_player["turn"] = to_player["from"].at("uuid");
-            to_player["chat"] = to_player["chat"];
-            to_player["dealer_comment"] = to_player["dealer_comment"];
-            to_player["recommended_play"] = to_player["recommended_play"];
-            to_player["current_pot"] = int(to_player["current_pot"]);
-            to_player["minimum_bet"] = int(to_player["minimum_bet"]);
-            to_player["hand"] =
-            {
-              {{"total_balance",to_player["hand"].at("total_balance")}, {"current_bet",to_player["hand"].at("current_bet")}, {"uuid",to_player["hand"].at("uuid")}, {"name",to_player["hand"].at("name")}, {"cards",to_player["hand"].at("cards")}},
-              {{"total_balance",to_player["hand"].at("total_balance")}, {"current_bet",to_player["hand"].at("current_bet")}, {"uuid",to_player["hand"].at("uuid")}, {"name",to_player["hand"].at("name")}, {"cards",to_player["hand"].at("cards")}},
-              {{"total_balance",to_player["hand"].at("total_balance")}, {"current_bet",to_player["hand"].at("current_bet")}, {"uuid",to_player["hand"].at("uuid")}, {"name",to_player["hand"].at("name")}, {"cards",to_player["hand"].at("cards")}},
-              {{"total_balance",to_player["hand"].at("total_balance")}, {"current_bet",to_player["hand"].at("current_bet")}, {"uuid",to_player["hand"].at("uuid")}, {"name",to_player["hand"].at("name")}, {"cards",to_player["hand"].at("cards")}}
-            };
-*/
-
-    // **********************************************************************************
-
-            cout<<"From the dealer:"<<endl;
+            cout<<"from dealer:"<<endl;
             json to_player = json::parse(string(read_msg_.body()));
-
-            cout << "\"chat\": " << to_player["chat"] << endl;
+            cout<<to_player.dump()<<endl;
+            this->turn = to_string(to_player["turn"]);
+            this->chat = to_string(to_player["chat"]);
+            this->dealer_comment = to_string(to_player["dealer_comment"]);
+            this->recommended_play = to_string(to_player["recommended_play"]);
+            this->current_pot = (int) to_player["current_pot"];
+            this->minimum_bet = (int) to_player["minimum_bet"];
+            unsigned int index;
+            for(index=0; index<to_player["hand"].size(); index++)
+            {
+                if(uuid.compare(to_string(to_player["hand"][index].at("uuid"))))
+                    break;
+            }
+            this->total_balance = (int) to_player["hand"][index].at("total_balance");
+            this->current_bet = (int) to_player["hand"][index].at("current_bet");
+            for(unsigned int i=0; i<this->cards.size(); i++)
+                this->cards[i] = (string) to_player["hand"][index].at("cards")[i];
 
             //cout.write(read_msg_.body(), read_msg_.body_length());
             //cout << endl;

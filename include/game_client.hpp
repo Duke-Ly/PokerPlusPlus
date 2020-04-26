@@ -6,8 +6,9 @@
 #include "chat_message.hpp"
 
 using asio::ip::tcp;
+using namespace std;
 
-typedef std::deque<chat_message> chat_message_queue;
+typedef deque<chat_message> chat_message_queue;
 
 class game_client
 {
@@ -18,13 +19,23 @@ public:
     void write(const chat_message& msg);
     void close();
     void send();
-    std::string uuid;
-    std::string name;
-    std::string event;
-    std::string chat;
+
+    string uuid;
+    string name;
+    string event;
     int bet = 0;
     int raise = 0;
-    std::vector<int> replace_vector = {0, 0, 0, 0, 0};
+    vector<int> replace_vector = {0, 0, 0, 0, 0};
+
+    string turn;
+    string chat;
+    string dealer_comment;
+    string recommended_play;
+    int current_pot = 0;
+    int minimum_bet = 0;
+    int total_balance = 100;
+    int current_bet = 0;
+    vector<string> cards = {"red_back","red_back","red_back","red_back","red_back"};
 
 private:
     void do_connect(const tcp::resolver::results_type& endpoints);
