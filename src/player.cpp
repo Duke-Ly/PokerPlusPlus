@@ -18,11 +18,11 @@ Player_GUI *player_gui = nullptr;
 
 void update(Player_GUI *player_gui)
 {
-    player_gui->label_dealer_message->set_text("Message from Dealer: "+player_gui->client->dealer_comment);
+    player_gui->label_dealer_message->set_text(player_gui->client->dealer_comment);
     player_gui->label_total_balance->set_text(to_string(player_gui->client->total_balance));
     player_gui->label_chat_message->set_text(player_gui->client->chat);
     player_gui->label_recommended_play->set_text(player_gui->client->recommended_play);
-    player_gui->label_pot_value->set_text(to_string(player_gui->client->current_pot));
+    player_gui->label_pot_value->set_text("$"+to_string(player_gui->client->current_pot));
     player_gui->label_current_bet->set_text(to_string(player_gui->client->current_bet));
     player_gui->label_minimum_bet->set_text(to_string(player_gui->client->minimum_bet));
 
