@@ -7,10 +7,6 @@
 
 using namespace std;
 
-Hand::Hand() {};
-
-Hand::~Hand() {};
-
 void Hand::addCard(Card card)
 {
     cards.push_back(card);

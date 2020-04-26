@@ -10,8 +10,9 @@ enum cardSuit {DIAMONDS, HEARTS, CLUBS, SPADES};
 class Card
 {
 public:
-    Card(int value, cardSuit suit, string cardID);
-    ~Card();
+    Card(int value, cardSuit suit, string cardID)
+        : value(value), suit(suit), cardID(cardID) {};
+    ~Card() {};
 
     int value;
     cardSuit suit;

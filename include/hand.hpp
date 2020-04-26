@@ -10,8 +10,8 @@ using namespace std;
 class Hand
 {
 public:
-    Hand();
-    ~Hand();
+    Hand() {};
+    ~Hand() {};
     void addCard(Card card);
     void removeCard(Card rmCard);
     void sortHand();

@@ -57,11 +57,11 @@ Player_GUI::Player_GUI(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>
     builder->get_widget("label_player2_balance", label_player1_balance);
     builder->get_widget("label_player3_balance", label_player1_balance);
     builder->get_widget("label_player4_balance", label_player1_balance);
-    builder->get_widget("label_specator1", label_specator1);
-    builder->get_widget("label_specator2", label_specator1);
-    builder->get_widget("label_specator3", label_specator1);
-    builder->get_widget("label_specator4", label_specator1);
-    builder->get_widget("label_specator5", label_specator1);
+    builder->get_widget("label_spectator1", label_spectator1);
+    builder->get_widget("label_spectator2", label_spectator1);
+    builder->get_widget("label_spectator3", label_spectator1);
+    builder->get_widget("label_spectator4", label_spectator1);
+    builder->get_widget("label_spectator5", label_spectator1);
     builder->get_widget("about_dialog", about_dialog);
     builder->get_widget("help_dialog", help_dialog);
     builder->get_widget("help_close", help_close);
@@ -74,14 +74,14 @@ Player_GUI::Player_GUI(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>
     button_raise->signal_clicked().connect(sigc::mem_fun(*this, &Player_GUI::on_raise_button_clicked));
     button_all_in->signal_clicked().connect(sigc::mem_fun(*this, &Player_GUI::on_all_in_button_clicked));
     button_replace->signal_clicked().connect(sigc::mem_fun(*this, &Player_GUI::on_replace_button_clicked));
-/*    check1->signal_clicked().connect(sigc::mem_fun(*this, &Player_GUI::check1_toggled));
-    check2->signal_clicked().connect(sigc::mem_fun(*this, &Player_GUI::check2_toggled));
-    check3->signal_clicked().connect(sigc::mem_fun(*this, &Player_GUI::check3_toggled));
-    check4->signal_clicked().connect(sigc::mem_fun(*this, &Player_GUI::check4_toggled));
-    check5->signal_clicked().connect(sigc::mem_fun(*this, &Player_GUI::check5_toggled));
-    player_bet_entry->signal_activate().connect(sigc::mem_fun(*this, &Player_GUI::player_bet_entry_activate));
-    entry_player_chat->signal_activate().connect(sigc::mem_fun(*this, &Player_GUI::entry_player_chat_activate));
-*/  button_send->signal_clicked().connect(sigc::mem_fun(*this, &Player_GUI::on_send_button_clicked));
+    /*    check1->signal_clicked().connect(sigc::mem_fun(*this, &Player_GUI::check1_toggled));
+        check2->signal_clicked().connect(sigc::mem_fun(*this, &Player_GUI::check2_toggled));
+        check3->signal_clicked().connect(sigc::mem_fun(*this, &Player_GUI::check3_toggled));
+        check4->signal_clicked().connect(sigc::mem_fun(*this, &Player_GUI::check4_toggled));
+        check5->signal_clicked().connect(sigc::mem_fun(*this, &Player_GUI::check5_toggled));
+        player_bet_entry->signal_activate().connect(sigc::mem_fun(*this, &Player_GUI::player_bet_entry_activate));
+        entry_player_chat->signal_activate().connect(sigc::mem_fun(*this, &Player_GUI::entry_player_chat_activate));
+    */  button_send->signal_clicked().connect(sigc::mem_fun(*this, &Player_GUI::on_send_button_clicked));
     button_clear->signal_clicked().connect(sigc::mem_fun(*this, &Player_GUI::on_clear_button_clicked));
     about_menu->signal_activate().connect(sigc::mem_fun(*this, &Player_GUI::on_about_dialog_activate_link));
     help_menu->signal_activate().connect(sigc::mem_fun(*this, &Player_GUI::on_help_menu_activate));
@@ -90,11 +90,6 @@ Player_GUI::Player_GUI(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>
     window->set_title("Poker++");
     window->override_background_color(Gdk::RGBA{"green"});
     player_name_dialog->show();
-}
-
-void Player_GUI::update()
-{
-    label_dealer_message->set_text("message form dealer: "+client->dealer_comment);
 }
 
 void Player_GUI::on_name_dialog_enter_clicked()
@@ -284,9 +279,9 @@ void Player_GUI::on_call_button_clicked()
     {
         if (button_call)
         {
-          cout << "Call Button was clicked" << endl;
-          client->event = "call";
-          //client->send();
+            cout << "Call Button was clicked" << endl;
+            client->event = "call";
+            //client->send();
         }
     }
 }
@@ -297,9 +292,9 @@ void Player_GUI::on_fold_button_clicked()
     {
         if (button_fold)
         {
-          cout << "Fold Button was clicked" << endl;
-          client->event = "fold";
-          //client->send();
+            cout << "Fold Button was clicked" << endl;
+            client->event = "fold";
+            //client->send();
         }
     }
 }
@@ -339,11 +334,11 @@ void Player_GUI::on_raise_button_clicked()
     {
         if (button_raise)
         {
-          cout << "Raise Button was clicked" << endl;
-          // TO DO : implement raise
-          client->raise = 1;
-          client->event = "raise";
-          //client->send();
+            cout << "Raise Button was clicked" << endl;
+            // TO DO : implement raise
+            client->raise = 1;
+            client->event = "raise";
+            //client->send();
         }
     }
 }
@@ -354,9 +349,9 @@ void Player_GUI::on_all_in_button_clicked()
     {
         if (button_all_in)
         {
-          cout << "All-in Button was clicked" << endl;
-          string event = "all-in";
-          //client->event = event;
+            cout << "All-in Button was clicked" << endl;
+            string event = "all-in";
+            //client->event = event;
         }
     }
 }
@@ -364,19 +359,19 @@ void Player_GUI::on_all_in_button_clicked()
 void Player_GUI::on_replace_button_clicked()
 {
     string assets[52] = {"../assets/10C.png", "../assets/10D.png", "../assets/10H.png", "../assets/10S.png",
-                              "../assets/9C.png", "../assets/9D.png", "../assets/9H.png", "../assets/9S.png",
-                              "../assets/8C.png", "../assets/8D.png", "../assets/8H.png", "../assets/8S.png",
-                              "../assets/7C.png", "../assets/7D.png", "../assets/7H.png", "../assets/7S.png",
-                              "../assets/6C.png", "../assets/6D.png", "../assets/6H.png", "../assets/6S.png",
-                              "../assets/5C.png", "../assets/5D.png", "../assets/5H.png", "../assets/5S.png",
-                              "../assets/4C.png", "../assets/4D.png", "../assets/4H.png", "../assets/4S.png",
-                              "../assets/3C.png", "../assets/3D.png", "../assets/3H.png", "../assets/3S.png",
-                              "../assets/2C.png", "../assets/2D.png", "../assets/2H.png", "../assets/2S.png",
-                              "../assets/AC.png", "../assets/AD.png", "../assets/AH.png", "../assets/AS.png",
-                              "../assets/KC.png", "../assets/KD.png", "../assets/KH.png", "../assets/KS.png",
-                              "../assets/QC.png", "../assets/QD.png", "../assets/QH.png", "../assets/QS.png",
-                              "../assets/JC.png", "../assets/JD.png", "../assets/JH.png", "../assets/JS.png"
-                             };
+                         "../assets/9C.png", "../assets/9D.png", "../assets/9H.png", "../assets/9S.png",
+                         "../assets/8C.png", "../assets/8D.png", "../assets/8H.png", "../assets/8S.png",
+                         "../assets/7C.png", "../assets/7D.png", "../assets/7H.png", "../assets/7S.png",
+                         "../assets/6C.png", "../assets/6D.png", "../assets/6H.png", "../assets/6S.png",
+                         "../assets/5C.png", "../assets/5D.png", "../assets/5H.png", "../assets/5S.png",
+                         "../assets/4C.png", "../assets/4D.png", "../assets/4H.png", "../assets/4S.png",
+                         "../assets/3C.png", "../assets/3D.png", "../assets/3H.png", "../assets/3S.png",
+                         "../assets/2C.png", "../assets/2D.png", "../assets/2H.png", "../assets/2S.png",
+                         "../assets/AC.png", "../assets/AD.png", "../assets/AH.png", "../assets/AS.png",
+                         "../assets/KC.png", "../assets/KD.png", "../assets/KH.png", "../assets/KS.png",
+                         "../assets/QC.png", "../assets/QD.png", "../assets/QH.png", "../assets/QS.png",
+                         "../assets/JC.png", "../assets/JD.png", "../assets/JH.png", "../assets/JS.png"
+                        };
 
     if (window)
     {

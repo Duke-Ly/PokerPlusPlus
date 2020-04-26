@@ -66,37 +66,35 @@ void Poker_Player::do_read_body()
         {
             json to_dealer = json::parse(string(read_msg_.body()));
             json to_player;  // represents the entire game state.  sent to all players
-            to_player["turn"] = nullptr;//table_.dealer.current_player->playerUUID;
-            to_player["chat"] = "Table chat message";
+            to_player["turn"] = " ";//table_.dealer.current_player->playerUUID;
+            to_player["chat"] = "Chat Message";
             to_player["dealer_comment"] = "Waiting for dealer";
             to_player["recommended_play"] = "Waiting for dealer";
             to_player["current_pot"] = table_.current_pot;
             to_player["minimum_bet"] = table_.minimum_bet;
-            to_player["hand"].push_back({{"total_balance",0}, {"current_bet",0}, {"uuid","3f96b414-9ac9-40b5-8007-000000000000"}, {"name","0"},{"cards",{"red_back","red_back","red_back","red_back","red_back"}}});
+            to_player["hand"] = {};
 
             if(to_dealer["event"]=="join")
             {
-                string n = string(to_dealer["from"].at("name")) + " has joined.";
+                string n = string(to_dealer["from"].at("name")) + " has joined the game";
                 cout<<n<<endl;
                 self->name = string(to_dealer["from"].at("name"));
                 self->playerUUID = string(to_dealer["from"].at("uuid"));
                 to_player["dealer_comment"] = n;
             }
-            else if(to_dealer["event"]=="chat"&&table_.game_active&&(table_.game_state==WAITING))
+            else if(table_.enough_player()&&(to_dealer["event"]=="chat")&&
+                    (to_dealer["chat"]=="start")&&(table_.game_state==WAITING))
             {
-                if(to_dealer["chat"]=="start")
-                {
-                    table_.game_state = ANTE;
-                    cout<<"game_state = ANTE"<<endl;
-                    table_.dealer.current_player = *table_.players.begin();
-                    to_player["turn"] = table_.dealer.current_player->playerUUID;
-                    cout<<"current player turn: "<<table_.dealer.current_player->playerUUID<<endl;
-                    string str = "Waiting for " + table_.dealer.current_player->name + " turn";
-                    to_player["dealer_comment"] = str;
-                    str = "";
-                    str = "Bet the ant of $" + to_string(table_.minimum_bet);
-                    to_player["recommended_play"] = str;
-                }
+                table_.game_state = ANTE;
+                cout<<"game_state = ANTE"<<endl;
+                table_.dealer.current_player = *table_.players.begin();
+                to_player["turn"] = table_.dealer.current_player->playerUUID;
+                cout<<"current player turn: "<<table_.dealer.current_player->playerUUID<<endl;
+                string str = "Waiting for " + table_.dealer.current_player->name + " turn";
+                to_player["dealer_comment"] = str;
+                str = "";
+                str = "Bet the ant of $" + to_string(table_.minimum_bet);
+                to_player["recommended_play"] = str;
             }
             else if((table_.game_state==ANTE)
                     &&(to_dealer["from"].at("uuid")==table_.dealer.current_player->playerUUID)
@@ -104,15 +102,15 @@ void Poker_Player::do_read_body()
             {
                 cout<<"event is valid"<<endl;
                 if((to_dealer["event"]=="bet")
-                   &&(to_dealer["bet"]<=table_.dealer.current_player->total_balance)
-                   &&(to_dealer["bet"]==table_.minimum_bet))
+                        &&(to_dealer["bet"]<=table_.dealer.current_player->total_balance)
+                        &&(to_dealer["bet"]==table_.minimum_bet))
                 {
                     cout<<"bet is valid"<<endl;
                     table_.dealer.current_player->total_balance -= (int) to_dealer["bet"];
                     table_.dealer.current_player->current_bet = (int) to_dealer["bet"];
                 }
             }
-            else if((to_dealer["event"]=="chat")&&table_.game_active)
+            else if((to_dealer["event"]=="chat")&&table_.enough_player())
             {
                 string str = "Waiting for " + table_.dealer.current_player->name + " turn";
                 to_player["dealer_comment"] = str;
@@ -130,15 +128,6 @@ void Poker_Player::do_read_body()
                 to_player["recommended_play"] = str;
             }
 
-            if(table_.players.size() >= 2 && !table_.game_active)
-            {
-                table_.game_active = true;
-                cout<<"game is now active with "<<table_.players.size()<<" players"<<endl;
-                to_player["recommended_play"] = "Send 'start' in the chat message to start the game";
-            }
-            else
-                table_.game_active = false;
-
             set<player_ptr>::iterator it;
             for(it=table_.players.begin(); it!=table_.players.end(); ++it)
             {
@@ -151,7 +140,7 @@ void Poker_Player::do_read_body()
                     {"cards",(*it)->playerHand.cardsVector()}});
             }
             cout<<"to player:"<<endl;
-            cout<<to_player.dump()<<endl;
+            cout<<to_player.dump(2)<<endl;
             string t = to_player.dump();
             chat_message sending;
             memcpy(sending.body(), t.c_str(), t.size());

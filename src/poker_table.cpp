@@ -22,8 +22,6 @@ void Poker_Table::join(player_ptr player_)
 {
     std::cout<<"new player joining the table"<<std::endl;
     players.insert(player_);
-    //for (auto msg: recent_msgs_)
-    //  player_->deliver(msg);
 }
 
 void Poker_Table::leave(player_ptr player_)
@@ -46,16 +44,23 @@ bool Poker_Table::all_players_have_a_name()
     bool retval = true;
     for (auto player : players)
         retval = retval && (player->name > "");
+
     return retval;
 }
 
 bool Poker_Table::all_players_have_UUID()
 {
     bool retval = true;
-    // Need to fix this code
-    /*
     for (auto player : players)
-        retval = retval && (player->name > "");
-    */
+        retval = retval && (player->playerUUID > "");
+
     return retval;
+}
+
+bool Poker_Table::enough_player()
+{
+    if(players.size()== 2)
+        return true;
+    else
+        return false;
 }

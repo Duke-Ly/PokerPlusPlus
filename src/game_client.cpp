@@ -106,7 +106,7 @@ void game_client::do_read_body()
         {
             cout<<"from dealer:"<<endl;
             json to_player = json::parse(string(read_msg_.body()));
-            cout<<to_player.dump()<<endl;
+            cout<<to_player.dump(2)<<endl;
             this->turn = to_string(to_player["turn"]);
             this->chat = to_string(to_player["chat"]);
             this->dealer_comment = to_string(to_player["dealer_comment"]);
@@ -114,16 +114,25 @@ void game_client::do_read_body()
             this->current_pot = (int) to_player["current_pot"];
             this->minimum_bet = (int) to_player["minimum_bet"];
             unsigned int index;
+            this->playersName = {};
+            this->playersBalance = {};
             for(index=0; index<to_player["hand"].size(); index++)
             {
                 if(uuid.compare(to_string(to_player["hand"][index].at("uuid"))))
-                    break;
+                {
+                    this->total_balance = (int) to_player["hand"][index].at("total_balance");
+                    this->current_bet = (int) to_player["hand"][index].at("current_bet");
+                    for(unsigned int i=0; i<this->cards.size(); i++)
+                        this->cards[i] = (string) to_player["hand"][index].at("cards")[i];
+                }
+                else
+                {
+                    this->playersName.push_back(to_string(to_player["hand"][index].at("name")));
+                    this->playersBalance.push_back((int) to_player["hand"][index].at("total_balance"));
+                }
             }
-            this->total_balance = (int) to_player["hand"][index].at("total_balance");
-            this->current_bet = (int) to_player["hand"][index].at("current_bet");
-            for(unsigned int i=0; i<this->cards.size(); i++)
-                this->cards[i] = (string) to_player["hand"][index].at("cards")[i];
 
+            update(this->guiPTR);
             //cout.write(read_msg_.body(), read_msg_.body_length());
             //cout << endl;
             do_read_header();

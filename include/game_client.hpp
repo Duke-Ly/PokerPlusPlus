@@ -10,6 +10,9 @@ using namespace std;
 
 typedef deque<chat_message> chat_message_queue;
 
+class Player_GUI;
+class game_client;
+
 class game_client
 {
 public:
@@ -19,6 +22,9 @@ public:
     void write(const chat_message& msg);
     void close();
     void send();
+
+    friend void update(Player_GUI*);
+    Player_GUI* guiPTR;
 
     string uuid;
     string name;
@@ -35,7 +41,14 @@ public:
     int minimum_bet = 0;
     int total_balance = 100;
     int current_bet = 0;
-    vector<string> cards = {"red_back","red_back","red_back","red_back","red_back"};
+    vector<string> cards = {"red_back",
+                            "red_back",
+                            "red_back",
+                            "red_back",
+                            "red_back"
+                           };
+    vector<string> playersName;
+    vector<int> playersBalance;
 
 private:
     void do_connect(const tcp::resolver::results_type& endpoints);
