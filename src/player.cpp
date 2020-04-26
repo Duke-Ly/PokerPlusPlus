@@ -3,6 +3,7 @@
 #include <deque>
 #include <iostream>
 #include <thread>
+#include <string>
 #include "json.hpp"
 #include "asio.hpp"
 #include "chat_message.hpp"
