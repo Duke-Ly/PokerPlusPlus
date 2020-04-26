@@ -693,7 +693,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="player_current_bet">
+                      <object class="GtkLabel" id="labe_current_bet">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Your Current Bet: $0</property>
@@ -1145,7 +1145,7 @@
                 <property name="can_focus">False</property>
                 <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkLabel" id="label_current_bet">
+                  <object class="GtkLabel" id="label_minimum_bet">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="halign">start</property>
