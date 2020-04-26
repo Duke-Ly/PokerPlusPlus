@@ -293,6 +293,22 @@
               </packing>
             </child>
             <child>
+              <object class="GtkLabel" id="label_dealer_message">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="halign">start</property>
+                <property name="label" translatable="yes">Message from Dealer: Waiting for another player</property>
+                <attributes>
+                  <attribute name="weight" value="bold"/>
+                </attributes>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
               <object class="GtkBox" id="hbox_player_hand">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
@@ -506,7 +522,7 @@
               <packing>
                 <property name="expand">True</property>
                 <property name="fill">True</property>
-                <property name="position">1</property>
+                <property name="position">2</property>
               </packing>
             </child>
             <child>
@@ -636,37 +652,61 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel" id="label_empty2">
+                  <object class="GtkLabel" id="label_recommended_play">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="halign">start</property>
                     <property name="valign">center</property>
                     <property name="hexpand">True</property>
                     <property name="vexpand">True</property>
+                    <property name="label" translatable="yes">Recommended Play: </property>
+                    <property name="justify">right</property>
                     <attributes>
-                      <attribute name="font-desc" value="Ubuntu Mono Bold 15"/>
-                      <attribute name="weight" value="semibold"/>
+                      <attribute name="font-desc" value="Ubuntu Mono Bold 13"/>
+                      <attribute name="weight" value="bold"/>
                     </attributes>
                   </object>
                   <packing>
                     <property name="expand">True</property>
-                    <property name="fill">True</property>
+                    <property name="fill">False</property>
                     <property name="position">1</property>
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel" id="label_pot_value">
+                  <object class="GtkBox">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="halign">start</property>
-                    <property name="valign">center</property>
-                    <property name="hexpand">True</property>
-                    <property name="vexpand">True</property>
-                    <property name="label" translatable="yes">Current Pot: $0</property>
-                    <attributes>
-                      <attribute name="font-desc" value="Ubuntu Mono Bold 15"/>
-                      <attribute name="weight" value="semibold"/>
-                    </attributes>
+                    <property name="orientation">vertical</property>
+                    <child>
+                      <object class="GtkLabel" id="label_pot_value">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">Current Pot: $0</property>
+                        <attributes>
+                          <attribute name="weight" value="ultrabold"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="player_current_bet">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">Your Current Bet: $0</property>
+                        <attributes>
+                          <attribute name="weight" value="bold"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
                   </object>
                   <packing>
                     <property name="expand">True</property>
@@ -678,7 +718,7 @@
               <packing>
                 <property name="expand">True</property>
                 <property name="fill">True</property>
-                <property name="position">2</property>
+                <property name="position">3</property>
               </packing>
             </child>
           </object>
@@ -700,7 +740,7 @@
                 <property name="orientation">vertical</property>
                 <property name="spacing">10</property>
                 <child>
-                  <object class="GtkLabel" id="label_dealer_message">
+                  <object class="GtkLabel" id="label_chat_message">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="halign">start</property>
@@ -708,11 +748,11 @@
                     <property name="hexpand">True</property>
                     <property name="vexpand">True</property>
                     <property name="xpad">5</property>
-                    <property name="label" translatable="yes">Message from Dealer: Waiting for another player.</property>
+                    <property name="label" translatable="yes">&lt; Chat Message Area &gt;</property>
                     <property name="justify">center</property>
                     <attributes>
-                      <attribute name="font-desc" value="Ubuntu Mono Bold 12"/>
-                      <attribute name="weight" value="semibold"/>
+                      <attribute name="font-desc" value="Ubuntu Mono Bold 13"/>
+                      <attribute name="weight" value="bold"/>
                     </attributes>
                   </object>
                   <packing>
@@ -794,7 +834,7 @@
                 <property name="margin_top">6</property>
                 <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkLabel" id="total_balance">
+                  <object class="GtkLabel" id="label_total_balance">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="halign">start</property>
@@ -1273,7 +1313,6 @@ At the start of the game each player recieves five cards face down and a total c
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">Welcome to Poker++</property>
     <property name="modal">True</property>
-    <property name="window_position">center-on-parent</property>
     <property name="type_hint">dialog</property>
     <property name="urgency_hint">True</property>
     <property name="transient_for">window</property>

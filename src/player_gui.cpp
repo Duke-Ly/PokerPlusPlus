@@ -43,7 +43,8 @@ Player_GUI::Player_GUI(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>
     builder->get_widget("help_menu", help_menu);
     builder->get_widget("about_menu", about_menu);
     builder->get_widget("label_dealer_message", label_dealer_message);
-    builder->get_widget("total_balance", total_balance);
+    builder->get_widget("label_total_balance", label_total_balance);
+    builder->get_widget("label_chat_message", label_chat_message);
     builder->get_widget("about_dialog", about_dialog);
     builder->get_widget("help_dialog", help_dialog);
     builder->get_widget("help_close", help_close);

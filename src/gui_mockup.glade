@@ -740,7 +740,7 @@
                 <property name="orientation">vertical</property>
                 <property name="spacing">10</property>
                 <child>
-                  <object class="GtkLabel" id="chat_message_area">
+                  <object class="GtkLabel" id="label_chat_message">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="halign">start</property>
@@ -834,7 +834,7 @@
                 <property name="margin_top">6</property>
                 <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkLabel" id="total_balance">
+                  <object class="GtkLabel" id="label_total_balance">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="halign">start</property>

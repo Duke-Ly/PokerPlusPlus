@@ -37,7 +37,8 @@ public:
   Gtk::MenuItem* help_menu = nullptr;
   Gtk::MenuItem* about_menu = nullptr;
   Gtk::Label* label_dealer_message = nullptr;
-  Gtk::Label* total_balance = nullptr;
+  Gtk::Label* label_total_balance = nullptr;
+  Gtk::Label* label_chat_message = nullptr;
   Gtk::AboutDialog* about_dialog = nullptr;
   Gtk::MessageDialog* help_dialog = nullptr;
   Gtk::Button* help_close = nullptr;
