@@ -26,7 +26,6 @@ void Poker_Game::do_accept()
         {
             std::make_shared<Poker_Player>(std::move(socket), table_)->start();
         }
-
         do_accept();
     });
 }
