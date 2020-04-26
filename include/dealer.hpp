@@ -17,7 +17,7 @@ public:
     ~Dealer();
     void createDeck();
     void shuffleDeck();
-    void deal();
+    void deal(player_ptr dealPlayer);
     void next_player(player_ptr nextPlayer);
 
     int card_idx;

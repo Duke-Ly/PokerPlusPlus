@@ -305,13 +305,11 @@ void Player_GUI::on_bet_button_clicked()
     {
         if (button_bet)
         {
-            int player_balance = 100;
-
             cout << "Bet Button was clicked" << endl;
 
             if (player_bet_entry->get_text() == "")
                 cout << "Error. Player bet not set" << endl;
-            else if (stoi(player_bet_entry->get_text(),nullptr,0) > player_balance)
+            else if (stoi(player_bet_entry->get_text(),nullptr,0) > client->total_balance)
                 cout << "Error. Bet amount is greater than chip balance" << endl;
             else
             {
@@ -320,7 +318,7 @@ void Player_GUI::on_bet_button_clicked()
                 int entry = stoi(player_bet_entry->get_text(),nullptr,0);
                 client->bet = entry;
                 client->event = "bet";
-                //client->send();
+                client->send();
             }
 
             player_bet_entry->set_text("");
@@ -382,8 +380,8 @@ void Player_GUI::on_replace_button_clicked()
 
             if (check1->get_active())
             {
-                int randomIndex = rand() % 53;
-                image_card1->set(assets[randomIndex]);
+                //int randomIndex = rand() % 53;
+                //image_card1->set(assets[randomIndex]);
                 int position = 0;
                 client->replace_vector[position] = 1;
                 client->event = event;
@@ -393,8 +391,8 @@ void Player_GUI::on_replace_button_clicked()
             }
             if (check2->get_active())
             {
-                int randomIndex = rand() % 53;
-                image_card2->set(assets[randomIndex]);
+                //int randomIndex = rand() % 53;
+                //image_card2->set(assets[randomIndex]);
                 int position = 1;
                 client->replace_vector[position] = 1;
                 client->event = event;
@@ -404,8 +402,8 @@ void Player_GUI::on_replace_button_clicked()
             }
             if (check3->get_active())
             {
-                int randomIndex = rand() % 53;
-                image_card3->set(assets[randomIndex]);
+                //int randomIndex = rand() % 53;
+                //image_card3->set(assets[randomIndex]);
                 int position = 2;
                 client->replace_vector[position] = 1;
                 client->event = event;
@@ -415,8 +413,8 @@ void Player_GUI::on_replace_button_clicked()
             }
             if (check4->get_active())
             {
-                int randomIndex = rand() % 53;
-                image_card4->set(assets[randomIndex]);
+                //int randomIndex = rand() % 53;
+                //image_card4->set(assets[randomIndex]);
                 int position = 3;
                 client->replace_vector[position] = 1;
                 client->event = event;
@@ -426,8 +424,8 @@ void Player_GUI::on_replace_button_clicked()
             }
             if (check5->get_active())
             {
-                int randomIndex = rand() % 53;
-                image_card5->set(assets[randomIndex]);
+                //int randomIndex = rand() % 53;
+                //image_card5->set(assets[randomIndex]);
                 int position = 4;
                 client->replace_vector[position] = 1;
                 client->event = event;

@@ -61,6 +61,12 @@ void update(Player_GUI *player_gui)
         player_gui->label_player3_balance->set_text(to_string(player_gui->client->playersBalance[2]));
         player_gui->label_player4_balance->set_text(to_string(player_gui->client->playersBalance[3]));
     }
+
+    player_gui->image_card1->set("../assets/"+player_gui->client->cards[0]+".png");
+    player_gui->image_card2->set("../assets/"+player_gui->client->cards[1]+".png");
+    player_gui->image_card3->set("../assets/"+player_gui->client->cards[2]+".png");
+    player_gui->image_card4->set("../assets/"+player_gui->client->cards[3]+".png");
+    player_gui->image_card5->set("../assets/"+player_gui->client->cards[4]+".png");
 }
 
 int main(int argc, char* argv[])

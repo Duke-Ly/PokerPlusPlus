@@ -100,10 +100,11 @@ void Dealer::shuffleDeck()
     cout<<"deck have been shuffled"<<endl;
 }
 
-void Dealer::deal()
+void Dealer::deal(player_ptr dealPlayer)
 {
-    // Need to update code here.
-    card_idx++;
+    for(int i=0; i<5; i++)
+        dealPlayer->playerHand.addCard(this->deck[card_idx++]);
+    dealPlayer->playerHand.sortHand();
 }
 
 void Dealer::next_player(player_ptr nextPlayer)
