@@ -20,11 +20,11 @@ Poker_Game::~Poker_Game() {};
 void Poker_Game::do_accept()
 {
     acceptor_.async_accept(
-        [this](std::error_code ec, tcp::socket socket)
+        [this](error_code ec, tcp::socket socket)
     {
         if (!ec)
         {
-            std::make_shared<Poker_Player>(std::move(socket), table_)->start();
+            make_shared<Poker_Player>(move(socket), table_)->start();
         }
         do_accept();
     });

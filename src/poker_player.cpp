@@ -1,6 +1,7 @@
 #include <cstdlib>
 #include <memory>
 #include <vector>
+#include <numeric>
 #include "player.hpp"
 #include "chat_message.hpp"
 #include "poker_table.hpp"
@@ -23,7 +24,7 @@ Poker_Player::~Poker_Player() {};
 
 void Poker_Player::start()
 {
-    this->table_.join(shared_from_this());
+    table_.join(shared_from_this());
     do_read_header();
 }
 
@@ -46,11 +47,19 @@ void Poker_Player::do_read_header()
     {
         if (!ec && read_msg_.decode_header())
         {
+            // clear out the old buffer from the last read
+            // a '\0' is a good value to make sure a string
+            // is terminated
+            for (unsigned int i=0; i<chat_message::max_body_length; i++)
+            {
+                read_msg_.body() [i] = '\0';
+            }
+
             do_read_body();
         }
         else
         {
-            this->table_.leave(shared_from_this());
+            table_.leave(shared_from_this());
         }
     });
 }
@@ -65,163 +74,344 @@ void Poker_Player::do_read_body()
         if(!ec)
         {
             json to_dealer = json::parse(string(read_msg_.body()));
+            cout<<"from player:"<<endl;
+            cout<<to_dealer.dump(2)<<endl;
 
             json to_player;  // represents the entire game state.  sent to all players
-            if(this->table_.game_state!=WAITING)
-                to_player["turn"] = this->table_.dealer.current_player->playerUUID;
+            if(table_.game_state!=WAITING)
+                to_player["turn"] = table_.dealer.current_player->playerUUID;
             else
-                to_player["turn"] = " ";
-            to_player["chat"] = to_dealer["chat"];
-            to_player["dealer_comment"] = "Waiting for dealer";
-            to_player["recommended_play"] = "Waiting for dealer";
-            to_player["current_pot"] = this->table_.current_pot;
-            to_player["minimum_bet"] = this->table_.minimum_bet;
+                to_player["turn"] = "";
+            to_player["chat"] = "";
+            to_player["dealer_comment"] = "";
+            to_player["recommended_play"] = "";
+            to_player["current_pot"] = table_.current_pot;
+            to_player["minimum_bet"] = table_.minimum_bet;
             to_player["hand"] = {};
 
-            if(this->table_.game_state!=WAITING)
-            {
-                cout<<"player_valid: ";
-                cout<<this->table_.dealer.current_player->playerUUID.compare(to_dealer["from"].at("uuid"))<<endl;
-            }
-
+            // Game Logic
             if(to_dealer["event"]=="join")
             {
-                string n = string(to_dealer["from"].at("name")) + " has joined the table";
+                string n = string(to_dealer["from"].at("name")) + " has joined the table.";
                 cout<<n<<endl;
                 self->name = string(to_dealer["from"].at("name"));
                 self->playerUUID = string(to_dealer["from"].at("uuid"));
                 to_player["dealer_comment"] = n;
-            }
-            else if(this->table_.enough_player()&&(to_dealer["event"]=="chat")&&
-                    (to_dealer["chat"]=="start")&&(this->table_.game_state==WAITING))
-            {
-                this->table_.game_state = ANTE;
-                cout<<"game_state = ANTE"<<endl;
-                this->table_.dealer.current_player = *(this->table_.players.begin());
-                to_player["turn"] = this->table_.dealer.current_player->playerUUID;
-                cout<<"current player turn: "<<this->table_.dealer.current_player->playerUUID<<endl;
-                string str = "Waiting for " + this->table_.dealer.current_player->name + " turn";
-                to_player["dealer_comment"] = str;
-                str = "\0";
-                str = "Bet the ante of $" + to_string(this->table_.minimum_bet);
-                to_player["recommended_play"] = str;
-            }
-            else if((this->table_.game_state==ANTE)
-                    &&!(this->table_.dealer.current_player->playerUUID.compare(to_dealer["from"].at("uuid")))
-                    &&(to_dealer["event"]!="chat"))
-            {
-                if((to_dealer["event"]=="bet")
-                        &&(to_dealer["bet"]<=this->table_.dealer.current_player->total_balance)
-                        &&(to_dealer["bet"]==this->table_.minimum_bet))
+                if(table_.game_state==WAITING&&table_.enough_player())
                 {
-                    set<player_ptr>::iterator it;
-                    it = this->table_.players.find(this->table_.dealer.current_player);
-                    cout<<"bet is valid"<<endl;
-                    this->table_.dealer.current_player->total_balance -= (int) to_dealer["bet"];
-                    this->table_.dealer.current_player->current_bet += (int) to_dealer["bet"];
-                    this->table_.current_pot += (int) to_dealer["bet"];
-                    cout<<"check point!"<<endl;
-                    if(++it==this->table_.players.end())
-                    {
-                        cout<<"check point!"<<endl;
-                        this->table_.game_state = BETTING1;
-                        cout<<"game_state = BETTING1"<<endl;
-                        this->table_.dealer.current_player = *(this->table_.players.begin());
-                        for(it=this->table_.players.begin(); it!=this->table_.players.end(); it++)
-                            this->table_.dealer.deal((*it));
-                    }
-                    else
-                        this->table_.dealer.next_player(*(it));
-                    string str = "Waiting for " + this->table_.dealer.current_player->name + " turn";
+                    string str = "Send 'start' in chat to start the game!";
+                    to_player["recommended_play"] = str;
+                }
+            }
+            else if(to_dealer["event"]=="fold")
+            {
+                string player_action = table_.dealer.current_player->name + " folded! ";
+                set<player_ptr>::iterator it;
+                it = table_.players.find(table_.dealer.current_player);
+                table_.folded_players.insert(table_.dealer.current_player);
+
+                if(it==(--table_.players.end()))
+                {
+                    table_.players.erase(it);
+                    table_.dealer.current_player = *(--table_.players.end());
+                }
+                else
+                {
+                    table_.dealer.next_player(*(it));
+                    table_.players.erase(it);
+                }
+
+                if(table_.players.size()==1)
+                {
+                    table_.game_state = WIN;
+                    cout<<"game_state = WIN"<<endl;
+                    table_.dealer.current_player = *(table_.players.begin());
+                }
+
+                to_player["turn"] = table_.dealer.current_player->playerUUID;
+                string str = player_action + table_.dealer.current_player->name + " turn";
+                to_player["dealer_comment"] = str;
+            }
+            else if(to_dealer["event"]=="chat"&&table_.enough_player())
+            {
+                string temp = (string) to_dealer["chat"];
+
+                if((temp.find("start")>=0)&&(table_.game_state==WAITING))
+                {
+                    table_.game_state = ANTE;
+                    cout<<"game_state = ANTE"<<endl;
+                    table_.dealer.current_player = *(table_.players.begin());
+                    to_player["turn"] = table_.dealer.current_player->playerUUID;
+                    cout<<"current player turn: "<<table_.dealer.current_player->playerUUID<<endl;
+                    string str = table_.dealer.current_player->name + " turn.";
                     to_player["dealer_comment"] = str;
                     str = "\0";
-                    str = "Bet the ante of $" + to_string(this->table_.minimum_bet);
+                    str = "Bet the ante of $" + to_string(table_.minimum_bet) + ".";
                     to_player["recommended_play"] = str;
                 }
                 else
                 {
-                    cout<<"invalid event"<<endl;
-                    string str = "Invalid actions! Waiting for " + this->table_.dealer.current_player->name + " turn";
+                    string str = "";
                     to_player["dealer_comment"] = str;
-                    str = "\0";
-                    str = "Bet the ante of $" + to_string(this->table_.minimum_bet);
                     to_player["recommended_play"] = str;
+                    to_player["chat"] = string(to_dealer["chat"]);
                 }
             }
-            else if((this->table_.game_state==BETTING1)
-                    &&!(this->table_.dealer.current_player->playerUUID.compare(to_dealer["from"].at("uuid")))
-                    &&(to_dealer["event"]!="chat"))
+            else if(table_.game_state==ANTE&&to_dealer["event"]=="bet")
             {
-                if((to_dealer["event"]=="bet")
-                        &&(to_dealer["bet"]<=this->table_.dealer.current_player->total_balance)
-                        &&(to_dealer["bet"]>=this->table_.minimum_bet)
-                        &&(this->table_.dealer.current_player==*(this->table_.players.begin())))
+                set<player_ptr>::iterator it;
+                it = table_.players.find(table_.dealer.current_player);
+                string player_action = table_.dealer.current_player->name + " betted $1. ";
+                table_.dealer.current_player->total_balance -= 1;
+                table_.dealer.current_player->current_bet += 1;
+                table_.current_pot += 1;
+                to_player["current_pot"] = table_.current_pot;
+                to_player["minimum_bet"] = table_.minimum_bet;
+
+                if(++it==table_.players.end())
                 {
-                    set<player_ptr>::iterator it;
-                    it = this->table_.players.find(this->table_.dealer.current_player);
-                    cout<<"bet is valid"<<endl;
-                    this->table_.dealer.current_player->total_balance -= (int) to_dealer["bet"];
-                    this->table_.dealer.current_player->current_bet += (int) to_dealer["bet"];
-                    this->table_.current_pot += (int) to_dealer["bet"];
-                    this->table_.current_pot += (int) to_dealer["bet"];
-                    cout<<"check point!"<<endl;
-                    if(++it==(this->table_.players.end()))
+                    table_.game_state = BETTING1;
+                    cout<<"game_state = BETTING1"<<endl;
+                    table_.dealer.current_player = *(table_.players.begin());
+                    for(it=table_.players.begin(); it!=table_.players.end(); it++)
                     {
-                        cout<<"check point!"<<endl;
-                        this->table_.game_state = BETTING1;
-                        cout<<"game_state = BETTING1"<<endl;
-                        this->table_.dealer.current_player = *(this->table_.players.begin());
-                        for(it=(this->table_.players.begin()); it!=(this->table_.players.end()); it++)
-                            this->table_.dealer.deal((*it));
+                        (*it)->playerHand.cards.clear();
+                        table_.dealer.deal((*it));
                     }
-                    else
-                        this->table_.dealer.next_player(*(it));
-                    string str = "Waiting for " + this->table_.dealer.current_player->name + " turn";
+                    to_player["turn"] = table_.dealer.current_player->playerUUID;
+                    string str = player_action + table_.dealer.current_player->name + " turn now!";
                     to_player["dealer_comment"] = str;
-                    str = "\0";
-                    str = "Match minimum bet of $" + to_string(this->table_.minimum_bet);
-                    to_player["recommended_play"] = str;
+                    to_player["recommended_play"] = "Check or make a bet.";
                 }
                 else
                 {
-                    cout<<"invalid event"<<endl;
-                    string str = "Invalid actions! Waiting for " + this->table_.dealer.current_player->name + " turn";
+                    table_.dealer.next_player(*(it));
+                    to_player["turn"] = table_.dealer.current_player->playerUUID;
+                    string str = player_action + table_.dealer.current_player->name + " turn now!";
                     to_player["dealer_comment"] = str;
                     str = "\0";
-                    str = "Match minimum bet of $" + to_string(this->table_.minimum_bet);
+                    str = "Bet the ante of $" + to_string(table_.minimum_bet);
                     to_player["recommended_play"] = str;
                 }
             }
-
-
-            else if((to_dealer["event"]=="chat")&&this->table_.enough_player())
+            else if(table_.game_state==BETTING1)
             {
-                // seg fault here
-                string str = "Waiting for " + this->table_.dealer.current_player->name + " turn";
-                to_player["dealer_comment"] = str;
-                to_player["recommended_play"] = str;
-                cout<<"from: "<<string(to_dealer["from"])<<endl;
-                cout<<"chat: "<<string(to_dealer["chat"])<<endl;
-                string msg = "from: " + to_string(to_dealer["from"]) + "\n" +
-                             "chat: " + to_string(to_dealer["chat"]);
-                to_player["chat"] = msg;
+                set<player_ptr>::iterator it;
+                it = table_.players.find(table_.dealer.current_player);
+                string player_action;
+
+                if(to_dealer["event"]=="bet")
+                {
+                    player_action = table_.dealer.current_player->name + " betted $" + to_string((int) to_dealer["bet"]) + " ";
+                    table_.dealer.current_player->total_balance -= (int) to_dealer["bet"];
+                    table_.dealer.current_player->current_bet += (int) to_dealer["bet"];
+                    table_.current_pot += (int) to_dealer["bet"];
+                    table_.minimum_bet += (int) to_dealer["bet"];
+                    to_player["current_pot"] = table_.current_pot;
+                    to_player["minimum_bet"] = table_.minimum_bet;
+                }
+                else if(to_dealer["event"]=="check")
+                {
+                    player_action = table_.dealer.current_player->name + " checked. ";
+                }
+                else if(to_dealer["event"]=="call")
+                {
+                    player_action = table_.dealer.current_player->name + " called. ";
+                    table_.dealer.current_player->total_balance -= (table_.minimum_bet-table_.dealer.current_player->current_bet);
+                    table_.dealer.current_player->current_bet += (table_.minimum_bet-table_.dealer.current_player->current_bet);
+                    table_.current_pot += (table_.minimum_bet-table_.dealer.current_player->current_bet);
+                    to_player["current_pot"] = table_.current_pot;
+                    to_player["minimum_bet"] = table_.minimum_bet;
+                }
+                else if(to_dealer["event"]=="raise")
+                {
+                    player_action = table_.dealer.current_player->name + " raised $" + to_string((int) to_dealer["raise"]) + " ";
+                    table_.dealer.current_player->total_balance -= (int) to_dealer["raise"] + table_.minimum_bet;
+                    table_.dealer.current_player->current_bet += (int) to_dealer["raise"] + table_.minimum_bet;
+                    table_.current_pot += (int) to_dealer["raise"] + table_.minimum_bet;
+                    table_.minimum_bet += (int) to_dealer["raise"];
+                    to_player["current_pot"] = table_.current_pot;
+                    to_player["minimum_bet"] = table_.minimum_bet;
+                }
+                else if(to_dealer["event"]=="all-in")
+                {
+                    player_action = table_.dealer.current_player->name + " all-in. ";
+                    int total = table_.dealer.current_player->total_balance;
+                    table_.dealer.current_player->total_balance -= total;
+                    table_.dealer.current_player->current_bet += total;
+                    table_.current_pot += total;
+                    table_.minimum_bet += total-table_.minimum_bet;
+                    to_player["current_pot"] = table_.current_pot;
+                    to_player["minimum_bet"] = table_.minimum_bet;
+                }
+
+                if(++it==table_.players.end()&&table_.all_bet_valid())
+                {
+                    table_.game_state = SWAPPING;
+                    cout<<"game_state = SWAPPING"<<endl;
+                    table_.dealer.current_player = *(table_.players.begin());
+
+                    to_player["turn"] = table_.dealer.current_player->playerUUID;
+                    string str = player_action + table_.dealer.current_player->name + " turn";
+                    to_player["dealer_comment"] = str;
+                    to_player["recommended_play"] = "Replace unwanted cards";
+                }
+                else if(it==table_.players.end()&&!table_.all_bet_valid())
+                {
+                    table_.dealer.current_player = *(table_.players.begin());
+                    to_player["turn"] = table_.dealer.current_player->playerUUID;
+                    string str = player_action + table_.dealer.current_player->name + " turn";
+                    to_player["dealer_comment"] = str;
+                    to_player["recommended_play"] = "Call, Check, Raise, All-in or Fold";
+                }
+                else
+                {
+                    table_.dealer.next_player(*(it));
+                    to_player["turn"] = table_.dealer.current_player->playerUUID;
+                    string str = player_action + table_.dealer.current_player->name + " turn";
+                    to_player["dealer_comment"] = str;
+                    to_player["recommended_play"] = "Call, Check, Raise, All-in or Fold";
+                }
             }
-            else if(this->table_.game_state!=WAITING)
+            else if(table_.game_state==SWAPPING&&to_dealer["event"]=="replace")
             {
-                string str = "Waiting for " + this->table_.dealer.current_player->name + " turn";
-                to_player["dealer_comment"] = str;
-                to_player["recommended_play"] = str;
+                set<player_ptr>::iterator it;
+                it = table_.players.find(table_.dealer.current_player);
+                vector<int> replace_vector = to_dealer["replace_vector"];
+                int numSwapped = accumulate(replace_vector.begin(),replace_vector.end(),
+                                            decltype(replace_vector)::value_type(0));;
+                string player_action = table_.dealer.current_player->name + " swaped " + to_string(numSwapped) + " cards. ";
+                table_.dealer.replace_cards(replace_vector);
+
+                if(++it==table_.players.end())
+                {
+                    table_.game_state = BETTING2;
+                    cout<<"game_state = BETTING2"<<endl;
+                    table_.dealer.current_player = *(table_.players.begin());
+                    to_player["turn"] = table_.dealer.current_player->playerUUID;
+                    string str = player_action + table_.dealer.current_player->name + " turn";
+                    to_player["dealer_comment"] = str;
+                    to_player["recommended_play"] = "Check or make a bet.";
+                }
+                else
+                {
+                    table_.dealer.next_player(*(it));
+                    to_player["turn"] = table_.dealer.current_player->playerUUID;
+                    string str = player_action + table_.dealer.current_player->name + " turn";
+                    to_player["dealer_comment"] = str;
+                    to_player["recommended_play"] = "Replace unwanted cards";
+                }
+            }
+            else if(table_.game_state==BETTING2)
+            {
+                set<player_ptr>::iterator it;
+                it = table_.players.find(table_.dealer.current_player);
+                string player_action;
+
+                if(to_dealer["event"]=="bet")
+                {
+                    player_action = table_.dealer.current_player->name + " betted $" + to_string((int) to_dealer["bet"]) + " ";
+                    table_.dealer.current_player->total_balance -= (int) to_dealer["bet"];
+                    table_.dealer.current_player->current_bet += (int) to_dealer["bet"];
+                    table_.current_pot += (int) to_dealer["bet"];
+                    table_.minimum_bet += (int) to_dealer["bet"];
+                    to_player["current_pot"] = table_.current_pot;
+                    to_player["minimum_bet"] = table_.minimum_bet;
+                }
+                else if(to_dealer["event"]=="check")
+                {
+                    player_action = table_.dealer.current_player->name + " checked. ";
+                }
+                else if(to_dealer["event"]=="call")
+                {
+                    player_action = table_.dealer.current_player->name + " called. ";
+                    table_.dealer.current_player->total_balance -= (table_.minimum_bet-table_.dealer.current_player->current_bet);
+                    table_.dealer.current_player->current_bet += (table_.minimum_bet-table_.dealer.current_player->current_bet);
+                    table_.current_pot += (table_.minimum_bet-table_.dealer.current_player->current_bet);
+                    to_player["current_pot"] = table_.current_pot;
+                    to_player["minimum_bet"] = table_.minimum_bet;
+                }
+                else if(to_dealer["event"]=="raise")
+                {
+                    player_action = table_.dealer.current_player->name + " raised $" + to_string((int) to_dealer["raise"]) + " ";
+                    table_.dealer.current_player->total_balance -= (int) to_dealer["raise"];
+                    table_.dealer.current_player->current_bet += (int) to_dealer["raise"];
+                    table_.current_pot += (int) to_dealer["raise"];
+                    table_.minimum_bet += ((int) to_dealer["raise"])-table_.minimum_bet;
+                    to_player["current_pot"] = table_.current_pot;
+                    to_player["minimum_bet"] = table_.minimum_bet;
+                }
+                else if(to_dealer["event"]=="all-in")
+                {
+                    player_action = table_.dealer.current_player->name + " all-in. ";
+                    int total = table_.dealer.current_player->total_balance;
+                    table_.dealer.current_player->total_balance -= total;
+                    table_.dealer.current_player->current_bet += total;
+                    table_.current_pot += total;
+                    table_.minimum_bet += total-table_.minimum_bet;
+                    to_player["current_pot"] = table_.current_pot;
+                    to_player["minimum_bet"] = table_.minimum_bet;
+                }
+
+                if(++it==table_.players.end()&&table_.all_bet_valid())
+                {
+                    table_.game_state = WIN;
+                    cout<<"game_state = WIN"<<endl;
+                    table_.dealer.current_player = *(table_.players.begin());
+                }
+                else if(it==table_.players.end()&&!table_.all_bet_valid())
+                {
+                    table_.dealer.current_player = *(table_.players.begin());
+                    to_player["turn"] = table_.dealer.current_player->playerUUID;
+                    string str = player_action + table_.dealer.current_player->name + " turn";
+                    to_player["dealer_comment"] = str;
+                    to_player["recommended_play"] = "Call, Check, Raise, All-in or Fold";
+                }
+                else
+                {
+                    table_.dealer.next_player(*(it));
+                    to_player["turn"] = table_.dealer.current_player->playerUUID;
+                    string str = player_action + table_.dealer.current_player->name + " turn";
+                    to_player["dealer_comment"] = str;
+                    to_player["recommended_play"] = "Call, Check, Raise, All-in or Fold";
+                }
             }
 
-            if(this->table_.enough_player()&&(this->table_.game_state==WAITING))
+            if(table_.game_state==WIN)
             {
-                string str = "Send 'start' in chat message to start the game";
-                to_player["dealer_comment"] = str;
-                to_player["recommended_play"] = str;
+                table_.game_state = WAITING;
+                cout<<"game_state = WAITING"<<endl;
+
+                player_ptr winner;
+                winner = table_.find_winner();
+                winner->total_balance += table_.current_pot;
+                string player_action = winner->name + " Won the round! ";
+                table_.current_pot = 0;
+                table_.minimum_bet = 1;
+
+                set<player_ptr>::iterator it;
+                for(it=table_.folded_players.begin(); it!=table_.folded_players.end(); it++)
+                {
+                    table_.players.insert(*it);
+                }
+                table_.folded_players.clear();
+
+                for(it=table_.players.begin(); it!=table_.players.end(); it++)
+                {
+                    (*it)->current_bet = 0;
+                    (*it)->playerHand.cards.clear();
+                    (*it)->playerHand.cards = (*it)->playerHand.default_cards;
+                }
+
+                to_player["dealer_comment"] = player_action;
+                to_player["recommended_play"] = "Send 'start' in chat to start the a new round!";
+                to_player["turn"] = "";
+                to_player["current_pot"] = table_.current_pot;
+                to_player["minimum_bet"] = table_.minimum_bet;
             }
 
             set<player_ptr>::iterator it;
-            for(it=(this->table_.players.begin()); it!=(this->table_.players.end()); ++it)
+            for(it=(table_.players.begin()); it!=(table_.players.end()); ++it)
             {
                 to_player["hand"].push_back(
                 {
@@ -231,19 +421,21 @@ void Poker_Player::do_read_body()
                     {"name",(*it)->name},
                     {"cards",(*it)->playerHand.cardsVector()}});
             }
+
             cout<<"to player:"<<endl;
             cout<<to_player.dump(2)<<endl;
             string t = to_player.dump();
+
             chat_message sending;
             memcpy(sending.body(), t.c_str(), t.size());
             sending.body_length(t.size());
             sending.encode_header();
-            this->table_.deliver(sending);
+            table_.deliver(sending);
             do_read_header();
         }
         else
         {
-            this->table_.leave(shared_from_this());
+            table_.leave(shared_from_this());
         }
     });
 }
@@ -253,7 +445,7 @@ void Poker_Player::do_write()
     auto self(shared_from_this());
     asio::async_write(socket_,
                       asio::buffer(write_msg_.front().data(), write_msg_.front().length()),
-                      [this, self](std::error_code ec, std::size_t /*length*/)
+                      [this, self](error_code ec, size_t /*length*/)
     {
         if (!ec)
         {
@@ -265,7 +457,7 @@ void Poker_Player::do_write()
         }
         else
         {
-            this->table_.leave(shared_from_this());
+            table_.leave(shared_from_this());
         }
     });
 }

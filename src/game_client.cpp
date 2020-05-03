@@ -20,7 +20,15 @@ game_client::game_client(asio::io_context& io_context,
     do_connect(endpoints);
 }
 
-game_client::~game_client() {};
+game_client::~game_client()
+{
+    //delete guiPTR;
+    replace_vector.clear();
+    cards.clear();
+    playersName.clear();
+    playersBalance.clear();
+    close();
+}
 
 void game_client::write(const chat_message& msg)
 {
@@ -48,12 +56,12 @@ void game_client::send()
     chat_message msg;
 
     json to_dealer;
-    to_dealer["from"] = { {"uuid",this->uuid}, {"name",this->name} };
-    to_dealer["event"] = this->event; // "check","bet","call","raise","fold","all_in","replace","chat","join"
-    to_dealer["replace_vector"] = this->replace_vector;
-    to_dealer["bet"] = this->bet;
-    to_dealer["raise"] = this->raise;
-    to_dealer["chat"] = this->chat;
+    to_dealer["from"] = { {"uuid",uuid}, {"name",name} };
+    to_dealer["event"] = event; // "check","bet","call","raise","fold","all_in","replace","chat","join"
+    to_dealer["replace_vector"] = replace_vector;
+    to_dealer["bet"] = bet;
+    to_dealer["raise"] = raise;
+    to_dealer["chat"] = chat;
 
     cout<<"to dealer:"<<endl;
     cout<<to_dealer.dump(2)<<endl;
@@ -63,7 +71,7 @@ void game_client::send()
     msg.body_length(t.size());
     memcpy(msg.body(), t.c_str(), msg.body_length());
     msg.encode_header();
-    this->write(msg);
+    write(msg);
 }
 
 void game_client::do_connect(const tcp::resolver::results_type& endpoints)
@@ -84,10 +92,14 @@ void game_client::do_read_header()
     {
         if(!ec && read_msg_.decode_header())
         {
+            // clear out the old buffer from the last read
+            // a '\0' is a good value to make sure a string
+            // is terminated
             for(unsigned int i=0; i<chat_message::max_body_length; i++)
             {
                 read_msg_.body() [i] = '\0';
             }
+
             do_read_body();
         }
         else
@@ -104,40 +116,53 @@ void game_client::do_read_body()
     {
         if(!ec)
         {
-            cout<<"from dealer:"<<endl;
             json to_player = json::parse(string(read_msg_.body()));
+            cout<<"from dealer:"<<endl;
             cout<<to_player.dump(2)<<endl;
-            this->turn = to_string(to_player["turn"]);
-            this->chat = to_string(to_player["chat"]);
-            this->dealer_comment = to_string(to_player["dealer_comment"]);
-            this->recommended_play = to_string(to_player["recommended_play"]);
-            this->current_pot = (int) to_player["current_pot"];
-            this->minimum_bet = (int) to_player["minimum_bet"];
+
+            turn = string(to_player["turn"]);
+            turn.erase(remove(turn.begin(), turn.end(), '\"' ), turn.end());
+            chat = string(to_player["chat"]);
+            chat.erase(remove(chat.begin(), chat.end(), '\"' ), chat.end());
+            dealer_comment = string(to_player["dealer_comment"]);
+            dealer_comment.erase(remove(dealer_comment.begin(), dealer_comment.end(), '\"' ), dealer_comment.end());
+            recommended_play = string(to_player["recommended_play"]);
+            recommended_play.erase(remove(recommended_play.begin(), recommended_play.end(), '\"' ), recommended_play.end());
+            current_pot = (int) to_player["current_pot"];
+            minimum_bet = (int) to_player["minimum_bet"];
+
             unsigned int index;
-            this->playersName.clear();
-            this->playersBalance.clear();
+            playersName.clear();
+            playersBalance.clear();
             cout<<"There are "<<to_player["hand"].size()<<" players"<<endl;
+
             for(index=0; index<to_player["hand"].size(); index++)
             {
-                if(!(this->uuid.compare(to_player["hand"][index].at("uuid"))))
+                if(!(uuid.compare(to_player["hand"][index].at("uuid"))))
                 {
-                    this->total_balance = (int) to_player["hand"][index].at("total_balance");
-                    this->current_bet = (int) to_player["hand"][index].at("current_bet");
-                    for(unsigned int i=0; i<this->cards.size(); i++)
+                    total_balance = (int) to_player["hand"][index].at("total_balance");
+                    current_bet = (int) to_player["hand"][index].at("current_bet");
+
+                    for(unsigned int i=0; i<cards.size(); i++)
                     {
-                        this->cards[i] = "";
-                        this->cards[i] = (string) to_player["hand"][index].at("cards")[i];
+                        cards[i] = "";
+                        cards[i] = (string) to_player["hand"][index].at("cards")[i];
                         cout<<"index = "<<i<<" card = "<<to_player["hand"][index].at("cards")[i]<<endl;
                     }
                 }
                 else
                 {
-                    this->playersName.push_back(to_string(to_player["hand"][index].at("name")));
-                    this->playersBalance.push_back((int) to_player["hand"][index].at("total_balance"));
+                    playersName.push_back(string(to_player["hand"][index].at("name")));
+                    playersBalance.push_back((int) to_player["hand"][index].at("total_balance"));
+                }
+
+                for(unsigned int i=0; i<playersName.size(); i++)
+                {
+                    playersName[i].erase(remove(playersName[i].begin(), playersName[i].end(), '\"' ), playersName[i].end());
                 }
             }
 
-            update(this->guiPTR);
+            update(guiPTR, this);
             do_read_header();
         }
         else

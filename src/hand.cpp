@@ -7,6 +7,32 @@
 
 using namespace std;
 
+Hand::Hand()
+{
+    Card defaultCard(0, DIAMONDS, "red_back");
+    for(int i=0; i<5; i++)
+    {
+        cards.push_back(defaultCard);
+        default_cards.push_back(defaultCard);
+    }
+    cout<<"A hand was created"<<endl;
+}
+
+Hand::~Hand()
+{
+    for (auto & element : cards)
+    {
+        delete &element;
+    }
+    cards.clear();
+
+    for (auto & element : default_cards)
+    {
+        delete &element;
+    }
+    default_cards.clear();
+}
+
 void Hand::addCard(Card card)
 {
     cards.push_back(card);
@@ -33,6 +59,8 @@ void Hand::sortHand()
     });
     for(auto it = cards.begin(); it != cards.end(); it++)
         cout<<it->cardID<<endl;
+
+    cout<<"Hand have been sorted"<<endl;
 }
 
 void Hand::calcHandValue()
@@ -108,6 +136,8 @@ void Hand::calcHandValue()
         handValue = 8;
     if(royalFlush)
         handValue = 9;
+
+    cout<<"Value of the hand have been calculated"<<endl;
 }
 
 void Hand::findHighCard()
@@ -125,11 +155,12 @@ void Hand::findHighCard()
         else // special case for first card in hand
             highCardValue = cards[i].value;
     }
+    cout<<"Hand high card value have been found!"<<endl;
 }
 
-bool Hand::isOverMaxSize()
+bool Hand::isMaxSize()
 {
-    if((int)cards.size()>maxHandSize)
+    if(cards.size()==maxHandSize)
         return true;
     else
         return false;

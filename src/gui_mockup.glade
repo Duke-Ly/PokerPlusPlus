@@ -6,6 +6,8 @@
     <property name="width_request">1000</property>
     <property name="height_request">600</property>
     <property name="can_focus">False</property>
+    <property name="window_position">center</property>
+    <property name="destroy_with_parent">True</property>
     <child>
       <placeholder/>
     </child>
@@ -683,23 +685,6 @@
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <child>
-                      <object class="GtkLabel">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="halign">end</property>
-                        <property name="label" translatable="yes">Recommended Play:   </property>
-                        <attributes>
-                          <attribute name="font-desc" value="Sans 12"/>
-                          <attribute name="weight" value="bold"/>
-                        </attributes>
-                      </object>
-                      <packing>
-                        <property name="expand">True</property>
-                        <property name="fill">True</property>
-                        <property name="position">0</property>
-                      </packing>
-                    </child>
-                    <child>
                       <object class="GtkLabel" id="label_recommended_play">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
@@ -713,7 +698,7 @@
                       <packing>
                         <property name="expand">True</property>
                         <property name="fill">True</property>
-                        <property name="position">1</property>
+                        <property name="position">0</property>
                       </packing>
                     </child>
                   </object>
@@ -1376,6 +1361,7 @@
   </object>
   <object class="GtkAboutDialog" id="about_dialog">
     <property name="can_focus">False</property>
+    <property name="destroy_with_parent">True</property>
     <property name="type_hint">dialog</property>
     <property name="transient_for">window</property>
     <property name="program_name">Poker++</property>
@@ -1421,6 +1407,7 @@ Kiran Karki
   </object>
   <object class="GtkMessageDialog" id="help_dialog">
     <property name="can_focus">False</property>
+    <property name="destroy_with_parent">True</property>
     <property name="type_hint">dialog</property>
     <property name="transient_for">window</property>
     <property name="text" translatable="yes">&lt;big&gt;&lt;b&gt;Welcome to Poker++&lt;/b&gt;&lt;/big&gt;</property>
@@ -1428,6 +1415,9 @@ Kiran Karki
     <property name="secondary_text" translatable="yes">Poker++ is based on Five-Card Draw Poker. The aim of the game is to make the best five-card poker hand. 
 
 At the start of the game each player recieves five cards face down and a total chip balance of $100. Each player then has the opportunity to replace select cards with new cards from the dealer's stack. Then players will place a bet. The strongest hand wins the pot! Players play until their chip balance is $0.  </property>
+    <child>
+      <placeholder/>
+    </child>
     <child internal-child="vbox">
       <object class="GtkBox">
         <property name="can_focus">False</property>
@@ -1466,9 +1456,14 @@ At the start of the game each player recieves five cards face down and a total c
     </child>
   </object>
   <object class="GtkDialog" id="player_name_dialog">
+    <property name="width_request">400</property>
+    <property name="height_request">200</property>
     <property name="can_focus">False</property>
+    <property name="is_focus">True</property>
     <property name="title" translatable="yes">Welcome to Poker++</property>
     <property name="modal">True</property>
+    <property name="window_position">center</property>
+    <property name="destroy_with_parent">True</property>
     <property name="type_hint">dialog</property>
     <property name="urgency_hint">True</property>
     <property name="transient_for">window</property>
@@ -1478,11 +1473,13 @@ At the start of the game each player recieves five cards face down and a total c
     </child>
     <child internal-child="vbox">
       <object class="GtkBox">
+        <property name="height_request">50</property>
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
         <property name="spacing">2</property>
         <child internal-child="action_area">
           <object class="GtkButtonBox">
+            <property name="height_request">50</property>
             <property name="can_focus">False</property>
             <property name="layout_style">end</property>
             <child>
@@ -1511,10 +1508,12 @@ At the start of the game each player recieves five cards face down and a total c
         </child>
         <child>
           <object class="GtkBox">
+            <property name="height_request">50</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <child>
               <object class="GtkLabel" id="label_player_name">
+                <property name="height_request">50</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">&lt;b&gt;Enter your name:&lt;/b&gt;</property>
@@ -1528,12 +1527,12 @@ At the start of the game each player recieves five cards face down and a total c
             </child>
             <child>
               <object class="GtkBox">
+                <property name="height_request">50</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="halign">center</property>
+                <property name="valign">center</property>
                 <property name="orientation">vertical</property>
-                <child>
-                  <placeholder/>
-                </child>
                 <child>
                   <object class="GtkEntry" id="entry_player_name">
                     <property name="visible">True</property>
@@ -1544,9 +1543,6 @@ At the start of the game each player recieves five cards face down and a total c
                     <property name="fill">True</property>
                     <property name="position">1</property>
                   </packing>
-                </child>
-                <child>
-                  <placeholder/>
                 </child>
               </object>
               <packing>

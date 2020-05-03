@@ -1,4 +1,5 @@
 #include <cstdlib>
+#include <ctime>
 #include <exception>
 #include <vector>
 #include <iostream>
@@ -22,10 +23,17 @@ Dealer::Dealer()
     createDeck();
     shuffleDeck();
     current_player = NULL;
-    card_idx=0;
+    card_idx = 0;
 }
 
-Dealer::~Dealer() {};
+Dealer::~Dealer()
+{
+    for(auto & element : deck)
+    {
+        delete &element;
+    }
+    deck.clear();
+}
 
 void Dealer::createDeck()
 {
@@ -95,8 +103,13 @@ void Dealer::createDeck()
 
 void Dealer::shuffleDeck()
 {
-    auto rng = default_random_engine {};
-    shuffle(deck.begin(), deck.end(), rng);
+    card_idx = 0;
+    srand((unsigned) time(0));
+    int randomNumber = rand()% 100 + 1;
+    //auto rng = default_random_engine {};
+    //shuffle(deck.begin(), deck.end(), rng);
+    for(int i=0; i<randomNumber; i++)
+        random_shuffle(deck.begin(), deck.end());
     cout<<"deck have been shuffled"<<endl;
 }
 
@@ -104,13 +117,36 @@ void Dealer::deal(player_ptr dealPlayer)
 {
     for(int i=0; i<5; i++)
         dealPlayer->playerHand.addCard(this->deck[card_idx++]);
+
+    cout<<"Hand had been dealt to player"<<endl;
     dealPlayer->playerHand.sortHand();
+    dealPlayer->playerHand.calcHandValue();
+    dealPlayer->playerHand.findHighCard();
 }
 
 void Dealer::next_player(player_ptr nextPlayer)
 {
     current_player = nextPlayer;
     cout<<"current_player = "<<current_player->name<<endl;
+}
+
+void Dealer::replace_cards(vector<int> replace_vector)
+{
+    for(int i=4; i>=0; i--)
+    {
+        if(replace_vector[i])
+        {
+            current_player->playerHand.removeCard(current_player->playerHand.cards[i]);
+        }
+    }
+    while(!current_player->playerHand.isMaxSize())
+    {
+        current_player->playerHand.addCard(this->deck[card_idx++]);
+    }
+
+    current_player->playerHand.sortHand();
+    current_player->playerHand.calcHandValue();
+    current_player->playerHand.findHighCard();
 }
 
 int main(int argc, char* argv[])
@@ -132,6 +168,14 @@ int main(int argc, char* argv[])
         }
 
         io_context.run();
+
+        for(auto & element : servers)
+        {
+            delete &element;
+        }
+        servers.clear();
+
+        delete &io_context;
     }
     catch(exception& e)
     {
