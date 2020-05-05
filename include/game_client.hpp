@@ -11,7 +11,6 @@ using namespace std;
 typedef deque<chat_message> chat_message_queue;
 
 class Player_GUI;
-class game_client;
 
 class game_client
 {
@@ -23,9 +22,11 @@ public:
     void close();
     void send();
 
-    friend void update(Player_GUI*);
+    friend void update(Player_GUI*, game_client*);
+
     Player_GUI* guiPTR;
 
+    // to_dealer
     string uuid;
     string name;
     string event;
@@ -33,6 +34,7 @@ public:
     int raise = 0;
     vector<int> replace_vector = {0, 0, 0, 0, 0};
 
+    // to_player
     string turn;
     string chat;
     string dealer_comment;

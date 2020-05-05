@@ -15,7 +15,7 @@ public:
     {
         cout<<"Creating a new player"<<endl;
     }
-    virtual ~Player() {}
+    virtual ~Player() {};
     virtual void deliver(const chat_message& msg) = 0;
 
     Hand playerHand;

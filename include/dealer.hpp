@@ -8,7 +8,7 @@
 
 using namespace std;
 
-typedef std::shared_ptr<Player> player_ptr;
+typedef shared_ptr<Player> player_ptr;
 
 class Dealer
 {
@@ -19,6 +19,7 @@ public:
     void shuffleDeck();
     void deal(player_ptr dealPlayer);
     void next_player(player_ptr nextPlayer);
+    void replace_cards(vector<int> replace_vector);
 
     int card_idx;
     vector<Card> deck;

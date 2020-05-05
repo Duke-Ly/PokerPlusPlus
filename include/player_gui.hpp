@@ -64,9 +64,9 @@ public:
 
 public:
     Player_GUI(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade);
-    ~Player_GUI() {};
-    game_client* client;
-    friend void update(Player_GUI*);
+    ~Player_GUI();
+    game_client* clientPTR;
+    friend void update(Player_GUI*, game_client*);
 
 protected:
     void on_name_dialog_enter_clicked();
@@ -77,14 +77,14 @@ protected:
     //void entry_player_chat_activate();
     void on_send_button_clicked();
     void on_clear_button_clicked();
-    /*  void player_bet_entry_activate();
-      void check1_toggled();
-      void check2_toggled();
-      void check3_toggled();
-      void check4_toggled();
-      void check5_toggled();
-      void on_check_button_clicked();
-    */void on_call_button_clicked();
+    //void player_bet_entry_activate();
+    void check1_toggled();
+    void check2_toggled();
+    void check3_toggled();
+    void check4_toggled();
+    void check5_toggled();
+    void on_check_button_clicked();
+    void on_call_button_clicked();
     void on_fold_button_clicked();
     void on_bet_button_clicked();
     void on_raise_button_clicked();

@@ -10,23 +10,24 @@ using namespace std;
 class Hand
 {
 public:
-    Hand() {};
-    ~Hand() {};
+    Hand();
+    ~Hand();
     void addCard(Card card);
     void removeCard(Card rmCard);
     void sortHand();
     void calcHandValue();
     void findHighCard();
-    bool isOverMaxSize();
+    bool isMaxSize();
     vector<string> cardsVector();
 
     int highCardValue = 0;
     int handSize = 0;
     int handValue = 0;
     vector<Card> cards;
+    vector<Card> default_cards;
 
 private:
-    int maxHandSize = 5;
+    unsigned int maxHandSize = 5;
 };
 
 #endif

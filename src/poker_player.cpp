@@ -217,18 +217,18 @@ void Poker_Player::do_read_body()
                 else if(to_dealer["event"]=="call")
                 {
                     player_action = table_.dealer.current_player->name + " called. ";
-                    table_.dealer.current_player->total_balance -= (table_.minimum_bet-table_.dealer.current_player->current_bet);
-                    table_.dealer.current_player->current_bet += (table_.minimum_bet-table_.dealer.current_player->current_bet);
-                    table_.current_pot += (table_.minimum_bet-table_.dealer.current_player->current_bet);
+                    table_.dealer.current_player->total_balance -= ((table_.minimum_bet)-(table_.dealer.current_player->current_bet));
+                    table_.dealer.current_player->current_bet += ((table_.minimum_bet)-(table_.dealer.current_player->current_bet));
+                    table_.current_pot += ((table_.minimum_bet)-(table_.dealer.current_player->current_bet));
                     to_player["current_pot"] = table_.current_pot;
                     to_player["minimum_bet"] = table_.minimum_bet;
                 }
                 else if(to_dealer["event"]=="raise")
                 {
                     player_action = table_.dealer.current_player->name + " raised $" + to_string((int) to_dealer["raise"]) + " ";
-                    table_.dealer.current_player->total_balance -= (int) to_dealer["raise"] + table_.minimum_bet;
-                    table_.dealer.current_player->current_bet += (int) to_dealer["raise"] + table_.minimum_bet;
-                    table_.current_pot += (int) to_dealer["raise"] + table_.minimum_bet;
+                    table_.dealer.current_player->total_balance -= (int) to_dealer["raise"] + ((table_.minimum_bet)-(table_.dealer.current_player->current_bet));
+                    table_.dealer.current_player->current_bet += (int) to_dealer["raise"] + ((table_.minimum_bet)-(table_.dealer.current_player->current_bet));
+                    table_.current_pot += (int) to_dealer["raise"] + ((table_.minimum_bet)-(table_.dealer.current_player->current_bet));
                     table_.minimum_bet += (int) to_dealer["raise"];
                     to_player["current_pot"] = table_.current_pot;
                     to_player["minimum_bet"] = table_.minimum_bet;
@@ -240,7 +240,7 @@ void Poker_Player::do_read_body()
                     table_.dealer.current_player->total_balance -= total;
                     table_.dealer.current_player->current_bet += total;
                     table_.current_pot += total;
-                    table_.minimum_bet += total-table_.minimum_bet;
+                    table_.minimum_bet += (total-table_.minimum_bet);
                     to_player["current_pot"] = table_.current_pot;
                     to_player["minimum_bet"] = table_.minimum_bet;
                 }
@@ -325,19 +325,19 @@ void Poker_Player::do_read_body()
                 else if(to_dealer["event"]=="call")
                 {
                     player_action = table_.dealer.current_player->name + " called. ";
-                    table_.dealer.current_player->total_balance -= (table_.minimum_bet-table_.dealer.current_player->current_bet);
-                    table_.dealer.current_player->current_bet += (table_.minimum_bet-table_.dealer.current_player->current_bet);
-                    table_.current_pot += (table_.minimum_bet-table_.dealer.current_player->current_bet);
+                    table_.dealer.current_player->total_balance -= ((table_.minimum_bet)-(table_.dealer.current_player->current_bet));
+                    table_.dealer.current_player->current_bet += ((table_.minimum_bet)-(table_.dealer.current_player->current_bet));
+                    table_.current_pot += ((table_.minimum_bet)-(table_.dealer.current_player->current_bet));
                     to_player["current_pot"] = table_.current_pot;
                     to_player["minimum_bet"] = table_.minimum_bet;
                 }
                 else if(to_dealer["event"]=="raise")
                 {
                     player_action = table_.dealer.current_player->name + " raised $" + to_string((int) to_dealer["raise"]) + " ";
-                    table_.dealer.current_player->total_balance -= (int) to_dealer["raise"];
-                    table_.dealer.current_player->current_bet += (int) to_dealer["raise"];
-                    table_.current_pot += (int) to_dealer["raise"];
-                    table_.minimum_bet += ((int) to_dealer["raise"])-table_.minimum_bet;
+                    table_.dealer.current_player->total_balance -= (int) to_dealer["raise"] + ((table_.minimum_bet)-(table_.dealer.current_player->current_bet));
+                    table_.dealer.current_player->current_bet += (int) to_dealer["raise"] + ((table_.minimum_bet)-(table_.dealer.current_player->current_bet));
+                    table_.current_pot += (int) to_dealer["raise"] + ((table_.minimum_bet)-(table_.dealer.current_player->current_bet));
+                    table_.minimum_bet += (int) to_dealer["raise"];
                     to_player["current_pot"] = table_.current_pot;
                     to_player["minimum_bet"] = table_.minimum_bet;
                 }
