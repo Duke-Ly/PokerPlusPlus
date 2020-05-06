@@ -1460,14 +1460,15 @@ At the start of the game each player recieves five cards face down and a total c
     <property name="height_request">200</property>
     <property name="can_focus">False</property>
     <property name="is_focus">True</property>
+    <property name="type">popup</property>
     <property name="title" translatable="yes">Welcome to Poker++</property>
+    <property name="resizable">False</property>
     <property name="modal">True</property>
     <property name="window_position">center</property>
     <property name="destroy_with_parent">True</property>
     <property name="type_hint">dialog</property>
     <property name="urgency_hint">True</property>
     <property name="transient_for">window</property>
-    <property name="attached_to">window</property>
     <child>
       <placeholder/>
     </child>

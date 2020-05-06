@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 #include "json.hpp"
 
 using json = nlohmann::json;
@@ -33,8 +34,8 @@ int main(int argc, char *argv[])
     to_player["chat"] = {"this is one line","this is another","and so is this"};
     to_player["dealer_comment"] = "fred has raised and received 2 new cards";
     to_player["recommended_play"] = "you should fold";
-    to_player["current_pot"] = 5.00;
-    to_player["minimum_bet"] = 1.00;
+    to_player["current_pot"] = 5;
+    to_player["minimum_bet"] = 1;
     to_player["hand"] =
     {
         {{"total_balance",100}, {"current_bet",10}, {"uuid","3f96b414-9ac9-40b5-8007-90d0e771f0d0"}, {"name","Bud"},{"cards",{"acespades","10hearts","9clubs","2diamonds","kinghearts"}}},
@@ -45,8 +46,24 @@ int main(int argc, char *argv[])
 
     //to_player["hand"].push_back({{"total_balance",0}, {"current_bet",0}, {"uuid","3f96b414-9ac9-40b5-8007-000000000000"}, {"name","0"},{"cards",{"0","0","0","0","0"}}});
     //cout<<"to player:"<<endl;
-    cout<<to_player.dump(2) <<endl;
+    //cout<<to_player.dump(2) <<endl;
     //cout<<to_player["hand"][0].at("uuid")<<endl;
+    string test_string = to_player["turn"];
+    cout<<test_string<<endl;
+
+    test_string = to_player["hand"][0].at("name");
+    cout<<test_string<<endl;
+
+    test_string = to_player["hand"][0].at("uuid");
+    cout<<test_string<<endl;
+
+    vector<string> test_vector = to_player["hand"][0].at("cards");
+    cout<<"cards:"<<endl;
+    for(auto item : test_vector)
+        cout<<item<<endl;
+
+    int pot = to_player["current_pot"];
+    cout<<"current_pot: "<<pot<<endl;
 
     return 0;
 }

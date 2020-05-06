@@ -17,11 +17,10 @@ class game_client
 public:
     game_client(asio::io_context& io_context,
                 const tcp::resolver::results_type& endpoints);
-    ~game_client();
     void write(const chat_message& msg);
     void close();
-    void send();
 
+    void send();
     friend void update(Player_GUI*, game_client*);
 
     Player_GUI* guiPTR;

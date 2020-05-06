@@ -20,16 +20,6 @@ game_client::game_client(asio::io_context& io_context,
     do_connect(endpoints);
 }
 
-game_client::~game_client()
-{
-    //delete guiPTR;
-    replace_vector.clear();
-    cards.clear();
-    playersName.clear();
-    playersBalance.clear();
-    close();
-}
-
 void game_client::write(const chat_message& msg)
 {
     asio::post(io_context_, [this, msg]()
@@ -49,29 +39,6 @@ void game_client::close()
     {
         socket_.close();
     });
-}
-
-void game_client::send()
-{
-    chat_message msg;
-
-    json to_dealer;
-    to_dealer["from"] = { {"uuid",uuid}, {"name",name} };
-    to_dealer["event"] = event; // "check","bet","call","raise","fold","all_in","replace","chat","join"
-    to_dealer["replace_vector"] = replace_vector;
-    to_dealer["bet"] = bet;
-    to_dealer["raise"] = raise;
-    to_dealer["chat"] = chat;
-
-    cout<<"to dealer:"<<endl;
-    cout<<to_dealer.dump(2)<<endl;
-
-    string t = to_dealer.dump();
-
-    msg.body_length(t.size());
-    memcpy(msg.body(), t.c_str(), msg.body_length());
-    msg.encode_header();
-    write(msg);
 }
 
 void game_client::do_connect(const tcp::resolver::results_type& endpoints)
@@ -120,45 +87,33 @@ void game_client::do_read_body()
             cout<<"from dealer:"<<endl;
             cout<<to_player.dump(2)<<endl;
 
-            turn = string(to_player["turn"]);
-            turn.erase(remove(turn.begin(), turn.end(), '\"' ), turn.end());
-            chat = string(to_player["chat"]);
-            chat.erase(remove(chat.begin(), chat.end(), '\"' ), chat.end());
-            dealer_comment = string(to_player["dealer_comment"]);
-            dealer_comment.erase(remove(dealer_comment.begin(), dealer_comment.end(), '\"' ), dealer_comment.end());
-            recommended_play = string(to_player["recommended_play"]);
-            recommended_play.erase(remove(recommended_play.begin(), recommended_play.end(), '\"' ), recommended_play.end());
-            current_pot = (int) to_player["current_pot"];
-            minimum_bet = (int) to_player["minimum_bet"];
+            turn = to_player["turn"];
+            chat = to_player["chat"];
+            dealer_comment = to_player["dealer_comment"];
+            recommended_play = to_player["recommended_play"];
+            current_pot = to_player["current_pot"];
+            minimum_bet = to_player["minimum_bet"];
 
             unsigned int index;
             playersName.clear();
             playersBalance.clear();
+            cards.clear();
             cout<<"There are "<<to_player["hand"].size()<<" players"<<endl;
 
             for(index=0; index<to_player["hand"].size(); index++)
             {
                 if(!(uuid.compare(to_player["hand"][index].at("uuid"))))
                 {
-                    total_balance = (int) to_player["hand"][index].at("total_balance");
-                    current_bet = (int) to_player["hand"][index].at("current_bet");
+                    total_balance = to_player["hand"][index].at("total_balance");
+                    current_bet = to_player["hand"][index].at("current_bet");
 
-                    for(unsigned int i=0; i<cards.size(); i++)
-                    {
-                        cards[i] = "";
-                        cards[i] = (string) to_player["hand"][index].at("cards")[i];
-                        cout<<"index = "<<i<<" card = "<<to_player["hand"][index].at("cards")[i]<<endl;
-                    }
+                    for(auto card: to_player["hand"][index].at("cards"))
+                        cards.push_back(card);
                 }
                 else
                 {
-                    playersName.push_back(string(to_player["hand"][index].at("name")));
-                    playersBalance.push_back((int) to_player["hand"][index].at("total_balance"));
-                }
-
-                for(unsigned int i=0; i<playersName.size(); i++)
-                {
-                    playersName[i].erase(remove(playersName[i].begin(), playersName[i].end(), '\"' ), playersName[i].end());
+                    playersName.push_back(to_player["hand"][index].at("name"));
+                    playersBalance.push_back(to_player["hand"][index].at("total_balance"));
                 }
             }
 
@@ -190,4 +145,27 @@ void game_client::do_write()
             socket_.close();
         }
     });
+}
+
+void game_client::send()
+{
+    chat_message msg;
+
+    json to_dealer;
+    to_dealer["from"] = { {"uuid",uuid}, {"name",name} };
+    to_dealer["event"] = event; // "check","bet","call","raise","fold","all_in","replace","chat","join"
+    to_dealer["replace_vector"] = replace_vector;
+    to_dealer["bet"] = bet;
+    to_dealer["raise"] = raise;
+    to_dealer["chat"] = chat;
+
+    cout<<"to dealer:"<<endl;
+    cout<<to_dealer.dump(2)<<endl;
+
+    string t = to_dealer.dump();
+
+    msg.body_length(t.size());
+    memcpy(msg.body(), t.c_str(), msg.body_length());
+    msg.encode_header();
+    write(msg);
 }

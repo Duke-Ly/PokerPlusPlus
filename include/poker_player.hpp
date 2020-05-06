@@ -16,16 +16,19 @@ class Poker_Player
       public enable_shared_from_this<Poker_Player>
 {
 public:
-    Poker_Player(tcp::socket socket, Poker_Table& table_);
-    ~Poker_Player();
+    Poker_Player(tcp::socket socket, Poker_Table& table_)
+        : socket_(move(socket)),
+          table_(table_)
+    {
+    }
     void start();
     void deliver(const chat_message& msg);
-
 
 private:
     void do_read_header();
     void do_read_body();
     void do_write();
+
     tcp::socket socket_;
     Poker_Table& table_;
     chat_message read_msg_;

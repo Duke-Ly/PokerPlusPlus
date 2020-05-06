@@ -12,8 +12,8 @@ class Hand
 public:
     Hand();
     ~Hand();
-    void addCard(Card card);
-    void removeCard(Card rmCard);
+    void addCard(Card& card);
+    void removeCard(Card& rmCard);
     void sortHand();
     void calcHandValue();
     void findHighCard();

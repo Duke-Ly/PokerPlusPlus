@@ -22,81 +22,72 @@ Dealer::Dealer()
     cout<<"Creating a dealer"<<endl;
     createDeck();
     shuffleDeck();
-    current_player = NULL;
+    current_player = nullptr;
     card_idx = 0;
 }
 
 Dealer::~Dealer()
 {
-    for(auto & element : deck)
-    {
-        delete &element;
-    }
     deck.clear();
 }
 
 void Dealer::createDeck()
 {
-    cardSuit Dsuit = DIAMONDS;
-    cardSuit Hsuit = HEARTS;
-    cardSuit Csuit = CLUBS;
-    cardSuit Ssuit = SPADES;
+    deck.emplace_back(1, DIAMONDS, "AD");
+    deck.emplace_back(2, DIAMONDS, "2D");
+    deck.emplace_back(3, DIAMONDS, "3D");
+    deck.emplace_back(4, DIAMONDS, "4D");
+    deck.emplace_back(5, DIAMONDS, "5D");
+    deck.emplace_back(6, DIAMONDS, "6D");
+    deck.emplace_back(7, DIAMONDS, "7D");
+    deck.emplace_back(8, DIAMONDS, "8D");
+    deck.emplace_back(9, DIAMONDS, "9D");
+    deck.emplace_back(10, DIAMONDS, "10D");
+    deck.emplace_back(11, DIAMONDS, "JD");
+    deck.emplace_back(12, DIAMONDS, "QD");
+    deck.emplace_back(13, DIAMONDS, "KD");
 
-    deck.push_back(Card(1, Dsuit, "AD"));
-    deck.push_back(Card(2, Dsuit, "2D"));
-    deck.push_back(Card(3, Dsuit, "3D"));
-    deck.push_back(Card(4, Dsuit, "4D"));
-    deck.push_back(Card(5, Dsuit, "5D"));
-    deck.push_back(Card(6, Dsuit, "6D"));
-    deck.push_back(Card(7, Dsuit, "7D"));
-    deck.push_back(Card(8, Dsuit, "8D"));
-    deck.push_back(Card(9, Dsuit, "9D"));
-    deck.push_back(Card(10, Dsuit, "10D"));
-    deck.push_back(Card(11, Dsuit, "JD"));
-    deck.push_back(Card(12, Dsuit, "QD"));
-    deck.push_back(Card(13, Dsuit, "KD"));
+    deck.emplace_back(1, HEARTS, "AH");
+    deck.emplace_back(2, HEARTS, "2H");
+    deck.emplace_back(3, HEARTS, "3H");
+    deck.emplace_back(4, HEARTS, "4H");
+    deck.emplace_back(5, HEARTS, "5H");
+    deck.emplace_back(6, HEARTS, "6H");
+    deck.emplace_back(7, HEARTS, "7H");
+    deck.emplace_back(8, HEARTS, "8H");
+    deck.emplace_back(9, HEARTS, "9H");
+    deck.emplace_back(10, HEARTS, "10H");
+    deck.emplace_back(11, HEARTS, "JH");
+    deck.emplace_back(12, HEARTS, "QH");
+    deck.emplace_back(13, HEARTS, "KH");
 
-    deck.push_back(Card(1, Hsuit, "AH"));
-    deck.push_back(Card(2, Hsuit, "2H"));
-    deck.push_back(Card(3, Hsuit, "3H"));
-    deck.push_back(Card(4, Hsuit, "4H"));
-    deck.push_back(Card(5, Hsuit, "5H"));
-    deck.push_back(Card(6, Hsuit, "6H"));
-    deck.push_back(Card(7, Hsuit, "7H"));
-    deck.push_back(Card(8, Hsuit, "8H"));
-    deck.push_back(Card(9, Hsuit, "9H"));
-    deck.push_back(Card(10, Hsuit, "10H"));
-    deck.push_back(Card(11, Hsuit, "JH"));
-    deck.push_back(Card(12, Hsuit, "QH"));
-    deck.push_back(Card(13, Hsuit, "KH"));
+    deck.emplace_back(1, CLUBS, "AC");
+    deck.emplace_back(2, CLUBS, "2C");
+    deck.emplace_back(3, CLUBS, "3C");
+    deck.emplace_back(4, CLUBS, "4C");
+    deck.emplace_back(5, CLUBS, "5C");
+    deck.emplace_back(6, CLUBS, "6C");
+    deck.emplace_back(7, CLUBS, "7C");
+    deck.emplace_back(8, CLUBS, "8C");
+    deck.emplace_back(9, CLUBS, "9C");
+    deck.emplace_back(10, CLUBS, "10C");
+    deck.emplace_back(11, CLUBS, "JC");
+    deck.emplace_back(12, CLUBS, "QC");
+    deck.emplace_back(13, CLUBS, "KC");
 
-    deck.push_back(Card(1, Csuit, "AC"));
-    deck.push_back(Card(2, Csuit, "2C"));
-    deck.push_back(Card(3, Csuit, "3C"));
-    deck.push_back(Card(4, Csuit, "4C"));
-    deck.push_back(Card(5, Csuit, "5C"));
-    deck.push_back(Card(6, Csuit, "6C"));
-    deck.push_back(Card(7, Csuit, "7C"));
-    deck.push_back(Card(8, Csuit, "8C"));
-    deck.push_back(Card(9, Csuit, "9C"));
-    deck.push_back(Card(10, Csuit, "10C"));
-    deck.push_back(Card(11, Csuit, "JC"));
-    deck.push_back(Card(12, Csuit, "QC"));
-    deck.push_back(Card(13, Csuit, "KC"));
-
-    deck.push_back(Card(1, Ssuit, "AS"));
-    deck.push_back(Card(2, Ssuit, "2S"));
-    deck.push_back(Card(3, Ssuit, "3S"));
-    deck.push_back(Card(4, Ssuit, "4S"));
-    deck.push_back(Card(5, Ssuit, "5S"));
-    deck.push_back(Card(6, Ssuit, "6S"));
-    deck.push_back(Card(7, Ssuit, "7S"));
-    deck.push_back(Card(8, Ssuit, "8S"));
-    deck.push_back(Card(9, Ssuit, "9S"));
-    deck.push_back(Card(10, Ssuit, "10S"));
-    deck.push_back(Card(11, Ssuit, "JS"));
-    deck.push_back(Card(12, Ssuit, "QS"));
-    deck.push_back(Card(13, Ssuit, "KS"));
+    deck.emplace_back(1, SPADES, "AS");
+    deck.emplace_back(2, SPADES, "2S");
+    deck.emplace_back(3, SPADES, "3S");
+    deck.emplace_back(4, SPADES, "4S");
+    deck.emplace_back(5, SPADES, "5S");
+    deck.emplace_back(6, SPADES, "6S");
+    deck.emplace_back(7, SPADES, "7S");
+    deck.emplace_back(8, SPADES, "8S");
+    deck.emplace_back(9, SPADES, "9S");
+    deck.emplace_back(10, SPADES, "10S");
+    deck.emplace_back(11, SPADES, "JS");
+    deck.emplace_back(12, SPADES, "QS");
+    deck.emplace_back(13, SPADES, "KS");
 
     cout<<"deck have been created"<<endl;
 }
@@ -116,12 +107,12 @@ void Dealer::shuffleDeck()
 void Dealer::deal(player_ptr dealPlayer)
 {
     for(int i=0; i<5; i++)
-        dealPlayer->playerHand.addCard(this->deck[card_idx++]);
+        dealPlayer->hand.addCard(deck[card_idx++]);
 
     cout<<"Hand had been dealt to player"<<endl;
-    dealPlayer->playerHand.sortHand();
-    dealPlayer->playerHand.calcHandValue();
-    dealPlayer->playerHand.findHighCard();
+    dealPlayer->hand.sortHand();
+    dealPlayer->hand.calcHandValue();
+    dealPlayer->hand.findHighCard();
 }
 
 void Dealer::next_player(player_ptr nextPlayer)
@@ -136,17 +127,17 @@ void Dealer::replace_cards(vector<int> replace_vector)
     {
         if(replace_vector[i])
         {
-            current_player->playerHand.removeCard(current_player->playerHand.cards[i]);
+            current_player->hand.removeCard(current_player->hand.cards[i]);
         }
     }
-    while(!current_player->playerHand.isMaxSize())
+    while(!current_player->hand.isMaxSize())
     {
-        current_player->playerHand.addCard(this->deck[card_idx++]);
+        current_player->hand.addCard(deck[card_idx++]);
     }
 
-    current_player->playerHand.sortHand();
-    current_player->playerHand.calcHandValue();
-    current_player->playerHand.findHighCard();
+    current_player->hand.sortHand();
+    current_player->hand.calcHandValue();
+    current_player->hand.findHighCard();
 }
 
 int main(int argc, char* argv[])
@@ -160,22 +151,15 @@ int main(int argc, char* argv[])
         }
 
         asio::io_context io_context;
+
         list<Poker_Game> servers;
-        for (int i = 1; i < argc; ++i)
+        for(int i = 1; i < argc; ++i)
         {
             tcp::endpoint endpoint(tcp::v4(), atoi(argv[i]));
             servers.emplace_back(io_context, endpoint);
         }
 
         io_context.run();
-
-        for(auto & element : servers)
-        {
-            delete &element;
-        }
-        servers.clear();
-
-        delete &io_context;
     }
     catch(exception& e)
     {

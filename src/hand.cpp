@@ -20,27 +20,18 @@ Hand::Hand()
 
 Hand::~Hand()
 {
-    for (auto & element : cards)
-    {
-        delete &element;
-    }
     cards.clear();
-
-    for (auto & element : default_cards)
-    {
-        delete &element;
-    }
     default_cards.clear();
 }
 
-void Hand::addCard(Card card)
+void Hand::addCard(Card& card)
 {
     cards.push_back(card);
     handSize++;
     cout<<card.cardID<<" had been added to hand."<<endl;
 }
 
-void Hand::removeCard(Card rmCard)
+void Hand::removeCard(Card& rmCard)
 {
     for(int i=0; i<(int)cards.size(); ++i)
         if((rmCard.suit==cards[i].suit)&&(rmCard.value==cards[i].value))
@@ -137,7 +128,7 @@ void Hand::calcHandValue()
     if(royalFlush)
         handValue = 9;
 
-    cout<<"Value of the hand have been calculated"<<endl;
+    cout<<"Value of the hand is "<<handValue<<endl;
 }
 
 void Hand::findHighCard()
@@ -155,7 +146,7 @@ void Hand::findHighCard()
         else // special case for first card in hand
             highCardValue = cards[i].value;
     }
-    cout<<"Hand high card value have been found!"<<endl;
+    cout<<"Hand high card value is "<<highCardValue<<endl;
 }
 
 bool Hand::isMaxSize()

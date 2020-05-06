@@ -8,8 +8,6 @@
 
 using namespace std;
 
-typedef shared_ptr<Player> player_ptr;
-
 class Dealer
 {
 public:

@@ -11,18 +11,16 @@ using namespace std;
 class Player
 {
 public:
-    Player()
-    {
-        cout<<"Creating a new player"<<endl;
-    }
-    virtual ~Player() {};
+    virtual ~Player() {}
     virtual void deliver(const chat_message& msg) = 0;
 
-    Hand playerHand;
+    Hand hand;
     string name;
-    string playerUUID;
+    string UUID;
     int current_bet = 0;
     int total_balance = 100;
 };
+
+typedef shared_ptr<Player> player_ptr;
 
 #endif
