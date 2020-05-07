@@ -43,3 +43,7 @@ You will have to manually uncomment it for the game to run properly
 Then in the src directory run make shuffle_test and then run the shuffle_test program
 ./PokerPlusPlus/src $ make shuffle_test
 ./PokerPlusPlus/src $ ./shuffle_test
+
+To compile and run the winning_hand_tests in the src directory run make winning_hand_tests and then run the winning_hand_tests program
+./PokerPlusPlus/src $ make winning_hand_tests
+./PokerPlusPlus/src $ ./winning_hand_tests

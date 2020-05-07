@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <string>
 #include <iostream>
+#include <map>
 
 using namespace std;
 
@@ -33,7 +34,7 @@ void Hand::addCard(Card& card)
 
 void Hand::removeCard(Card& rmCard)
 {
-    for(int i=0; i<(int)cards.size(); ++i)
+    for(int i=0; i<5; ++i)
         if((rmCard.suit==cards[i].suit)&&(rmCard.value==cards[i].value))
         {
             cout<<cards[i].cardID<<" had been removed from hand."<<endl;
@@ -56,32 +57,55 @@ void Hand::sortHand()
 
 void Hand::calcHandValue()
 {
-    bool onePair, twoPair, threeOfaKind, straight, flush = false;
-    bool fullHouse, fourOfaKind, straightFlush, royalFlush = false;
+    bool onePair = false, twoPair = false, threeOfaKind = false, straight = false, flush = false;
+    bool fullHouse = false, fourOfaKind = false, straightFlush = false, royalFlush = false;
     int numPair = 0;
 
     // check for one pair or two pair
-    for(int i=0; i<(int)cards.size(); i++)
+    map<int, int> M;
+    for(auto & card : cards)
     {
-        if((i>0)&&(i<(int)cards.size()-1)&&(cards[i].value==cards[i-1].value)&&(cards[i].value!=cards[i+1].value))
+        auto result = M.insert(std::pair<int, int>(card.value, 1));
+        if (result.second == false)
+            result.first->second++;
+    }
+    // Iterate over the map
+    for (auto & elem : M)
+    {
+        // If frequency count is greater than 1 then its a duplicate element
+        if (elem.second == 2)
+        {
             numPair++;
-        if((i==(int)cards.size()-1)&&(cards[i].value==cards[i-1].value)&&(cards[i].value!=cards[i-2].value))
+        }
+        if (elem.second == 3)
+        {
+            threeOfaKind = true;
+        }
+    }
+/*
+    for(int i=1; i<5; i++)
+    {
+        if((i<3)&&(cards[i].value==cards[i-1].value)&&(cards[i].value!=cards[i+1].value))
+            numPair++;
+        if((i>2)&&(cards[i].value==cards[i-1].value)&&(cards[i].value!=cards[i-2].value))
             numPair++;
     }
+*/
     if(numPair==1)
         onePair = true;
     if(numPair==2)
         twoPair = true;
-
+/*
     // check for three of a kind
-    for(int i=0; i<(int)cards.size(); i++)
+    for(int i=1; i<4; i++)
     {
-        if((i>0)&&(i<(int)cards.size()-1)&&(cards[i].value==cards[i-1].value)&&(cards[i].value==cards[i+1].value))
+        if((cards[i].value==cards[i-1].value)&&(cards[i].value==cards[i+1].value))
             threeOfaKind = true;
     }
-
+*/
     // check for straight
-    if((cards[0].value==cards[1].value-1)&&(cards[1].value==cards[2].value-1)&&(cards[2].value==cards[3].value-1)&&(cards[3].value==cards[4].value-1))
+    if((cards[0].value==(cards[1].value-1))&&(cards[1].value==(cards[2].value-1))
+       &&(cards[2].value==(cards[3].value-1))&&(cards[3].value==(cards[4].value-1)))
         straight = true;
     if((cards[0].value==1)&&(cards[1].value==10)&&(cards[2].value==11)&&(cards[3].value==12)&&(cards[4].value==13))
         straight = true;
@@ -133,7 +157,7 @@ void Hand::calcHandValue()
 
 void Hand::findHighCard()
 {
-    for(int i=0; i<(int)cards.size(); i++)
+    for(int i=0; i<5; i++)
     {
         if(cards[i].value==1)
         {
@@ -160,9 +184,9 @@ bool Hand::isMaxSize()
 vector<string> Hand::cardsVector()
 {
     vector<string> returnVector;
-    if((int)cards.size()==0)
+    if(5==0)
         return {"red_back","red_back","red_back","red_back","red_back"};
-    for(int i=0; i<(int)cards.size(); i++)
+    for(int i=0; i<5; i++)
         returnVector.push_back(cards[i].cardID);
 
     return returnVector;

@@ -1,16 +1,15 @@
-
 #include <map>
 #include <string>
 #include "card.hpp"
 #include "dealer.hpp"
 #include "hand.hpp"
 
-#define BOOST_TEST_MODULE card_tests
+#define BOOST_TEST_MODULE shuffle_tests
 #include <boost/test/included/unit_test.hpp>
 
 using namespace std;
 
-BOOST_AUTO_TEST_SUITE (cards_tests)
+BOOST_AUTO_TEST_SUITE (shuffle_tests)
 
 BOOST_AUTO_TEST_CASE (number_of_cards_in_deck)
 {

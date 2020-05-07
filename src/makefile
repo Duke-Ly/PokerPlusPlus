@@ -46,13 +46,17 @@ player: player.cpp player_gui.o game_client.o
 json: json.cpp
 	${CXX} ${CXXFLAGS} ${CPPFLAGS} -o $@ -c $< ${LDLIBS}
 	
-shuffle_test: shuffle_test.cpp ../include/card.hpp dealer.o hand.o
+shuffle_tests: shuffle_tests.cpp ../include/card.hpp dealer.o hand.o
 	${CXX} ${CXXFLAGS} ${CPPFLAGS} -o $@ $< dealer.o hand.o ${LDLIBS}
+
+winning_hand_tests: winning_hand_tests.cpp ../include/card.hpp hand.o
+	${CXX} ${CXXFLAGS} ${CPPFLAGS} -o $@ $< hand.o ${LDLIBS}
 
 clean:
 	-rm -rf ../asio-1.12.2
 	-rm -f player
 	-rm -f dealer
 	-rm -f json
-	-rm -f shuffle_test
+	-rm -f shuffle_tests
+	-rm -f winning_hand_tests
 	-rm -f *.o
