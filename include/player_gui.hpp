@@ -64,6 +64,7 @@ public:
 
 public:
     Player_GUI(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refGlade);
+    ~Player_GUI() {};
     game_client* clientPTR;
     friend void update(Player_GUI*, game_client*);
 
