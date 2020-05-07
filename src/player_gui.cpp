@@ -62,6 +62,9 @@ Player_GUI::Player_GUI(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>
     builder->get_widget("label_spectator3", label_spectator3);
     builder->get_widget("label_spectator4", label_spectator4);
     builder->get_widget("label_spectator5", label_spectator5);
+    builder->get_widget("num_white_chip", num_white_chip);
+    builder->get_widget("num_red_chip", num_red_chip);
+    builder->get_widget("num_blue_chip", num_blue_chip);
     builder->get_widget("about_dialog", about_dialog);
     builder->get_widget("help_dialog", help_dialog);
     builder->get_widget("help_close", help_close);
@@ -156,21 +159,20 @@ void update(Player_GUI *player_gui, game_client *client)
     // To Do: add support for spectators
     int temp = client->total_balance;
     int whiteChip = 0, redChip = 0, blueChip = 0;
-    while(temp>=50)
+    while(temp>50)
     {
         temp -= 25;
         blueChip++;
     }
-    while(temp>=25)
+    while(temp>25)
     {
         temp -= 5;
         redChip++;
     }
-    while(temp>0)
-    {
-        whiteChip = temp;
-        temp = 0;
-    }
+    whiteChip = temp;
+    player_gui->num_white_chip->set_text(to_string(whiteChip));
+    player_gui->num_red_chip->set_text(to_string(redChip));
+    player_gui->num_blue_chip->set_text(to_string(blueChip));
 }
 
 void Player_GUI::on_name_dialog_enter_clicked()

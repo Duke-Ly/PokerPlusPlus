@@ -56,6 +56,9 @@ public:
     Gtk::Label* label_spectator3 = nullptr;
     Gtk::Label* label_spectator4 = nullptr;
     Gtk::Label* label_spectator5 = nullptr;
+    Gtk::Label* num_white_chip = nullptr;
+    Gtk::Label* num_red_chip = nullptr;
+    Gtk::Label* num_blue_chip = nullptr;
     Gtk::AboutDialog* about_dialog = nullptr;
     Gtk::MessageDialog* help_dialog = nullptr;
     Gtk::Button* help_close = nullptr;
