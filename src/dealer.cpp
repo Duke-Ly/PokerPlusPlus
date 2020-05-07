@@ -140,6 +140,8 @@ void Dealer::replace_cards(vector<int> replace_vector)
     current_player->hand.findHighCard();
 }
 
+// set #if 0 for testing compiling and testing shuffle_test
+#if 1
 int main(int argc, char* argv[])
 {
     try
@@ -168,3 +170,4 @@ int main(int argc, char* argv[])
 
     return 0;
 }
+#endif

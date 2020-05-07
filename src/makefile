@@ -9,7 +9,7 @@ LDLIBS   += -lpthread ${GTKLINKFLAGS}
 ROOTDIR = ../
 VPATH = $(ROOTDIR)
 
-TARGETS = $(ROOTDIR)/asio-1.12.2 player dealer json
+TARGETS = $(ROOTDIR)/asio-1.12.2 player dealer
 
 all: ${TARGETS}
 
@@ -32,7 +32,10 @@ player_gui.o: player_gui.cpp ../include/player_gui.hpp
 	${CXX} ${CXXFLAGS} ${CPPFLAGS} -o $@ -c $< ${LDLIBS}
 	
 game_client.o: game_client.cpp ../include/game_client.hpp
-	${CXX} ${CXXFLAGS} ${CPPFLAGS} -o $@ -c $< ${LDLIBS}	
+	${CXX} ${CXXFLAGS} ${CPPFLAGS} -o $@ -c $< ${LDLIBS}
+
+dealer.o: dealer.cpp ../include/dealer.hpp
+	${CXX} ${CXXFLAGS} ${CPPFLAGS} -o $@ -c $< ${LDLIBS}
 
 dealer: dealer.cpp hand.o poker_table.o poker_player.o poker_game.o
 	${CXX} ${CXXFLAGS} ${CPPFLAGS} -o $@ $< hand.o poker_table.o poker_player.o poker_game.o ${LDLIBS}
@@ -40,9 +43,16 @@ dealer: dealer.cpp hand.o poker_table.o poker_player.o poker_game.o
 player: player.cpp player_gui.o game_client.o
 	${CXX} ${CXXFLAGS} ${CPPFLAGS} -o $@ $< player_gui.o game_client.o ${LDLIBS}
 
+json: json.cpp
+	${CXX} ${CXXFLAGS} ${CPPFLAGS} -o $@ -c $< ${LDLIBS}
+	
+shuffle_test: shuffle_test.cpp ../include/card.hpp dealer.o hand.o
+	${CXX} ${CXXFLAGS} ${CPPFLAGS} -o $@ $< dealer.o hand.o ${LDLIBS}
+
 clean:
 	-rm -rf ../asio-1.12.2
 	-rm -f player
 	-rm -f dealer
 	-rm -f json
+	-rm -f shuffle_test
 	-rm -f *.o
