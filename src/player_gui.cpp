@@ -154,6 +154,23 @@ void update(Player_GUI *player_gui, game_client *client)
     player_gui->image_card5->set("../assets/"+client->cards[4]+".png");
 
     // To Do: add support for spectators
+    int temp = client->total_balance;
+    int whiteChip = 0, redChip = 0, blueChip = 0;
+    while(temp>=50)
+    {
+        temp -= 25;
+        blueChip++;
+    }
+    while(temp>=25)
+    {
+        temp -= 5;
+        redChip++;
+    }
+    while(temp>0)
+    {
+        whiteChip = temp;
+        temp = 0;
+    }
 }
 
 void Player_GUI::on_name_dialog_enter_clicked()
