@@ -208,6 +208,7 @@
                       <object class="GtkLabel" id="label_spectotrs_title">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">Specators</property>
                         <attributes>
                           <attribute name="font-desc" value="Ubuntu Mono Bold 14"/>
                           <attribute name="weight" value="semibold"/>
@@ -223,6 +224,7 @@
                       <object class="GtkLabel" id="label_spectator1">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">&lt;spectator 1&gt;</property>
                       </object>
                       <packing>
                         <property name="expand">True</property>
@@ -234,6 +236,7 @@
                       <object class="GtkLabel" id="label_spectator2">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">&lt;specatator 2&gt;</property>
                       </object>
                       <packing>
                         <property name="expand">True</property>
@@ -245,6 +248,7 @@
                       <object class="GtkLabel" id="label_spectator3">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">&lt;spectator 3&gt;</property>
                       </object>
                       <packing>
                         <property name="expand">True</property>
@@ -256,6 +260,7 @@
                       <object class="GtkLabel" id="label_spectator4">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">&lt;spectator 4&gt;</property>
                       </object>
                       <packing>
                         <property name="expand">True</property>
@@ -267,6 +272,7 @@
                       <object class="GtkLabel" id="label_spectator5">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">&lt;spectator 5&gt;</property>
                       </object>
                       <packing>
                         <property name="expand">True</property>
@@ -1409,6 +1415,9 @@ Kiran Karki
     <property name="secondary_text" translatable="yes">Poker++ is based on Five-Card Draw Poker. The aim of the game is to make the best five-card poker hand. 
 
 At the start of the game each player recieves five cards face down and a total chip balance of $100. Each player then has the opportunity to replace select cards with new cards from the dealer's stack. Then players will place a bet. The strongest hand wins the pot! Players play until their chip balance is $0.  </property>
+    <child>
+      <placeholder/>
+    </child>
     <child internal-child="vbox">
       <object class="GtkBox">
         <property name="can_focus">False</property>
