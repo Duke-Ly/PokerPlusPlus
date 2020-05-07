@@ -1469,7 +1469,6 @@ At the start of the game each player recieves five cards face down and a total c
     <property name="type_hint">dialog</property>
     <property name="urgency_hint">True</property>
     <property name="transient_for">window</property>
-    <property name="attached_to">window</property>
     <child>
       <placeholder/>
     </child>
